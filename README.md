@@ -1,4 +1,12 @@
 # RecipEat
 DATA 515 Project - Recipe recommendation for Meal Planning based on nutrition and available ingredients.
 
-Keeping track of the food at home and preparing meals is definitely a hassle that we face on a daily basis. It’s also hard to make sure that you get all the nutrients that you need into your diet. I wanted to make it simpler to be able to find quick recipes with available ingredients and your required nutrients. I also wanted to make sure that you can plan out your meals ahead of time by picking out the ingredients and characteristics of food you’d like to have and recommend quick recipes that you could use for your meal plans.
+[More information about the project propsal here.](https://docs.google.com/document/d/1VCmc425JY53zHsUiasGh4CeFm5eu0YMbTKfwk1pRHZA/edit#heading=h.5x0d5h95i329)   
+[Spoontacular API](https://spoonacular.com/food-api)  
+
+> Run the application using the following command while in app.py directory, ensure that you have installed flask.
+
+```
+flask run
+```
+This is a markdown file similar to R markdown. To learn more about formatting a markdown [click here](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code).
