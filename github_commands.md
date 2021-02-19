@@ -1,4 +1,4 @@
-###Quick Commands
+### Quick Commands
 
 [Here's a tool to help with visualizing git structure.](https://git-school.github.io/visualizing-git/#free-remote)
 1. Clone this repository, go to the `develop` branch and work there.
