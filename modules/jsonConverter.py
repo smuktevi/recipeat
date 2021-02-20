@@ -10,7 +10,7 @@ def boi_convert_to_json(df):
     :return: json object
     """
 
-    return df.to_json(orient="split")
+    return df.to_json(orient="records")
 
 
 def boi_convert_to_df(json):
@@ -20,7 +20,7 @@ def boi_convert_to_df(json):
     :return: pandas DataFrame object
     """
 
-    return pd.read_json(json_obj, orient="split")
+    return pd.read_json(json_obj, orient="records")
 
 '''
 if __name__ == '__main__':
