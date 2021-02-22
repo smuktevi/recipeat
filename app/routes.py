@@ -2,6 +2,7 @@
 from flask import render_template, flash, redirect, url_for, escape, request, session
 from app import app
 from app.forms.ingredients_form import LoginForm
+from app.forms.register_form import RegisterForm
 
 
 # when url inside this function is called the following function executes and returns to the browser page that called it.
@@ -31,6 +32,24 @@ def login():
         return redirect('/index')
 
     return render_template('login.html', title='Sign In', form=form)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        session['name'] = request.form['name']
+        session['username'] = request.form['username']
+        session['password'] = request.form['password']
+
+        return redirect(url_for('home'))
+
+    form = RegisterForm()
+    if form.validate_on_submit():
+        flash('Login requested for user {}, remember_me={}'.format(
+            form.username.data, form.remember_me.data))
+        return redirect('/register')
+
+    return render_template('register.html', title='Register', form=form)
 
 
 @app.route('/logout')
