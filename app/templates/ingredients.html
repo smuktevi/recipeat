@@ -2,9 +2,4 @@
 
 {% block content %}
     <h1>Enter Ingredients</h1>
-    <form action="" method="post" novalidate>
-        {% for ingredient_entry_form in form.bag_of_ingredients %}
-            {{ ingredient_entry_form.hidden_tag() }}
-        {% endfor %}
-    </form>
 {% endblock %}

@@ -8,9 +8,3 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
-class IngredientForm(FlaskForm):
-    item = StringField()
-
-class MoreIngredientsForm(FlaskForm):
-    """A form for one or more ingredients"""
-    bag_of_ingredients = FieldList(FormField(IngredientForm), min_entries = 1)

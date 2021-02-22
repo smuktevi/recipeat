@@ -1,5 +1,5 @@
 #import the flask library
-from flask import Flask 
+from flask import Flask
 from config import Config
 
 #configure an object of class Flask with __name__

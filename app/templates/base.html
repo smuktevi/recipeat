@@ -1,28 +1,32 @@
 <html>
-    <head>
-      {% if title %}
-      <title>{{ title }} - Recipeat</title>
-      {% else %}
-      <title>Welcome to Recipeat</title>
-      {% endif %}
-    </head>
-    <body>
-      <div>
-        Recipeat:
-        <a href="/index">Home</a>
-        <a href="/login">Login</a>
-        <a href="/ingredients">Ingredients</a>
-      </div>
-      <hr>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
-        {% block content %}{% endblock %}
-    </body>
+
+<head>
+  {% if title %}
+  <title>{{ title }} - Recipeat</title>
+  {% else %}
+  <title>Welcome to Recipeat</title>
+  {% endif %}
+</head>
+
+<body>
+  <div>
+    <h4>RecipEat</h4>
+    <a href="/index">Home</a>
+    <a href="/login">Login</a>
+    <a href="/ingredients">Ingredients</a>
+  </div>
+  <hr>
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</body>
+
 </html>
