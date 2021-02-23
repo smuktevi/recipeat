@@ -5,20 +5,19 @@ from app import app
 from app.forms.ingredients_form import LoginForm
 from app.forms.register_form import RegisterForm
 
-'''
 config = {
-    "apiKey": "",
-    "authDomain": "",
-    "databaseURL": "",
-    "projectId": "",
-    "storageBucket": "",
-    "messagingSenderId": "",
-    "appId": ""
+    "apiKey": "AIzaSyALmQ-MUJqlIWPmZZK8P73JTxgiWFzcTwY",
+    "authDomain": "recipeat-e5c29.firebaseapp.com",
+    "projectId": "recipeat-e5c29",
+    "storageBucket": "recipeat-e5c29.appspot.com",
+    "messagingSenderId": "141820818637",
+    "appId": "1:141820818637:web:d29b714c5cc98bb6d9e584",
+    "measurementId": "G-28H1MDHXJC"
 }
 
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
-'''
+
 
 # when url inside this function is called the following function executes and returns to the browser page that called it.
 @app.route('/')
@@ -39,16 +38,12 @@ def login():
         session['username'] = request.form['username']
         session['password'] = request.form['password']
 
-        '''
         try:
-            auth.sign_in_with_email_and_password(email, password)
+            auth.sign_in_with_email_and_password(session['username'], session['password'])
             return redirect(url_for('index'))
         except:
             unsuccessful = 'Please check your credentials'
             return render_template('login.html', alertmessage=unsuccessful)
-        '''
-
-        return redirect(url_for('index'))
 
     form = LoginForm()
     if form.validate_on_submit():
