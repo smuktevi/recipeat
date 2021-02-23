@@ -18,14 +18,17 @@ config = {
 
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
-
+database = firebase.database()
 
 # when url inside this function is called the following function executes and returns to the browser page that called it.
 @app.route('/')
 @app.route('/index')
 # view function
 def index():
-    user = {'username': 'User'}
+    if 'username' in session:
+        user = {'username': session['username']}
+    else:
+        user = {'username': 'New User'}
     return render_template('index.html', user=user)
 
 
@@ -37,16 +40,19 @@ def login():
         return 'Logged in as ' + username + '<br>' + "<b><a href = '/logout'>click here to log out</a></b>"
 
     if request.method == 'POST':
-        session['username'] = request.form['username']
-        session['password'] = request.form['password']
-
+        username = request.form['username']
+        password = request.form['password']
 
         try:
-            auth.sign_in_with_email_and_password(session['username'], session['password'])
+            # Successful login
+            auth.sign_in_with_email_and_password(username, password)
+            session['username'] = username
+            session['password'] = password
             return redirect(url_for('index'))
         except:
+            # Failed login
             unsuccessful = 'Please check your credentials'
-            return render_template('login.html', title='Sign In', form=form,  alertmessage=unsuccessful)
+            return render_template('login.html', title='Sign In', form=form, alertmessage=unsuccessful)
 
     if form.validate_on_submit():
         flash('Login requested for user {}, remember_me={}'.format(
@@ -60,20 +66,20 @@ def login():
 def register():
     form = RegisterForm()
     if request.method == 'POST':
-        session['name'] = request.form['name']
-        session['username'] = request.form['username']
-        session['password'] = request.form['password']
-
+        name = request.form['name']
+        username = request.form['username']
+        password = request.form['password']
 
         try:
-            auth.create_user_with_email_and_password(session['username'], session['password'])
+            # Successful Registration
+            auth.create_user_with_email_and_password(username, password)
             return render_template('register.html', title='Register', form=form, successmessage="Successfully Registered Account!")
+
+            # TODO May need to implement a read/write to firebase realtime database here. (Create account)
         except:
+            # Failed Registration
             unsuccessful = 'Failed to register account! Check if email is valid! Check if password is long enough! Email may already be registered!'
             return render_template('register.html', title='Register', form=form, alertmessage=unsuccessful)
-
-
-        #return redirect(url_for('home'))
 
     if form.validate_on_submit():
         flash('Login requested for user {}, remember_me={}'.format(
