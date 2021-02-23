@@ -1,9 +1,24 @@
 # render_template() invokes Jinja2 template engine for powerful operations in templates
 from flask import render_template, flash, redirect, url_for, escape, request, session
+import pyrebase
 from app import app
 from app.forms.ingredients_form import LoginForm
 from app.forms.register_form import RegisterForm
 
+'''
+config = {
+    "apiKey": "",
+    "authDomain": "",
+    "databaseURL": "",
+    "projectId": "",
+    "storageBucket": "",
+    "messagingSenderId": "",
+    "appId": ""
+}
+
+firebase = pyrebase.initialize_app(config)
+auth = firebase.auth()
+'''
 
 # when url inside this function is called the following function executes and returns to the browser page that called it.
 @app.route('/')
@@ -23,6 +38,16 @@ def login():
     if request.method == 'POST':
         session['username'] = request.form['username']
         session['password'] = request.form['password']
+
+        '''
+        try:
+            auth.sign_in_with_email_and_password(email, password)
+            return redirect(url_for('index'))
+        except:
+            unsuccessful = 'Please check your credentials'
+            return render_template('login.html', alertmessage=unsuccessful)
+        '''
+
         return redirect(url_for('index'))
 
     form = LoginForm()
@@ -40,6 +65,15 @@ def register():
         session['name'] = request.form['name']
         session['username'] = request.form['username']
         session['password'] = request.form['password']
+
+        '''
+        try:
+            auth.create_user_with_email_and_password(email, password)
+            return render_template('register.html', successmessage="Successfully Registered Account!")
+        except:
+            unsuccessful = 'Email is already registered'
+            return render_template('register.html', alertmessage=unsuccessful)
+        '''
 
         return redirect(url_for('home'))
 

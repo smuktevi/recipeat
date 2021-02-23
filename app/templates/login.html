@@ -2,6 +2,11 @@
 
 {% block content %}
     <h1>Sign In</h1>
+    {% if alertmessage %}
+        <div class="alert alert-danger">
+            {{ alertmessage }}
+        </div>
+    {% endif %}
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
