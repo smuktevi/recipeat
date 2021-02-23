@@ -1,5 +1,5 @@
 # render_template() invokes Jinja2 template engine for powerful operations in templates
-from flask import render_template, flash, redirect, url_for, escape, request, session
+from flask import *
 import pyrebase
 from app import app
 from app.forms.ingredients_form import LoginForm
@@ -8,11 +8,12 @@ from app.forms.register_form import RegisterForm
 config = {
     "apiKey": "AIzaSyALmQ-MUJqlIWPmZZK8P73JTxgiWFzcTwY",
     "authDomain": "recipeat-e5c29.firebaseapp.com",
+    "databaseURL": "https://recipeat-e5c29-default-rtdb.firebaseio.com",
     "projectId": "recipeat-e5c29",
     "storageBucket": "recipeat-e5c29.appspot.com",
     "messagingSenderId": "141820818637",
-    "appId": "1:141820818637:web:d29b714c5cc98bb6d9e584",
-    "measurementId": "G-28H1MDHXJC"
+    "appId": "1:141820818637:web:303e5636dc57aabbd9e584",
+    "measurementId": "G-SHGP23CXCE"
 }
 
 firebase = pyrebase.initialize_app(config)
@@ -30,6 +31,7 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    form = LoginForm()
     if 'username' in session:
         username = session['username']
         return 'Logged in as ' + username + '<br>' + "<b><a href = '/logout'>click here to log out</a></b>"
@@ -38,14 +40,14 @@ def login():
         session['username'] = request.form['username']
         session['password'] = request.form['password']
 
+
         try:
             auth.sign_in_with_email_and_password(session['username'], session['password'])
             return redirect(url_for('index'))
         except:
             unsuccessful = 'Please check your credentials'
-            return render_template('login.html', alertmessage=unsuccessful)
+            return render_template('login.html', title='Sign In', form=form,  alertmessage=unsuccessful)
 
-    form = LoginForm()
     if form.validate_on_submit():
         flash('Login requested for user {}, remember_me={}'.format(
             form.username.data, form.remember_me.data))
@@ -56,23 +58,23 @@ def login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    form = RegisterForm()
     if request.method == 'POST':
         session['name'] = request.form['name']
         session['username'] = request.form['username']
         session['password'] = request.form['password']
 
-        '''
+
         try:
-            auth.create_user_with_email_and_password(email, password)
-            return render_template('register.html', successmessage="Successfully Registered Account!")
+            auth.create_user_with_email_and_password(session['username'], session['password'])
+            return render_template('register.html', title='Register', form=form, successmessage="Successfully Registered Account!")
         except:
-            unsuccessful = 'Email is already registered'
-            return render_template('register.html', alertmessage=unsuccessful)
-        '''
+            unsuccessful = 'Failed to register account! Check if email is valid! Check if password is long enough! Email may already be registered!'
+            return render_template('register.html', title='Register', form=form, alertmessage=unsuccessful)
 
-        return redirect(url_for('home'))
 
-    form = RegisterForm()
+        #return redirect(url_for('home'))
+
     if form.validate_on_submit():
         flash('Login requested for user {}, remember_me={}'.format(
             form.username.data, form.remember_me.data))
