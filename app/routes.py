@@ -21,7 +21,6 @@ auth = firebase.auth()
 database = firebase.database()
 
 # when url inside this function is called the following function executes and returns to the browser page that called it.
-@app.route('/')
 @app.route('/index')
 # view function
 def index():
@@ -31,7 +30,7 @@ def index():
         user = {'username': 'New User'}
     return render_template('index.html', user=user)
 
-
+@app.route('/')
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -84,7 +83,7 @@ def register():
     if form.validate_on_submit():
         flash('Login requested for user {}, remember_me={}'.format(
             form.username.data, form.remember_me.data))
-        return redirect('/register')
+        return redirect('/index', name=name)
 
     return render_template('register.html', title='Register', form=form)
 

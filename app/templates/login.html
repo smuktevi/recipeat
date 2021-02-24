@@ -1,7 +1,6 @@
-{% extends "base.html" %}
-
+<h1>Welcome to RecipEat</h1>
 {% block content %}
-    <h1>Sign In</h1>
+    <h2>Sign In</h2>
     {% if alertmessage %}
         <div class="alert alert-danger">
             {{ alertmessage }}
@@ -22,3 +21,5 @@
     </form>
     Don't have an account? <a href="/register">Register here!</a>
 {% endblock %}
+
+
