@@ -5,8 +5,14 @@ DATA 515 Project - Recipe recommendation for Meal Planning based on nutrition an
 [Spoontacular API](https://spoonacular.com/food-api)  
 
 > Checkout github_commands.md for help.  
+
+> Run the following code to install all the requuired packages/dependecies to run this application locally.
+
+```
+ pip3 install -r requirements.txt
+```
   
-Run the application using the following command while in app.py directory, ensure that you have installed flask.
+> Run the application using the following command while in app.py directory, ensure that you have installed flask.
 
 ```
 flask run
