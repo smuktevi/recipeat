@@ -7,9 +7,9 @@
 git clone https://github.com/smuktevi/recipeat.git
 git checkout develop
 ```
-Make sure you set your remote repository to `origin develop`. [check here for help](https://devconnected.com/how-to-set-upstream-branch-on-git/)
-`git push -u <remote> <branch>`
-2. After making your changes execute:
+Make sure you set your remote repository to `origin develop`. [check here for help](https://devconnected.com/how-to-set-upstream-branch-on-git/)  
+`git push -u <remote> <branch>`  
+2. After making your changes execute:  
 ```
 git pull                                                                      #pull from remote repository, check for confilcts
 git add .                                                                     #which adds your files that you made changes in.
