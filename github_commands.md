@@ -5,7 +5,7 @@
 1. Clone this repository, go to the `develop` branch and work there.
 ```
 git clone https://github.com/smuktevi/recipeat.git
-git branch develop
+git checkout develop
 ```
 Make sure you set your remote repository to `origin develop`. [check here for help](https://devconnected.com/how-to-set-upstream-branch-on-git/)
 `git push -u <remote> <branch>`
