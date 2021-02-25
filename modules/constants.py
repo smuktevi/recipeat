@@ -16,6 +16,50 @@ firekey = {
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-51neu%40recipeat-e5c29.iam.gserviceaccount.com"
 }
 
+#sample user details
+username = "recipeat@gmail.com"
+password = "qwerty01"
+usn = "johndoe1"
+
+#sample user json data
+sample_user = {
+  "email": "recipeat@gmail.com",
+  "username": "johndoe1",
+  "details": {
+    "height": "999",
+    "weight": "999",
+    "age": "999",
+    "gender": "male"
+  },
+  "boi": [
+    {
+      "ingredientFull": "1 cup green tea",
+      "ingredient": "green tea",
+      "amount": 1,
+      "unit": "cup"
+    },
+    {
+      "ingredientFull": "2 oz mushrooms",
+      "ingredient": "mushrooms",
+      "amount": 2,
+      "unit": "oz"
+    },
+    {
+      "ingredientFull": "150 g egg whites",
+      "ingredient": "egg whites",
+      "amount": 150,
+      "unit": "g"
+    }
+  ],
+  "cuisine": [
+    "italian"
+  ],
+  "tolerances": [
+    "gluten"
+  ],
+  "diet": "vegetarian"
+}
+
 #GET URL
 # api_home = "https://api.spoonacular.com/recipes"
 

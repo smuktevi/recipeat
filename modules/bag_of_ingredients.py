@@ -1,27 +1,39 @@
 import pandas as pd
 from constants import *
-# from firebase import firebase
+import json
 from pyrebase import pyrebase
 
 class BagOfIngeredients:
     def __init__(self):
+        self.username = None
         self.ingredients = []
         self.number_of_ingredients = 0
-        self.user_id = 0
+        self.db_user = None
         #get bag of ingredients from database and convert to pandas dataframe
 
-    def authenticate_user():
-        pass
+    def authenticate_user(self, username, password):
+        self.username = usn
+        try:
+            self.db_user = auth.sign_in_with_email_and_password(username, password) # Log the user in
+        except:
+            return False
+        return True
 
-    def get_boi():
-        pass
+    def get_boi(self):
+        user = db.child("users").get()
+        print(user.key(), user.val())
 
-    def update_boi():
-        pass
+    def push_boi(self, data):
+        db.child("users").child(self.username).set(data)
 
-    def delete_boi():
+    def update_boi(self, key, data):
+        _update = {key:data}
+        db.child("users").child(self.username).update(_update)
+        
+    def delete_boi(self):
         self.ingredients = []
         self.number_of_ingredients = 0
+        db.child("users").child(self.username).remove()
 
 
 #authorization config will REPLACE
@@ -30,7 +42,6 @@ config = {
     "authDomain": "recipeat-e5c29.firebaseapp.com",
     "databaseURL": "https://recipeat-e5c29-default-rtdb.firebaseio.com",
     "projectId": "recipeat-e5c29",
-    # 'serviceAccount': ""
     "storageBucket": "recipeat-e5c29.appspot.com",
     "messagingSenderId": "141820818637",
     "appId": "1:141820818637:web:303e5636dc57aabbd9e584",
@@ -38,35 +49,18 @@ config = {
 }
 
 firebase = pyrebase.initialize_app(config)
-
-#for now using defaults
-username = "saivenkatnow@gmail.com"
-password = "vishu123"
-######
-
-#try insert into firebase:
-# Get a reference to the auth service
 auth = firebase.auth()
+db = firebase.database() # Get a reference to the database service
 
-# Log the user in
-user = auth.sign_in_with_email_and_password(username, password)
-# Get a reference to the database service
-db = firebase.database()
-# data to save
-data = {
-    "name": "Mortimer 'Morty' Smith",
-    "description": "SUCCESSFUL DATABASE PUSH!!"
-}
-data_2 = {
-    "name": "Recipeat Users",
-    "BagOfIngredients" : [
-        
-        {"1": "Apple"}, 
-        {"12": "Grapes"} 
-    ]
+data = sample_user #check constants.py
+
+# CRUD operations example with predefined user from constants.py
+boi_sample = BagOfIngeredients()
+authenticated = boi_sample.authenticate_user(username, password)
+if authenticated:
+    print("AUTHENTICATED!!")
+    boi_sample.get_boi()
+    boi_sample.push_boi(sample_user)
+    boi_sample.update_boi("diet","non-vegetarian")
+    # boi_sample.delete_boi()
     
-}
-# Pass the user's idToken to the push method
-results = db.child("users").push(data, user['idToken'])
-db.child("new_node").child("users").set(data_2)
-print(results)
