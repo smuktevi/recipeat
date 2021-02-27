@@ -3,7 +3,7 @@ from constants import *
 import json
 from pyrebase import pyrebase
 
-class BagOfIngeredients:
+class BagOfIngredients:
     def __init__(self):
         self.username = None
         self.ingredients = []
@@ -55,7 +55,7 @@ db = firebase.database() # Get a reference to the database service
 data = sample_user #check constants.py
 
 # CRUD operations example with predefined user from constants.py
-boi_sample = BagOfIngeredients()
+boi_sample = BagOfIngredients()
 authenticated = boi_sample.authenticate_user(username, password)
 if authenticated:
     print("AUTHENTICATED!!")
