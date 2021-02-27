@@ -20,38 +20,42 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 db = firebase.database()  # Get a reference to the database service
 
+
 class User:
 
-    def __init__(self, name = "", email = "", password = "", height = 0, weight = 0, age = 0, gender = ""):
+    def __init__(self, name="", email="", height=0, weight=0, age=0, gender=""):
         self.name = name
         self.email = email
-        self.password = password
         self.height = height
         self.weight = weight
         self.age = age
         self.gender = gender
         self.bag_of_ingredients = BagOfIngredients()
 
-    def authenticate_user(self, username, password):
+    @staticmethod
+    def authenticate_user(username, password):
         try:
-            auth.sign_in_with_email_and_password(self.username, self.password)  # Log the user in
+            auth.sign_in_with_email_and_password(username, password)  # Log the user in
         except:
             return False
 
         # TODO return user object instead of True
+        user = User()
 
         return True
 
-    def register_user(self):
+    @staticmethod
+    def register_user(username, password):
         try:
             # Successful Registration
-            auth.create_user_with_email_and_password(self.username, self.password)
-
-
-            # TODO May need to implement a read/write to firebase realtime database here. (Create account)
+            auth.create_user_with_email_and_password(username, password)
         except:
             return False
 
-    def get_user_details(self):
-        # TODO implement this if necessary
+        # TODO Need to implement a write to firebase realtime database here. (Create account)
+        return True
+
+    @staticmethod
+    def get_user(username):
+        # TODO Read from firebase realtime database. Build user object and return it.
         pass
