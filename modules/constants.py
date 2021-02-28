@@ -1,6 +1,7 @@
 #AVAILABLE API KEYS
 apikey1 = 'apiKey=4078ba908cf14212b9c3754a84a262f5'
 apikey2 = 'apiKey=d18b19ea103f46929e677ecacef2c15c'
+apikey3 = 'apiKei=000c6ad96dd4406084b8c5492a302592'
 
 #firebase service account private key
 firekey = {
