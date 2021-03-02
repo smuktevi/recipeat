@@ -1,8 +1,8 @@
 import pandas as pd
-from constants import *
+from modules.constants import *
 import json
 from pyrebase import pyrebase
-from bag_of_ingredients import BagOfIngredients
+from modules.bag_of_ingredients import BagOfIngredients
 
 # authorization config will REPLACE
 config = {

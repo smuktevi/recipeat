@@ -4,6 +4,7 @@ import pyrebase
 from app import app
 from app.forms.ingredients_form import LoginForm
 from app.forms.register_form import RegisterForm
+from modules.user import User
 
 config = {
     "apiKey": "AIzaSyALmQ-MUJqlIWPmZZK8P73JTxgiWFzcTwY",
@@ -69,13 +70,12 @@ def register():
         username = request.form['username']
         password = request.form['password']
 
-        try:
-            # Successful Registration
-            auth.create_user_with_email_and_password(username, password)
-            return render_template('register.html', title='Register', form=form, successmessage="Successfully Registered Account!")
+        register_success = User.register_user(username, password)
 
-            # TODO May need to implement a read/write to firebase realtime database here. (Create account)
-        except:
+        if(register_success):
+            # Successful Registration
+            return render_template('register.html', title='Register', form=form, successmessage="Successfully Registered Account!")
+        else:
             # Failed Registration
             unsuccessful = 'Failed to register account! Check if email is valid! Check if password is long enough! Email may already be registered!'
             return render_template('register.html', title='Register', form=form, alertmessage=unsuccessful)
