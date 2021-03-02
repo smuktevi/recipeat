@@ -26,6 +26,22 @@
             {{ form.password.label }}<br>
             {{ form.password(size=32) }}
         </p>
+        <p>
+            {{ form.age.label }}<br>
+            {{ form.age(size=32) }}
+        </p>
+        <p>
+            {{ form.height.label }}<br>
+            {{ form.height(size=32) }}
+        </p>
+        <p>
+            {{ form.weight.label }}<br>
+            {{ form.weight(size=32) }}
+        </p>
+        <p>
+            {{ form.gender.label }}<br>
+            {{ form.gender(size=32) }}
+        </p>
         <p>{{ form.submit() }}</p>
     </form>
 {% endblock %}
