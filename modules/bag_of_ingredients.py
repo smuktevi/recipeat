@@ -1,5 +1,5 @@
 import pandas as pd
-from modules.constants import *
+from constants import *
 import json
 from pyrebase import pyrebase
 
