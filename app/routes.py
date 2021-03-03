@@ -5,17 +5,7 @@ from app import app
 from app.forms.ingredients_form import LoginForm
 from app.forms.register_form import RegisterForm
 from modules.user import User
-
-config = {
-    "apiKey": "AIzaSyALmQ-MUJqlIWPmZZK8P73JTxgiWFzcTwY",
-    "authDomain": "recipeat-e5c29.firebaseapp.com",
-    "databaseURL": "https://recipeat-e5c29-default-rtdb.firebaseio.com",
-    "projectId": "recipeat-e5c29",
-    "storageBucket": "recipeat-e5c29.appspot.com",
-    "messagingSenderId": "141820818637",
-    "appId": "1:141820818637:web:303e5636dc57aabbd9e584",
-    "measurementId": "G-SHGP23CXCE"
-}
+from modules.constants import *
 
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
@@ -31,7 +21,7 @@ def index():
         user = {'username': 'New User'}
     return render_template('index.html', user=user)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
