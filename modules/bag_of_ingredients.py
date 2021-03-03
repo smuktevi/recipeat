@@ -11,14 +11,6 @@ class BagOfIngredients:
         self.db_user = None
         #get bag of ingredients from database and convert to pandas dataframe
 
-    def authenticate_user(self, username, password):
-        self.username = usn
-        try:
-            self.db_user = auth.sign_in_with_email_and_password(username, password) # Log the user in
-        except:
-            return False
-        return True
-
     def get_boi(self):
         user = db.child("users").get()
         print(user.key(), user.val())
@@ -49,9 +41,8 @@ config = {
 }
 
 firebase = pyrebase.initialize_app(config)
-auth = firebase.auth()
 db = firebase.database() # Get a reference to the database service
-
+'''
 data = sample_user #check constants.py
 
 # CRUD operations example with predefined user from constants.py
@@ -63,4 +54,4 @@ if authenticated:
     boi_sample.push_boi(sample_user)
     boi_sample.update_boi("diet","non-vegetarian")
     # boi_sample.delete_boi()
-    
+'''
