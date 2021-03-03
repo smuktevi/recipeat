@@ -56,6 +56,7 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
+
     if request.method == 'POST':
         name = request.form['name']
         username = request.form['username']
@@ -90,6 +91,14 @@ def logout():
 @app.route('/ingredients', methods=['GET', 'POST'])
 def ingredients():
     form = IngredientForm()
+
+    if request.method == 'POST':
+        ingredient = request.form['ingredient']
+        quantity = request.form['quantity']
+
+        # TODO call update ingredient to bag of ingredients
+        #session['user'].update_boi()
+
     return render_template('ingredients.html', form=form)
 
 
