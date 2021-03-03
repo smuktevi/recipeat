@@ -2,20 +2,11 @@
 from flask import *
 import pyrebase
 from app import app
-from app.forms.ingredients_form import LoginForm
+from app.forms.login_form import LoginForm
 from app.forms.register_form import RegisterForm
+from app.forms.ingredients_form import IngredientForm
 from modules.user import User
-
-config = {
-    "apiKey": "AIzaSyALmQ-MUJqlIWPmZZK8P73JTxgiWFzcTwY",
-    "authDomain": "recipeat-e5c29.firebaseapp.com",
-    "databaseURL": "https://recipeat-e5c29-default-rtdb.firebaseio.com",
-    "projectId": "recipeat-e5c29",
-    "storageBucket": "recipeat-e5c29.appspot.com",
-    "messagingSenderId": "141820818637",
-    "appId": "1:141820818637:web:303e5636dc57aabbd9e584",
-    "measurementId": "G-SHGP23CXCE"
-}
+from modules.constants import *
 
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
@@ -26,12 +17,12 @@ database = firebase.database()
 # view function
 def index():
     if 'username' in session:
-        user = {'username': session['username']}
+        user = session['username']
     else:
-        user = {'username': 'New User'}
+        user = 'New User'
     return render_template('index.html', user=user)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -65,6 +56,7 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
+
     if request.method == 'POST':
         name = request.form['name']
         username = request.form['username']
@@ -74,7 +66,7 @@ def register():
 
         if(register_success):
             # Successful Registration
-            return render_template('register.html', title='Register', form=form, successmessage="Successfully Registered Account!")
+            return render_template('register.html', title='Register', form=form, successmessage='Successfully Registered Account!')
         else:
             # Failed Registration
             unsuccessful = 'Failed to register account! Check if email is valid! Check if password is long enough! Email may already be registered!'
@@ -93,9 +85,23 @@ def logout():
     # remove the username from the session if it is there
     session.pop('username', None)
     session.pop('password', None)
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 
 @app.route('/ingredients', methods=['GET', 'POST'])
 def ingredients():
-    return render_template('ingredients.html')
+    form = IngredientForm()
+
+    if request.method == 'POST':
+        ingredient = request.form['ingredient']
+        quantity = request.form['quantity']
+
+        # TODO call update ingredient to bag of ingredients
+        #session['user'].update_boi()
+
+    return render_template('ingredients.html', form=form)
+
+
+@app.route('/recipe', methods=['GET', 'POST'])
+def recipe():
+    return render_template('recipe.html')
