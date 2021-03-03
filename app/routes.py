@@ -2,8 +2,9 @@
 from flask import *
 import pyrebase
 from app import app
-from app.forms.ingredients_form import LoginForm
+from app.forms.login_form import LoginForm
 from app.forms.register_form import RegisterForm
+from app.forms.ingredients_form import IngredientForm
 from modules.user import User
 from modules.constants import *
 
@@ -16,9 +17,9 @@ database = firebase.database()
 # view function
 def index():
     if 'username' in session:
-        user = {'username': session['username']}
+        user = session['username']
     else:
-        user = {'username': 'New User'}
+        user = 'New User'
     return render_template('index.html', user=user)
 
 @app.route('/', methods=['GET', 'POST'])
@@ -64,7 +65,7 @@ def register():
 
         if(register_success):
             # Successful Registration
-            return render_template('register.html', title='Register', form=form, successmessage="Successfully Registered Account!")
+            return render_template('register.html', title='Register', form=form, successmessage='Successfully Registered Account!')
         else:
             # Failed Registration
             unsuccessful = 'Failed to register account! Check if email is valid! Check if password is long enough! Email may already be registered!'
@@ -83,9 +84,15 @@ def logout():
     # remove the username from the session if it is there
     session.pop('username', None)
     session.pop('password', None)
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 
 @app.route('/ingredients', methods=['GET', 'POST'])
 def ingredients():
-    return render_template('ingredients.html')
+    form = IngredientForm()
+    return render_template('ingredients.html', form=form)
+
+
+@app.route('/recipe', methods=['GET', 'POST'])
+def recipe():
+    return render_template('recipe.html')
