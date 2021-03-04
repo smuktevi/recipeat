@@ -3,6 +3,9 @@ from .constants import *
 import json
 from pyrebase import pyrebase
 
+firebase = pyrebase.initialize_app(config)
+db = firebase.database() # Get a reference to the database service
+
 class BagOfIngredients:
     def __init__(self):
         self.username = None
@@ -10,14 +13,6 @@ class BagOfIngredients:
         self.number_of_ingredients = 0
         self.db_user = None
         #get bag of ingredients from database and convert to pandas dataframe
-
-    def authenticate_user(self, username, password):
-        self.username = usn
-        try:
-            self.db_user = auth.sign_in_with_email_and_password(username, password) # Log the user in
-        except:
-            return False
-        return True
 
     def get_boi(self):
         user = db.child("users").get()
@@ -36,22 +31,7 @@ class BagOfIngredients:
         db.child("users").child(self.username).remove()
 
 
-#authorization config will REPLACE
-config = {
-    "apiKey": "AIzaSyALmQ-MUJqlIWPmZZK8P73JTxgiWFzcTwY",
-    "authDomain": "recipeat-e5c29.firebaseapp.com",
-    "databaseURL": "https://recipeat-e5c29-default-rtdb.firebaseio.com",
-    "projectId": "recipeat-e5c29",
-    "storageBucket": "recipeat-e5c29.appspot.com",
-    "messagingSenderId": "141820818637",
-    "appId": "1:141820818637:web:303e5636dc57aabbd9e584",
-    "measurementId": "G-SHGP23CXCE"
-}
-
-firebase = pyrebase.initialize_app(config)
-auth = firebase.auth()
-db = firebase.database() # Get a reference to the database service
-
+'''
 data = sample_user #check constants.py
 
 # CRUD operations example with predefined user from constants.py
@@ -63,4 +43,4 @@ if authenticated:
     boi_sample.push_boi(sample_user)
     boi_sample.update_boi("diet","non-vegetarian")
     # boi_sample.delete_boi()
-    
+'''
