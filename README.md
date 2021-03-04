@@ -9,7 +9,7 @@ DATA 515 Project - Recipe recommendation for Meal Planning based on nutrition an
 > Run the following code to install all the requuired packages/dependecies to run this application locally.
 
 ```
- pip3 install -r requirements.txt
+while read requirement; do pip install $requirement; done < requirements.txt
 ```
   
 > Run the application using the following command while in app.py directory, ensure that you have installed flask.
