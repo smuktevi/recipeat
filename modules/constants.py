@@ -1,4 +1,7 @@
-#AVAILABLE API KEYS
+import psycopg2
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+
+# AVAILABLE API KEYS
 apikey1 = 'apiKey=4078ba908cf14212b9c3754a84a262f5'
 apikey2 = 'apiKey=d18b19ea103f46929e677ecacef2c15c'
 apikey3 = 'apiKei=000c6ad96dd4406084b8c5492a302592'
@@ -15,51 +18,60 @@ config = {
     "measurementId": "G-SHGP23CXCE"
 }
 
-#sample user details
+
+def get_postgresql_connection():
+    conn = psycopg2.connect(dbname="d9umass2brvfdv", user="fbporsgtkyccmc",
+                            password="846ffc72335cec44f0861518fc4d1acfda4f890f52471fdb31dda4a637f3932a",
+                            host="ec2-100-24-139-146.compute-1.amazonaws.com", sslmode='require')
+    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+    return conn
+
+
+# sample user details
 username = "recipeat@gmail.com"
 password = "qwerty01"
 usn = "johndoe1"
 
-#sample user json data
+# sample user json data
 sample_user = {
-  "email": "recipeat@gmail.com",
-  "username": "johndoe1",
-  "details": {
-    "height": "999",
-    "weight": "999",
-    "age": "999",
-    "gender": "male"
-  },
-  "boi": [
-    {
-      "ingredientFull": "1 cup green tea",
-      "ingredient": "green tea",
-      "amount": 1,
-      "unit": "cup"
+    "email": "recipeat@gmail.com",
+    "username": "johndoe1",
+    "details": {
+        "height": "999",
+        "weight": "999",
+        "age": "999",
+        "gender": "male"
     },
-    {
-      "ingredientFull": "2 oz mushrooms",
-      "ingredient": "mushrooms",
-      "amount": 2,
-      "unit": "oz"
-    },
-    {
-      "ingredientFull": "150 g egg whites",
-      "ingredient": "egg whites",
-      "amount": 150,
-      "unit": "g"
-    }
-  ],
-  "cuisine": [
-    "italian"
-  ],
-  "tolerances": [
-    "gluten"
-  ],
-  "diet": "vegetarian"
+    "boi": [
+        {
+            "ingredientFull": "1 cup green tea",
+            "ingredient": "green tea",
+            "amount": 1,
+            "unit": "cup"
+        },
+        {
+            "ingredientFull": "2 oz mushrooms",
+            "ingredient": "mushrooms",
+            "amount": 2,
+            "unit": "oz"
+        },
+        {
+            "ingredientFull": "150 g egg whites",
+            "ingredient": "egg whites",
+            "amount": 150,
+            "unit": "g"
+        }
+    ],
+    "cuisine": [
+        "italian"
+    ],
+    "tolerances": [
+        "gluten"
+    ],
+    "diet": "vegetarian"
 }
 
-#GET URL
+# GET URL
 # api_home = "https://api.spoonacular.com/recipes"
 
 search_recipes = "https://api.spoonacular.com/recipes/complexSearch"

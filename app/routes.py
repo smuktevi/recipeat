@@ -1,6 +1,5 @@
 # render_template() invokes Jinja2 template engine for powerful operations in templates
 from flask import *
-import pyrebase
 from app import app
 from app.forms.login_form import LoginForm
 from app.forms.register_form import RegisterForm
@@ -8,16 +7,13 @@ from app.forms.ingredients_form import IngredientForm
 from modules.user import User
 from modules.constants import *
 
-firebase = pyrebase.initialize_app(config)
-auth = firebase.auth()
-database = firebase.database()
 
 # when url inside this function is called the following function executes and returns to the browser page that called it.
 @app.route('/index')
 # view function
 def index():
     if 'username' in session:
-        user = session['username']
+        user = session['name']
     else:
         user = 'New User'
     return render_template('index.html', user=user)
@@ -34,13 +30,16 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        try:
+        login_success = User.authenticate_user(username, password)
+
+        if(login_success):
             # Successful login
-            auth.sign_in_with_email_and_password(username, password)
             session['username'] = username
             session['password'] = password
+            user_obj = User.get_user(username)
+            session['name'] = user_obj.name
             return redirect(url_for('index'))
-        except:
+        else:
             # Failed login
             unsuccessful = 'Please check your credentials'
             return render_template('login.html', title='Sign In', form=form, alertmessage=unsuccessful)
@@ -61,15 +60,21 @@ def register():
         name = request.form['name']
         username = request.form['username']
         password = request.form['password']
+        age = request.form['age']
+        height = request.form['height']
+        weight = request.form['weight']
+        gender = request.form['gender']
 
-        register_success = User.register_user(username, password)
+        register_success = User.register_user(username, password, name, age, height, weight, gender)
+        unsuccessful = 'Failed to register account! Check if formats are valid! Check if password is long enough! Email may already be registered! There cannot be empty Fields!'
+        if(name == "" or age == "" or height == "" or weight == ""):
+            return render_template('register.html', title='Register', form=form, alertmessage=unsuccessful)
 
         if(register_success):
             # Successful Registration
             return render_template('register.html', title='Register', form=form, successmessage='Successfully Registered Account!')
         else:
             # Failed Registration
-            unsuccessful = 'Failed to register account! Check if email is valid! Check if password is long enough! Email may already be registered!'
             return render_template('register.html', title='Register', form=form, alertmessage=unsuccessful)
 
     if form.validate_on_submit():
@@ -85,6 +90,7 @@ def logout():
     # remove the username from the session if it is there
     session.pop('username', None)
     session.pop('password', None)
+    session.pop('user_obj', None)
     return redirect(url_for('login'))
 
 
