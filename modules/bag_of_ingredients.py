@@ -2,6 +2,7 @@ import pandas as pd
 from .constants import *
 import json
 from pyrebase import pyrebase
+import urllib.parse
 
 firebase = pyrebase.initialize_app(config)
 db = firebase.database() # Get a reference to the database service
@@ -13,6 +14,26 @@ class BagOfIngredients:
         self.number_of_ingredients = 0
         self.db_user = None
         #get bag of ingredients from database and convert to pandas dataframe
+
+        self.conn = None
+        self.cursor = None
+        if url:
+            self.open(url)
+    
+    def open(self,url):
+	
+        self.url = url
+	
+	# Access credentials via the passed on url. The url must
+	# be parsed with the urlparse library. 
+	self.conn = psycopg2.connect(database = 
+        self.url.path[1:],
+        user = self.url.username,
+        password = self.url.password,
+        host = self.url.hostname,
+        port = self.url.port)
+            
+        self.cursor = self.conn.cursor()
 
     def get_boi(self):
         user = db.child("users").get()
@@ -32,6 +53,7 @@ class BagOfIngredients:
 
 
 '''
+THIS CAN BE USED FOR TESTING.
 data = sample_user #check constants.py
 
 # CRUD operations example with predefined user from constants.py
