@@ -19,6 +19,7 @@ def index():
         user = 'New User'
     return render_template('index.html', user=user)
 
+
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -66,7 +67,8 @@ def register():
         weight = request.form['weight']
         gender = request.form['gender']
 
-        register_success = User.register_user(username, password, name, age, height, weight, gender)
+        register_success = User.register_user(
+            username, password, name, age, height, weight, gender)
         unsuccessful = 'Failed to register account! Check if formats are valid! Check if password is long enough! Email may already be registered! There cannot be empty Fields!'
         if(name == "" or age == "" or height == "" or weight == ""):
             return render_template('register.html', title='Register', form=form, alertmessage=unsuccessful)
@@ -112,7 +114,7 @@ def ingredients():
             return render_template('ingredients.html', form=form, alertmessage="Ingredient and Quantity cannot be empty! Make sure Quantity is a number!")
 
         # TODO call update ingredient to bag of ingredients
-        #session['user'].update_boi()
+        # session['user'].update_boi()
 
     return render_template('ingredients.html', form=form)
 
@@ -155,6 +157,5 @@ def recipe():
             nutr['minProtein'] = int(min_protein)
         if (max_protein != ""):
             nutr['maxProtein'] = int(max_protein)
-
 
     return render_template('recipe.html', form=form)

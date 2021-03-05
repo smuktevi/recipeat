@@ -1,8 +1,8 @@
 import pandas as pd
-from modules.constants import *
+from .constants import *
 import json
 from pyrebase import pyrebase
-from modules.bag_of_ingredients import BagOfIngredients
+from .bag_of_ingredients import BagOfIngredients
 
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
