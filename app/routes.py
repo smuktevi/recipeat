@@ -99,9 +99,17 @@ def logout():
 def ingredients():
     form = IngredientForm()
 
+    # TODO Query the database for BOI to display
+    #username = session['username']
+
+
     if request.method == 'POST':
         ingredient = request.form['ingredient']
         quantity = request.form['quantity']
+        units = request.form['units']
+
+        if(ingredient == "" or quantity == ""):
+            return render_template('ingredients.html', form=form, alertmessage="Ingredient and Quantity cannot be empty! Make sure Quantity is a number!")
 
         # TODO call update ingredient to bag of ingredients
         #session['user'].update_boi()
