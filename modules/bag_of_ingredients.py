@@ -12,38 +12,49 @@ db = firebase.database()  # Get a reference to the database service
 
 
 class BagOfIngredients:
-    def __init__(self):
-        self.username = None
+    def __init__(self, username):
+        self.username = "\'" + username + "\'"  # use a session variable
         self.ingredients = []
         self.number_of_ingredients = 0
-        self.db = Database(db_url)
+        self.db = Database()
+        self.db.open()
 
     def get_boi(self):
-        # user = db.child("users").get()
-        # print(user.key(), user.val())
-        print("DATA FROM Postgresql\n",self.db.get("bagofingredients"))
+        # Gets bag of ingredients for a certain User
 
-    def push_boi(self, data):
-        db.child("users").child(self.username).set(data)
+        print("Getting Bag of Ingredients from DB>>>\n", self.db.get(
+            "bagofingredients", "*", where="user_id="+self.username))
 
-    def update_boi(self, key, data):
-        _update = {key: data}
-        db.child("users").child(self.username).update(_update)
+    def push_boi(self, ing: Ingredient):
+        # Pushes an ingredient into Bag of Ingredients for the User
+
+        columns = "user_id, ingredient, ingredient_name, amount, unit"
+        data = "{0},{1},{2},{3},{4}".format(self.username,
+                                            ing.ingredient_full, ing.ingredient, ing.amount, ing.units)
+        print("Pushing "+ing.ingredient_full+" into DB>>> Bag of Ingredients.")
+        self.db.write("bagofingredients", columns, data)
+        self.number_of_ingredients += 1
+        self.ingredients.append(ing)
 
     def delete_boi(self):
-        self.ingredients = []
-        self.number_of_ingredients = 0
-        db.child("users").child(self.username).remove()
+        # Deletes all ingredients from Bag for a User
 
+        print("DELETING from BOI with user_id>>>"+self.username)
+        delete_query = "DELETE FROM bagofingredients WHERE user_id="+self.username+";"
+        self.db.query(delete_query)
 
-boi_sample = BagOfIngredients()
-# authenticated = boi_sample.authenticate_user(username, password)
-# if authenticated:
-print("AUTHENTICATED!!")
-boi_sample.get_boi()
+    def update_boi(self):
+        # Deletes certain rows and adds others if any changes
+        pass
+
+# TEST CASES FOR BOI FOR POSTGRESQL
+# boi_sample = BagOfIngredients(username)
+# boi_sample.get_boi()
+# boi_sample.push_boi(sample_ingredient)
+
 
 '''
-THIS CAN BE USED FOR TESTING.
+THIS CAN BE USED FOR TESTING FIREBASE (OLD).
 data = sample_user #check constants.py
 
 # CRUD operations example with predefined user from constants.py

@@ -1,6 +1,29 @@
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
+
+class Ingredient:
+    def __init__(self, ingredient_full=None, ingredient_name=None, amount=None, units=None):
+        self.ingredient_full = ingredient_full
+        self.ingredient = ingredient_name
+        self.amount = amount
+        self.units = units
+
+
+sample_ingredient = Ingredient(
+    "\'4 cups apple\'", "\'apple\'", "4", "\'cups\'")
+
+
+# class Recipe:
+#     def __init__(self, recipe_id=None, recipe_name=None, source_url=None, img_url=None, description=None, ingredients=None):
+#         self.recipe_id = recipe_id
+#         self.recipe_name = recipe_name
+#         self.source_url = source_url
+#         self.img_url = img_url
+#         self.description = description
+#         self.ingredients = ingredients  # list
+
+
 # AVAILABLE API KEYS
 apikey1 = 'apiKey=4078ba908cf14212b9c3754a84a262f5'
 apikey2 = 'apiKey=d18b19ea103f46929e677ecacef2c15c'
@@ -19,6 +42,8 @@ config = {
 }
 
 db_url = "postgres://fbporsgtkyccmc:846ffc72335cec44f0861518fc4d1acfda4f890f52471fdb31dda4a637f3932a@ec2-100-24-139-146.compute-1.amazonaws.com:5432/d9umass2brvfdv"
+
+
 def get_postgresql_connection():
     conn = psycopg2.connect(dbname="d9umass2brvfdv", user="fbporsgtkyccmc",
                             password="846ffc72335cec44f0861518fc4d1acfda4f890f52471fdb31dda4a637f3932a",
@@ -28,7 +53,7 @@ def get_postgresql_connection():
 
 
 # sample user details
-username = "recipeat@gmail.com"
+username = "q@gmail.com"
 password = "qwerty01"
 usn = "johndoe1"
 

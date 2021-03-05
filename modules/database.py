@@ -1,4 +1,5 @@
 import psycopg2
+from .constants import *
 from urllib.parse import parse_qsl, urljoin, urlparse
 
 ###########################################################################
@@ -65,9 +66,9 @@ class Database:
     #
     #######################################################################
 
-    def open(self, url):
-
-        self.url = urlparse(url)
+    def open(self):
+        print("OPENING")
+        self.url = urlparse(db_url)
 
         # Access credentials via the passed on url. The url must
         # be parsed with the urlparse library.
@@ -126,9 +127,13 @@ class Database:
     #
     #######################################################################
 
-    def get(self, table, columns="*", limit=None):
-
-        query = "SELECT {0} from {1};".format(columns, table)
+    def get(self, table, columns="*", limit=None, where=0):
+        print("------->",table, columns, where)
+        if where:
+            query = "SELECT {0} from {1} WHERE {2};".format(
+                columns, table, where)
+        else:
+            query = "SELECT {0} from {1};".format(columns, table)
         self.cursor.execute(query)
 
         # fetch data
@@ -185,61 +190,59 @@ class Database:
     def query(self, sql):
         self.cursor.execute(sql)
 
+    #######################################################################
+    #
+    # Utility function that summarizes a dataset.
+    #
+    #  This function takes a dataset, retrieved via the get() function, and
+    #  returns only the maximum, minimum and average for each column.
+    #
+    #  @param rows The retrieved data.
+    #
+    #######################################################################
 
-#######################################################################
-#
-# Utility function that summarizes a dataset.
-#
-#  This function takes a dataset, retrieved via the get() function, and
-#  returns only the maximum, minimum and average for each column.
-#
-#  @param rows The retrieved data.
-#
-#######################################################################
+    def summary(rows):
 
-def summary(rows):
+        # split the rows into columns
+        cols = [[r[c] for r in rows] for c in range(len(rows[0]))]
 
-    # split the rows into columns
-    cols = [[r[c] for r in rows] for c in range(len(rows[0]))]
+        # the time in terms of fractions of hours of how long ago
+        # the sample was assumes the sampling period is 10 minutes
+        def t(col): return "{:.1f}".format((len(rows) - col) / 6.0)
 
-    # the time in terms of fractions of hours of how long ago
-    # the sample was assumes the sampling period is 10 minutes
-    def t(col): return "{:.1f}".format((len(rows) - col) / 6.0)
+        # return a tuple, consisting of tuples of the maximum,
+        # the minimum and the average for each column and their
+        # respective time (how long ago, in fractions of hours)
+        # average has no time, of course
+        ret = []
 
-    # return a tuple, consisting of tuples of the maximum,
-    # the minimum and the average for each column and their
-    # respective time (how long ago, in fractions of hours)
-    # average has no time, of course
-    ret = []
+        for c in cols:
+            hi = max(c)
+            hi_t = t(c.index(hi))
 
-    for c in cols:
-        hi = max(c)
-        hi_t = t(c.index(hi))
+            lo = min(c)
+            lo_t = t(c.index(lo))
 
-        lo = min(c)
-        lo_t = t(c.index(lo))
+            avg = sum(c)/len(rows)
 
-        avg = sum(c)/len(rows)
+            ret.append(((hi, hi_t), (lo, lo_t), avg))
 
-        ret.append(((hi, hi_t), (lo, lo_t), avg))
+        return ret
 
-    return ret
+    #######################################################################
+    #
+    # Utility function that converts a dataset into CSV format.
+    #
+    #  @param data The data, retrieved from the get() function.
+    #
+    #  @param fname The file name to store the data in.
+    #
+    #  @see get()
+    #
+    #######################################################################
 
-#######################################################################
-#
-# Utility function that converts a dataset into CSV format.
-#
-#  @param data The data, retrieved from the get() function.
-#
-#  @param fname The file name to store the data in.
-#
-#  @see get()
-#
-#######################################################################
+    @staticmethod
+    def toCSV(data, fname="output.csv"):
 
-
-@staticmethod
-def toCSV(data, fname="output.csv"):
-
-    with open(fname, 'a') as file:
-        file.write(",".join([str(j) for i in data for j in i]))
+        with open(fname, 'a') as file:
+            file.write(",".join([str(j) for i in data for j in i]))
