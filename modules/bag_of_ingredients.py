@@ -24,16 +24,16 @@ class BagOfIngredients:
 
         print("Getting Bag of Ingredients from DB>>>\n", self.db.get(
             "bagofingredients", "*", where="user_id="+self.username))
-        return self.db.get("bagofingredients", "*", where="user_id="+self.username)
+        return self.db.get("BagOfIngredients", "*", where="user_id="+self.username)
 
     def push_boi(self, ing: Ingredient):
         # Pushes an ingredient into Bag of Ingredients for the User
 
         columns = "user_id, ingredient, ingredient_name, amount, unit"
-        data = "{0},{1},{2},{3},{4}".format(self.username,
+        data = "{0},'{1}','{2}',{3},'{4}'".format(self.username,
                                             ing.ingredient_full, ing.ingredient, ing.amount, ing.units)
         print("Pushing "+ing.ingredient_full+" into DB>>> Bag of Ingredients.")
-        push_success = self.db.write("bagofingredients", columns, data)
+        push_success = self.db.write("BagOfIngredients", columns, data)
         self.number_of_ingredients += 1
         self.ingredients.append(ing)
         return push_success
@@ -42,7 +42,7 @@ class BagOfIngredients:
         # Deletes all ingredients from Bag for a User
 
         print("DELETING from BOI with user_id>>>"+self.username)
-        delete_query = "DELETE FROM bagofingredients WHERE user_id="+self.username+";"
+        delete_query = "DELETE FROM BagOfIngredients WHERE user_id="+self.username+";"
         self.db.query(delete_query)
 
     def update_boi(self):
