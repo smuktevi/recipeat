@@ -4,6 +4,7 @@ from app import app
 from app.forms.login_form import LoginForm
 from app.forms.register_form import RegisterForm
 from app.forms.ingredients_form import IngredientForm
+from app.forms.recipe_form import RecipeForm
 from modules.user import User
 from modules.constants import *
 
@@ -110,4 +111,42 @@ def ingredients():
 
 @app.route('/recipe', methods=['GET', 'POST'])
 def recipe():
-    return render_template('recipe.html')
+    form = RecipeForm()
+
+    if request.method == 'POST':
+        nutr = {}
+
+        min_carb = request.form['min_carb']
+        max_carb = request.form['max_carb']
+
+        min_fat = request.form['min_fat']
+        max_fat = request.form['max_fat']
+
+        min_cal = request.form['min_cal']
+        max_cal = request.form['max_cal']
+
+        min_protein = request.form['min_protein']
+        max_protein = request.form['max_protein']
+
+        intolerances = request.form.getlist('intolerances')
+        diets = request.form.getlist('diets')
+
+        if(min_carb != ""):
+            nutr['minCarbs'] = int(min_carb)
+        if(max_carb != ""):
+            nutr['maxCarbs'] = int(max_carb)
+        if(min_fat != ""):
+            nutr['minFat'] = int(min_fat)
+        if (max_fat != ""):
+            nutr['maxFat'] = int(max_fat)
+        if (min_cal != ""):
+            nutr['minCalories'] = int(min_cal)
+        if (max_cal != ""):
+            nutr['maxCalories'] = int(max_cal)
+        if (min_protein != ""):
+            nutr['minProtein'] = int(min_protein)
+        if (max_protein != ""):
+            nutr['maxProtein'] = int(max_protein)
+
+
+    return render_template('recipe.html', form=form)

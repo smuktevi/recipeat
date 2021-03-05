@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     cur = conn.cursor()
 
-
+    '''
     commands = (
         """
         CREATE TABLE Users (
@@ -43,10 +43,10 @@ if __name__ == '__main__':
         )
         """
     )
-
+    '''
 
     #commands = ["INSERT INTO Users VALUES ('test1', 'test1', 'test1', 1, 2, 3, 'test1')"]
-    #commands = ["select * from Users"]
+    commands = ["select * from BagOfIngredients;", "select * from Users;"]
 
     # create table one by one
     for command in commands:
