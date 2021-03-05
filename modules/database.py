@@ -1,5 +1,6 @@
 import psycopg2
-import urllib.parse
+from urllib.parse import parse_qsl, urljoin, urlparse
+
 ###########################################################################
 #
 # @file postgres.py
@@ -49,7 +50,7 @@ class Database:
         self.cursor = None
 
         if url:
-            self.open(urlparse(url))
+            self.open(url)
 
     #######################################################################
     #

@@ -1,11 +1,11 @@
 import pandas as pd
-from constants import *
-# from .constants import *
+# from constants import *
+from .constants import *
 import json
 from pyrebase import pyrebase
-import urllib.parse
-from database import Database
-# from .database import Database
+from urllib.parse import parse_qsl, urljoin, urlparse
+# from database import Database
+from .database import Database
 
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()  # Get a reference to the database service
@@ -21,7 +21,7 @@ class BagOfIngredients:
     def get_boi(self):
         # user = db.child("users").get()
         # print(user.key(), user.val())
-        print(self.db.get("bagofingredients"))
+        print("DATA FROM Postgresql\n",self.db.get("bagofingredients"))
 
     def push_boi(self, data):
         db.child("users").child(self.username).set(data)
@@ -37,10 +37,10 @@ class BagOfIngredients:
 
 
 boi_sample = BagOfIngredients()
-authenticated = boi_sample.authenticate_user(username, password)
-if authenticated:
-    print("AUTHENTICATED!!")
-    boi_sample.get_boi()
+# authenticated = boi_sample.authenticate_user(username, password)
+# if authenticated:
+print("AUTHENTICATED!!")
+boi_sample.get_boi()
 
 '''
 THIS CAN BE USED FOR TESTING.
