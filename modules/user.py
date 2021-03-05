@@ -18,7 +18,7 @@ class User:
         self.weight = weight
         self.age = age
         self.gender = gender
-        self.bag_of_ingredients = BagOfIngredients()
+        self.bag_of_ingredients = BagOfIngredients(email)
 
     @staticmethod
     def get_user(username):

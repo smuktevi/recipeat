@@ -6,6 +6,7 @@ from app.forms.register_form import RegisterForm
 from app.forms.ingredients_form import IngredientForm
 from app.forms.recipe_form import RecipeForm
 from modules.user import User
+from modules.bag_of_ingredients import BagOfIngredients
 from modules.constants import *
 
 
@@ -102,7 +103,8 @@ def ingredients():
     form = IngredientForm()
 
     # TODO Query the database for BOI to display
-    #username = session['username']
+    user_boi = BagOfIngredients(session['username'])
+    user_boi.get_boi()
 
 
     if request.method == 'POST':
@@ -114,7 +116,11 @@ def ingredients():
             return render_template('ingredients.html', form=form, alertmessage="Ingredient and Quantity cannot be empty! Make sure Quantity is a number!")
 
         # TODO call update ingredient to bag of ingredients
-        # session['user'].update_boi()
+        ingredient_obj = Ingredient(ingredient_full=quantity+" "+units+" "+ingredient, ingredient_name=ingredient, amount=quantity, units=units)
+        push_success = user_boi.push_boi(ingredient_obj)
+
+        if(push_success == False):
+            return render_template('ingredients.html', form=form, alertmessage="Ingredient is already in bag!")
 
     return render_template('ingredients.html', form=form)
 

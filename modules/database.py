@@ -174,7 +174,11 @@ class Database:
         query = "INSERT INTO {0} ({1}) VALUES ({2});".format(
             table, columns, data)
 
-        self.cursor.execute(query)
+        try:
+            self.cursor.execute(query)
+            return True
+        except:
+            return False
 
     #######################################################################
     #

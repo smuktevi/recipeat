@@ -36,7 +36,7 @@ if __name__ == '__main__':
         CREATE TABLE BagOfIngredients (
             user_id VARCHAR(255) NOT NULL,
             ingredient VARCHAR,
-            PRIMARY KEY (user_id),
+            PRIMARY KEY (user_id, ingredient),
             FOREIGN KEY (user_id)
                 REFERENCES Users (user_id)
                 ON UPDATE CASCADE ON DELETE CASCADE
