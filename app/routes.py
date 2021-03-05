@@ -104,7 +104,7 @@ def ingredients():
 
     # TODO Query the database for BOI to display
     user_boi = BagOfIngredients(session['username'])
-    user_boi.get_boi()
+    ingredients_list = user_boi.get_boi()
 
 
     if request.method == 'POST':
@@ -113,16 +113,21 @@ def ingredients():
         units = request.form['units']
 
         if(ingredient == "" or quantity == ""):
-            return render_template('ingredients.html', form=form, alertmessage="Ingredient and Quantity cannot be empty! Make sure Quantity is a number!")
+            return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage="Ingredient and Quantity cannot be empty! Make sure Quantity is a number!")
 
-        # TODO call update ingredient to bag of ingredients
+        # Add ingredient to database
         ingredient_obj = Ingredient(ingredient_full=quantity+" "+units+" "+ingredient, ingredient_name=ingredient, amount=quantity, units=units)
         push_success = user_boi.push_boi(ingredient_obj)
 
+        # Check if push to database was not successful. Return error page.
         if(push_success == False):
-            return render_template('ingredients.html', form=form, alertmessage="Ingredient is already in bag!")
+            return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage="Ingredient is already in bag!")
 
-    return render_template('ingredients.html', form=form)
+        # Get the new list to display
+        ingredients_list = user_boi.get_boi()
+        return render_template('ingredients.html', form=form, ingredients=ingredients_list)
+
+    return render_template('ingredients.html', form=form, ingredients=ingredients_list)
 
 
 @app.route('/recipe', methods=['GET', 'POST'])

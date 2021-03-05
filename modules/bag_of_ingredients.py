@@ -22,8 +22,7 @@ class BagOfIngredients:
     def get_boi(self):
         # Gets bag of ingredients for a certain User
 
-        print("Getting Bag of Ingredients from DB>>>\n", self.db.get(
-            "bagofingredients", "*", where="user_id="+self.username))
+        print("Getting Bag of Ingredients from DB>>>\n", self.db.get("bagofingredients", "*", where="user_id="+self.username))
         return self.db.get("BagOfIngredients", "*", where="user_id="+self.username)
 
     def push_boi(self, ing: Ingredient):

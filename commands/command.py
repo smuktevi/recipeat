@@ -46,7 +46,25 @@ if __name__ == '__main__':
     '''
 
     #commands = ["INSERT INTO Users VALUES ('test1', 'test1', 'test1', 1, 2, 3, 'test1')"]
-    commands = ["select * from BagOfIngredients;", "select * from Users;"]
+    commands = ["select * from BagOfIngredients;"]
+    #commands = ["DROP TABLE BagOfIngredients"]
+    '''
+    commands = [
+        """
+        CREATE TABLE BagOfIngredients (
+        user_id VARCHAR(255) NOT NULL,
+        ingredient VARCHAR NOT NULL,
+        ingredient_name VARCHAR,
+        amount INTEGER,
+        unit VARCHAR,
+        PRIMARY KEY (user_id, ingredient_name),
+        FOREIGN KEY (user_id)
+            REFERENCES Users (user_id)
+            ON UPDATE CASCADE ON DELETE CASCADE
+        )
+        """
+    ]
+    '''
 
     # create table one by one
     for command in commands:

@@ -78,6 +78,7 @@ class Database:
                                      password=self.url.password,
                                      host=self.url.hostname,
                                      port=self.url.port)
+        self.conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 
         self.cursor = self.conn.cursor()
 
