@@ -180,9 +180,6 @@ def recipe():
     form.ingredients.choices = choices
 
     if request.method == 'POST':
-        # nutr is the nutrition dictionary to be passed into recipe recommender
-        nutr = {}
-
         min_carb = request.form['min_carb']
         max_carb = request.form['max_carb']
 
@@ -195,16 +192,8 @@ def recipe():
         min_protein = request.form['min_protein']
         max_protein = request.form['max_protein']
 
-        # intolerances and diets are the lists that will be passed into recipe recommender. May need to check if it is empty or not first
-        intolerances = request.form.getlist('intolerances')
-        diets = request.form.getlist('diets')
-        ingredients = request.form.getlist('ingredients')
-
-        # chosen ingredients is the ingredient list that will need to be passed into recipe recommender
-        chosen_ingredients = []
-        for ingredient in ingredients:
-            chosen_ingredients.append(Ingredient.parse_string(ingredient))
-
+        # nutr is the nutrition dictionary to be passed into recipe recommender
+        nutr = {}
         if min_carb != "":
             nutr['minCarbs'] = int(min_carb)
         if max_carb != "":
@@ -222,13 +211,32 @@ def recipe():
         if max_protein != "":
             nutr['maxProtein'] = int(max_protein)
 
+        # intolerances and diets are the lists that will be passed into recipe recommender. May need to check if it is empty or not first
+        intolerances = request.form.getlist('intolerances')
+        diets = request.form.getlist('diets')
+        ingredients = request.form.getlist('ingredients')
+
+        if(len(diets) == 0):
+            diets = ""
+        else:
+            diets = diets[0]
+
+        # chosen ingredients is the ingredient list that will need to be passed into recipe recommender
+        chosen_ingredients_objects = []
+        chosen_ingredients_names = []
+        for ingredient in ingredients:
+            ingredient_obj = Ingredient.parse_string(ingredient)
+            chosen_ingredients_objects.append(ingredient_obj)
+            chosen_ingredients_names.append(ingredient_obj.ingredient)
+
         RR = RecipeRecommender()
-        
+        # TODO add intolerances when the search_recipes has been modified
+        #recipe_list = RR.search_recipes(ingredients=chosen_ingredients_names, nutritional_req=nutr, diet=diets)
+        recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")])]
 
-        
-    recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2)])]
+        return render_template('recipe.html', form=form, recipe_list=recipe_list)
 
-    return render_template('recipe.html', form=form, recipe_list=recipe_list)
+    return render_template('recipe.html', form=form)
 
 @app.route('/compare', methods=['GET', 'POST'])
 def compare():

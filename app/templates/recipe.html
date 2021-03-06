@@ -86,10 +86,7 @@
             <img class="card-img-top" src={{ recipe.img_url }} alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">{{ recipe.recipe_name }}</h5>
-                {% for ingredient in recipe.ingredients %}
-                <a href="" onclick="return false;" title="Ingredients" data-toggle="popover" data-trigger="focus"
-                    data-content={{ ingredient.ingredient }}>Ingredients</a>
-                {% endfor %}
+                <a href="" onclick="return false;" title="Ingredients" data-toggle="popover" data-trigger="focus" data-content={% for ingredient in recipe.ingredients %}{{ ingredient }}{% endfor %}>Ingredients</a>
             </div>
         </div>
         {% endfor %}
