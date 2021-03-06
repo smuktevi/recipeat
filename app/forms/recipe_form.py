@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import *
 from wtforms.validators import DataRequired
+from modules.bag_of_ingredients import BagOfIngredients
 
 class RecipeForm(FlaskForm):
     min_carb = IntegerField('Minimum Carbohydrates')
@@ -20,6 +21,8 @@ class RecipeForm(FlaskForm):
 
     diet_options = [('Gluten Free', 'Gluten Free'), ('Ketogenic', 'Ketogenic'), ('Vegetarian', 'Vegetarian'), ('Lacto-Vegetarian', 'Lacto-Vegetarian'), ('Ovo-Vegetarian', 'Ovo-Vegetarian'), ('Vegan', 'Vegan'), ('Pescetarian', 'Pescetarian'), ('Paleo', 'Paleo'), ('Primal', 'Primal'), ('Whole30', 'Whole30')]
     diets = SelectMultipleField('Diets', choices=diet_options)
+
+    ingredients = SelectMultipleField('Ingredients')
 
     submit = SubmitField('Search Recipes')
 

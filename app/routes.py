@@ -156,7 +156,7 @@ def ingredients():
                 return render_template('ingredients.html', form=form, ingredients=ingredients_list,
                                        alertmessage3="Ingredient cannot be empty!")
 
-            delete_success= user_boi.delete_ingredient("\'"+ingredient_name+"\'")
+            delete_success = user_boi.delete_ingredient("\'"+ingredient_name+"\'")
 
             # Check if not successful. Return error page.
             if delete_success == False:
@@ -171,8 +171,15 @@ def ingredients():
 @app.route('/recipe', methods=['GET', 'POST'])
 def recipe():
     form = RecipeForm()
+    user_boi = BagOfIngredients(session['username'])
+    ingredients_list = user_boi.get_boi()
+    choices = []
+    for ingredient in ingredients_list:
+        choices.append((ingredient[1], ingredient[1]))
+    form.ingredients.choices = choices
 
     if request.method == 'POST':
+        # nutr is the nutrition dictionary to be passed into recipe recommender
         nutr = {}
 
         min_carb = request.form['min_carb']
@@ -187,8 +194,15 @@ def recipe():
         min_protein = request.form['min_protein']
         max_protein = request.form['max_protein']
 
+        # intolerances and diets are the lists that will be passed into recipe recommender. May need to check if it is empty or not first
         intolerances = request.form.getlist('intolerances')
         diets = request.form.getlist('diets')
+        ingredients = request.form.getlist('ingredients')
+
+        # chosen ingredients is the ingredient list that will need to be passed into recipe recommender
+        chosen_ingredients = []
+        for ingredient in ingredients:
+            chosen_ingredients.append(Ingredient.parse_string(ingredient))
 
         if min_carb != "":
             nutr['minCarbs'] = int(min_carb)
