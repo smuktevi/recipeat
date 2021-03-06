@@ -22,7 +22,6 @@
             {{ form.units(size=32) }}
         </p>
         <p>{{ form.submit() }}</p>
-    </form>
 
 <html lang="en">
 <head>
@@ -197,4 +196,34 @@ $(document).ready(function(){
     </div>
 </body>
 </html>
+
+<h1>Update Ingredient</h1>
+{% if alertmessage2 %}
+        <div class="alert alert-danger">
+            {{ alertmessage2 }}
+        </div>
+    {% endif %}
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.update_ingredient.label }}<br>
+            {{ form.update_ingredient(size=32) }}
+        </p>
+        <p>
+            {{ form.update_quantity.label }}<br>
+            {{ form.update_quantity(size=32) }}
+        </p>
+        <p>{{ form.update_submit() }}</p>
+    <h1>Delete Ingredient</h1>
+    {% if alertmessage3 %}
+        <div class="alert alert-danger">
+            {{ alertmessage3 }}
+        </div>
+    {% endif %}
+        <p>
+            {{ form.delete_ingredient.label }}<br>
+            {{ form.delete_ingredient(size=32) }}
+        </p>
+        <p>{{ form.delete_submit() }}</p>
+    </form>
+
 {% endblock %}

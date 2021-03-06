@@ -35,7 +35,7 @@ def login():
 
         login_success = User.authenticate_user(username, password)
 
-        if(login_success):
+        if login_success:
             # Successful login
             session['username'] = username
             session['password'] = password
@@ -71,10 +71,10 @@ def register():
         register_success = User.register_user(
             username, password, name, age, height, weight, gender)
         unsuccessful = 'Failed to register account! Check if formats are valid! Check if password is long enough! Email may already be registered! There cannot be empty Fields!'
-        if(name == "" or age == "" or height == "" or weight == ""):
+        if name == "" or age == "" or height == "" or weight == "":
             return render_template('register.html', title='Register', form=form, alertmessage=unsuccessful)
 
-        if(register_success):
+        if register_success:
             # Successful Registration
             return render_template('register.html', title='Register', form=form, successmessage='Successfully Registered Account!')
         else:
@@ -102,30 +102,52 @@ def logout():
 def ingredients():
     form = IngredientForm()
 
-    # TODO Query the database for BOI to display
     user_boi = BagOfIngredients(session['username'])
     ingredients_list = user_boi.get_boi()
 
-
     if request.method == 'POST':
-        ingredient = request.form['ingredient']
-        quantity = request.form['quantity']
-        units = request.form['units']
 
-        if(ingredient == "" or quantity == ""):
-            return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage="Ingredient and Quantity cannot be empty! Make sure Quantity is a number!")
+        if 'submit' in request.form:
 
-        # Add ingredient to database
-        ingredient_obj = Ingredient(ingredient_full=quantity+" "+units+" "+ingredient, ingredient_name=ingredient, amount=quantity, units=units)
-        push_success = user_boi.push_boi(ingredient_obj)
+            ingredient = request.form['ingredient']
+            quantity = request.form['quantity']
+            units = request.form['units']
 
-        # Check if push to database was not successful. Return error page.
-        if(push_success == False):
-            return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage="Ingredient is already in bag!")
+            if ingredient == "" or quantity == "":
+                return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage="Ingredient and Quantity cannot be empty! Make sure Quantity is a number!")
 
-        # Get the new list to display
-        ingredients_list = user_boi.get_boi()
-        return render_template('ingredients.html', form=form, ingredients=ingredients_list)
+            # Add ingredient to database
+            ingredient_obj = Ingredient(ingredient_full=quantity+" "+units+" "+ingredient, ingredient_name=ingredient, amount=quantity, units=units)
+            push_success = user_boi.push_boi(ingredient_obj)
+
+            # Check if push to database was not successful. Return error page.
+            if push_success == False:
+                return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage="Ingredient is already in bag!")
+
+            # Get the new list to display
+            ingredients_list = user_boi.get_boi()
+            return render_template('ingredients.html', form=form, ingredients=ingredients_list)
+
+        elif 'update_submit' in request.form:
+            ingredient = request.form['update_ingredient']
+            quantity = request.form['update_quantity']
+
+            if(ingredient == "" or quantity == ""):
+                return render_template('ingredients.html', form=form, ingredients=ingredients_list,
+                                       alertmessage2="Ingredient and Quantity cannot be empty! Make sure Quantity is a number!")
+
+            # TODO Update that ingredient
+            #user_boi.update_boi()
+
+        elif 'delete_submit' in request.form:
+            ingredient = request.form['delete_ingredient']
+
+            if ingredient == "":
+                return render_template('ingredients.html', form=form, ingredients=ingredients_list,
+                                       alertmessage3="Ingredient cannot be empty!")
+
+            # TODO Delete the ingredient
+            #user_boi.delete_boi()
 
     return render_template('ingredients.html', form=form, ingredients=ingredients_list)
 
@@ -152,21 +174,21 @@ def recipe():
         intolerances = request.form.getlist('intolerances')
         diets = request.form.getlist('diets')
 
-        if(min_carb != ""):
+        if min_carb != "":
             nutr['minCarbs'] = int(min_carb)
-        if(max_carb != ""):
+        if max_carb != "":
             nutr['maxCarbs'] = int(max_carb)
-        if(min_fat != ""):
+        if min_fat != "":
             nutr['minFat'] = int(min_fat)
-        if (max_fat != ""):
+        if max_fat != "":
             nutr['maxFat'] = int(max_fat)
-        if (min_cal != ""):
+        if min_cal != "":
             nutr['minCalories'] = int(min_cal)
-        if (max_cal != ""):
+        if max_cal != "":
             nutr['maxCalories'] = int(max_cal)
-        if (min_protein != ""):
+        if min_protein != "":
             nutr['minProtein'] = int(min_protein)
-        if (max_protein != ""):
+        if max_protein != "":
             nutr['maxProtein'] = int(max_protein)
 
     return render_template('recipe.html', form=form)
