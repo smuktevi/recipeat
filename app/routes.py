@@ -207,3 +207,7 @@ def recipe():
             nutr['maxProtein'] = int(max_protein)
 
     return render_template('recipe.html', form=form)
+
+@app.route('/visual', methods=['GET', 'POST'])
+def visual():
+    return render_template('visual_comparator.html')
