@@ -216,6 +216,11 @@ def recipe():
         diets = request.form.getlist('diets')
         ingredients = request.form.getlist('ingredients')
 
+        if(len(diets) == 0):
+            diets = ""
+        else:
+            diets = diets[0]
+
         # chosen ingredients is the ingredient list that will need to be passed into recipe recommender
         chosen_ingredients_objects = []
         chosen_ingredients_names = []
@@ -225,7 +230,9 @@ def recipe():
             chosen_ingredients_names.append(ingredient_obj.ingredient)
 
         RR = RecipeRecommender()
-        recipe_list = RR.search_recipes(ingredients=chosen_ingredients_names, nutritional_req=nutr)
+        # TODO add intolerances when the search_recipes has been modified
+        #recipe_list = RR.search_recipes(ingredients=chosen_ingredients_names, nutritional_req=nutr, diet=diets)
+        recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")])]
 
         return render_template('recipe.html', form=form, recipe_list=recipe_list)
 

@@ -18,7 +18,7 @@ class RecipeRecommender:
 
         search_url = "{search}?{apikey}&{result_options}&{ingredients}&{nutrition}&{preferences}".format(
             search=search_recipes_url,
-            apikey=apikey3,
+            apikey=apikey6,
             result_options=result_option_url,
             ingredients=ingredients_url,
             nutrition=nutr_url,
@@ -40,7 +40,7 @@ class RecipeRecommender:
             recipe_id_url = 'ids=' + ','.join(str(id) for id in list(search_results["id"]))
             recipe_info_url = "{get_recipe}?{apikey}&{recipe_ids}".format(
                 get_recipe=get_bulk_recipe_info_url,
-                apikey=apikey3,
+                apikey=apikey6,
                 recipe_ids=recipe_id_url)
 
             source_response = requests.request("GET", recipe_info_url, headers=headers, data=payload)
@@ -64,7 +64,7 @@ class RecipeRecommender:
 
         ingredients = []
 
-        url = request_url + apikey3
+        url = request_url + apikey6
         payload={}
         headers = {
             'Cookie': '__cfduid=dff952ebbf9c020c4f07c314e6bcb9c711613423774'
@@ -85,7 +85,7 @@ class RecipeRecommender:
     def get_recipe_info(recipe_id):
         request_url = 'https://api.spoonacular.com/recipes/{}/analyzedInstructions?'.format(recipe_id)
 
-        url = request_url + apikey3
+        url = request_url + apikey6
         payload={}
         headers = {
             'Cookie': '__cfduid=dff952ebbf9c020c4f07c314e6bcb9c711613423774'
