@@ -20,7 +20,7 @@ def index():
         user_obj = User.get_user(session['username'])
     else:
         user = 'New User'
-    return render_template('index.html', user=user,user_obj=user_obj)
+    return render_template('index.html', user=user, user_obj=user_obj)
 
 
 @app.route('/', methods=['GET', 'POST'])
