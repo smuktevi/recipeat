@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import *
 from wtforms.validators import DataRequired
-from modules.bag_of_ingredients import BagOfIngredients
 
 class RecipeForm(FlaskForm):
     min_carb = IntegerField('Minimum Carbohydrates')
