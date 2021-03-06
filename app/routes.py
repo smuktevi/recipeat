@@ -7,6 +7,7 @@ from app.forms.ingredients_form import IngredientForm
 from app.forms.recipe_form import RecipeForm
 from modules.user import User
 from modules.bag_of_ingredients import BagOfIngredients
+from modules.recipe_recommender import RecipeRecommender
 from modules.constants import *
 
 
@@ -16,10 +17,10 @@ from modules.constants import *
 def index():
     if 'username' in session:
         user = session['name']
-        user_obj = User.get_user(session['username'])
     else:
         user = 'New User'
-    return render_template('index.html', user=user, user_obj=user_obj)
+    user_obj = User.get_user(username)
+    return render_template('index.html', user=user,user_obj=user_obj)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -221,6 +222,10 @@ def recipe():
         if max_protein != "":
             nutr['maxProtein'] = int(max_protein)
 
+        RR = RecipeRecommender()
+        
+
+        
     recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2)])]
 
     return render_template('recipe.html', form=form, recipe_list=recipe_list)

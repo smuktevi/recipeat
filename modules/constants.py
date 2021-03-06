@@ -103,7 +103,6 @@ class IngredientRR:
     def __str__(self):
         return "ingredients: {ingredients} \n amount: {amount} {unit} \n".format(ingredients=self.ingredient, amount=self.amount, unit=self.unit)
 
-
 class Ingredient:
     def __init__(self, ingredient_full=None, ingredient_name=None, amount=None, units=None):
         self.ingredient_full = ingredient_full
