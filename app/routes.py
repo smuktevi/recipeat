@@ -180,9 +180,6 @@ def recipe():
     form.ingredients.choices = choices
 
     if request.method == 'POST':
-        # nutr is the nutrition dictionary to be passed into recipe recommender
-        nutr = {}
-
         min_carb = request.form['min_carb']
         max_carb = request.form['max_carb']
 
@@ -195,16 +192,8 @@ def recipe():
         min_protein = request.form['min_protein']
         max_protein = request.form['max_protein']
 
-        # intolerances and diets are the lists that will be passed into recipe recommender. May need to check if it is empty or not first
-        intolerances = request.form.getlist('intolerances')
-        diets = request.form.getlist('diets')
-        ingredients = request.form.getlist('ingredients')
-
-        # chosen ingredients is the ingredient list that will need to be passed into recipe recommender
-        chosen_ingredients = []
-        for ingredient in ingredients:
-            chosen_ingredients.append(Ingredient.parse_string(ingredient))
-
+        # nutr is the nutrition dictionary to be passed into recipe recommender
+        nutr = {}
         if min_carb != "":
             nutr['minCarbs'] = int(min_carb)
         if max_carb != "":
@@ -222,7 +211,18 @@ def recipe():
         if max_protein != "":
             nutr['maxProtein'] = int(max_protein)
 
+        # intolerances and diets are the lists that will be passed into recipe recommender. May need to check if it is empty or not first
+        intolerances = request.form.getlist('intolerances')
+        diets = request.form.getlist('diets')
+        ingredients = request.form.getlist('ingredients')
+
+        # chosen ingredients is the ingredient list that will need to be passed into recipe recommender
+        chosen_ingredients = []
+        for ingredient in ingredients:
+            chosen_ingredients.append(Ingredient.parse_string(ingredient))
+
         RR = RecipeRecommender()
+
         
 
         
