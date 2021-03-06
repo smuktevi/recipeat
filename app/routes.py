@@ -217,18 +217,19 @@ def recipe():
         ingredients = request.form.getlist('ingredients')
 
         # chosen ingredients is the ingredient list that will need to be passed into recipe recommender
-        chosen_ingredients = []
+        chosen_ingredients_objects = []
+        chosen_ingredients_names = []
         for ingredient in ingredients:
-            chosen_ingredients.append(Ingredient.parse_string(ingredient))
+            ingredient_obj = Ingredient.parse_string(ingredient)
+            chosen_ingredients_objects.append(ingredient_obj)
+            chosen_ingredients_names.append(ingredient_obj.ingredient)
 
         RR = RecipeRecommender()
+        recipe_list = RR.search_recipes(ingredients=chosen_ingredients_names, nutritional_req=nutr)
 
-        
+        return render_template('recipe.html', form=form, recipe_list=recipe_list)
 
-        
-    recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2)])]
-
-    return render_template('recipe.html', form=form, recipe_list=recipe_list)
+    return render_template('recipe.html', form=form)
 
 @app.route('/compare', methods=['GET', 'POST'])
 def compare():
