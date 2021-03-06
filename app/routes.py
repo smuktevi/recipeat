@@ -18,7 +18,8 @@ def index():
         user = session['name']
     else:
         user = 'New User'
-    return render_template('index.html', user=user)
+    user_obj = User.get_user(username)
+    return render_template('index.html', user=user,user_obj=user_obj)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -126,31 +127,46 @@ def ingredients():
 
             # Get the new list to display
             ingredients_list = user_boi.get_boi()
-            return render_template('ingredients.html', form=form, ingredients=ingredients_list)
+            print(">>>>>>>",ingredients_list)     #logging
+            return render_template('ingredients.html', form=form, ingredients=ingredients_list, pushsuccess="Successfully added ingredient!")
 
         elif 'update_submit' in request.form:
-            ingredient = request.form['update_ingredient']
+            ingredient_name = request.form['update_ingredient']
             quantity = request.form['update_quantity']
 
-            if(ingredient == "" or quantity == ""):
+            if(ingredient_name == "" or quantity == ""):
                 return render_template('ingredients.html', form=form, ingredients=ingredients_list,
                                        alertmessage2="Ingredient and Quantity cannot be empty! Make sure Quantity is a number!")
 
-            # TODO Update that ingredient
-            #user_boi.update_boi()
+            update_success= user_boi.update_ingredient("\'"+ingredient_name+"\'", "\'"+quantity+"\'")
 
+            # Check if not successful. Return error page.
+            if update_success == False:
+                return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage="Cannot update that quantity!")
+
+            # Get the new list to display
+            ingredients_list = user_boi.get_boi()
+            return render_template('ingredients.html', form=form, ingredients=ingredients_list, updatesuccess="Successfully updated ingredient!")
+
+        
         elif 'delete_submit' in request.form:
-            ingredient = request.form['delete_ingredient']
-
-            if ingredient == "":
+            ingredient_name = request.form['delete_ingredient']
+            
+            if ingredient_name == "":
                 return render_template('ingredients.html', form=form, ingredients=ingredients_list,
                                        alertmessage3="Ingredient cannot be empty!")
 
-            # TODO Delete the ingredient
-            #user_boi.delete_boi()
+            delete_success= user_boi.delete_ingredient("\'"+ingredient_name+"\'")
+
+            # Check if not successful. Return error page.
+            if delete_success == False:
+                return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage="Ingredient not in the bag!")
+
+            # Get the new list to display
+            ingredients_list = user_boi.get_boi()
+            return render_template('ingredients.html', form=form, ingredients=ingredients_list, deletesuccess="Successfully deleted ingredient!")
 
     return render_template('ingredients.html', form=form, ingredients=ingredients_list)
-
 
 @app.route('/recipe', methods=['GET', 'POST'])
 def recipe():
@@ -191,4 +207,10 @@ def recipe():
         if max_protein != "":
             nutr['maxProtein'] = int(max_protein)
 
-    return render_template('recipe.html', form=form)
+    recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2)])]
+
+    return render_template('recipe.html', form=form, recipe_list=recipe_list)
+
+@app.route('/compare', methods=['GET', 'POST'])
+def compare():
+    return render_template('visual_comparator.html')
