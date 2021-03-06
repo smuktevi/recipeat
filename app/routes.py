@@ -127,7 +127,7 @@ def ingredients():
             # Get the new list to display
             ingredients_list = user_boi.get_boi()
             print(">>>>>>>",ingredients_list)     #logging
-            return render_template('ingredients.html', form=form, ingredients=ingredients_list)
+            return render_template('ingredients.html', form=form, ingredients=ingredients_list, pushsuccess="Successfully added ingredient!")
 
         elif 'update_submit' in request.form:
             ingredient_name = request.form['update_ingredient']
@@ -145,7 +145,7 @@ def ingredients():
 
             # Get the new list to display
             ingredients_list = user_boi.get_boi()
-            return render_template('ingredients.html', form=form, ingredients=ingredients_list)
+            return render_template('ingredients.html', form=form, ingredients=ingredients_list, updatesuccess="Successfully updated ingredient!")
 
         
         elif 'delete_submit' in request.form:
@@ -163,7 +163,7 @@ def ingredients():
 
             # Get the new list to display
             ingredients_list = user_boi.get_boi()
-            return render_template('ingredients.html', form=form, ingredients=ingredients_list)
+            return render_template('ingredients.html', form=form, ingredients=ingredients_list, deletesuccess="Successfully deleted ingredient!")
 
     return render_template('ingredients.html', form=form, ingredients=ingredients_list)
 
