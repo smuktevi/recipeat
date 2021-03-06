@@ -126,31 +126,46 @@ def ingredients():
 
             # Get the new list to display
             ingredients_list = user_boi.get_boi()
+            print(">>>>>>>",ingredients_list)     #logging
             return render_template('ingredients.html', form=form, ingredients=ingredients_list)
 
         elif 'update_submit' in request.form:
-            ingredient = request.form['update_ingredient']
+            ingredient_name = request.form['update_ingredient']
             quantity = request.form['update_quantity']
 
-            if(ingredient == "" or quantity == ""):
+            if(ingredient_name == "" or quantity == ""):
                 return render_template('ingredients.html', form=form, ingredients=ingredients_list,
                                        alertmessage2="Ingredient and Quantity cannot be empty! Make sure Quantity is a number!")
 
-            # TODO Update that ingredient
-            #user_boi.update_boi()
+            update_success= user_boi.update_ingredient("\'"+ingredient_name+"\'", "\'"+quantity+"\'")
 
+            # Check if not successful. Return error page.
+            if update_success == False:
+                return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage="Cannot update that quantity!")
+
+            # Get the new list to display
+            ingredients_list = user_boi.get_boi()
+            return render_template('ingredients.html', form=form, ingredients=ingredients_list)
+
+        
         elif 'delete_submit' in request.form:
-            ingredient = request.form['delete_ingredient']
-
-            if ingredient == "":
+            ingredient_name = request.form['delete_ingredient']
+            
+            if ingredient_name == "":
                 return render_template('ingredients.html', form=form, ingredients=ingredients_list,
                                        alertmessage3="Ingredient cannot be empty!")
 
-            # TODO Delete the ingredient
-            #user_boi.delete_boi()
+            delete_success= user_boi.delete_ingredient("\'"+ingredient_name+"\'")
+
+            # Check if not successful. Return error page.
+            if delete_success == False:
+                return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage="Ingredient not in the bag!")
+
+            # Get the new list to display
+            ingredients_list = user_boi.get_boi()
+            return render_template('ingredients.html', form=form, ingredients=ingredients_list)
 
     return render_template('ingredients.html', form=form, ingredients=ingredients_list)
-
 
 @app.route('/recipe', methods=['GET', 'POST'])
 def recipe():
