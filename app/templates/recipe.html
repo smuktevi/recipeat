@@ -43,4 +43,31 @@
             {{ form.diets(size=6) }}
         <p>{{ form.submit() }}</p>
     </form>
+
+    {% for recipe in recipe_list %}
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src={{ recipe.img_url }} alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{ recipe.recipe_name }}</h5>
+                {% for ingredient in recipe.ingredients %}
+                    <a href="" onclick="return false;" title="Ingredients" data-toggle="popover" data-trigger="focus" data-content={{ ingredient.ingredient }}>Ingredients</a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+    <!--
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="https://spoonacular.com/recipeImages/157109-312x231.jpg" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+    -->
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+});
+</script>
 {% endblock %}

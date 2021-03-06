@@ -9,10 +9,30 @@ class Ingredient:
         self.amount = amount
         self.units = units
 
+    def __str__(self):
+        return_str = self.ingredient + " " + str(self.amount)
+        if self.units is not None:
+            return_str += " " + self.units
+        return return_str
+
+    def __repr__(self):
+        return_str = self.ingredient + " " + str(self.amount)
+        if self.units is not None:
+            return_str += " " + self.units
+        return return_str
+
+class Recipe:
+    def __init__(self, recipe_id=None, recipe_name=None, source_url=None, img_url=None, description=None, ingredients=None):
+        self.recipe_id = recipe_id
+        self.recipe_name = recipe_name
+        self.source_url = source_url
+        self.img_url = img_url
+        self.description = description
+        self.ingredients = ingredients
+
 
 sample_ingredient = Ingredient(
     "\'4 cups apple\'", "\'apple\'", "4", "\'cups\'")
-
 
 # class Recipe:
 #     def __init__(self, recipe_id=None, recipe_name=None, source_url=None, img_url=None, description=None, ingredients=None):

@@ -206,7 +206,9 @@ def recipe():
         if max_protein != "":
             nutr['maxProtein'] = int(max_protein)
 
-    return render_template('recipe.html', form=form)
+    recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2)])]
+
+    return render_template('recipe.html', form=form, recipe_list=recipe_list)
 
 @app.route('/visual', methods=['GET', 'POST'])
 def visual():
