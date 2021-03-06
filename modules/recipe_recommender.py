@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
-from constants import *
-from bag_of_ingredients import BagOfIngredients
+from .constants import *
+from .bag_of_ingredients import BagOfIngredients
 
 
 
