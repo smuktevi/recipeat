@@ -9,7 +9,7 @@ class IngredientForm(FlaskForm):
     submit = SubmitField('Add Ingredient')
 
     update_ingredient = StringField('Ingredient to update', validators=[DataRequired()])
-    update_quantity = IntegerField('Quantity', validators=[DataRequired()])
+    update_quantity = IntegerField('New Quantity', validators=[DataRequired()])
     update_submit = SubmitField('Update Ingredient')
 
     delete_ingredient = StringField('Ingredient to delete', validators=[DataRequired()])

@@ -67,7 +67,7 @@ class Database:
     #######################################################################
 
     def open(self):
-        print("OPENING")
+        #print("OPENING")
         self.url = urlparse(db_url)
 
         # Access credentials via the passed on url. The url must
@@ -129,7 +129,7 @@ class Database:
     #######################################################################
 
     def get(self, table, columns="*", limit=None, where=0):
-        print("------->",table, columns, where)
+        #print("------->",table, columns, where)
         if where:
             query = "SELECT {0} from {1} WHERE {2};".format(
                 columns, table, where)
