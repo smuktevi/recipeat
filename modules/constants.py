@@ -110,6 +110,15 @@ class Ingredient:
         self.amount = amount
         self.units = units
 
+    @staticmethod
+    def parse_string(ingredient_full):
+        ingredient_string = ingredient_full.split()
+        if(len(ingredient_string) == 2):
+            ingredient = Ingredient(ingredient_full=ingredient_full, ingredient_name=ingredient_string[1], amount=ingredient_string[0])
+        else:
+            ingredient = Ingredient(ingredient_full=ingredient_full, ingredient_name=ingredient_string[2], amount=ingredient_string[0], units=ingredient_string[1])
+        return ingredient
+
     def __str__(self):
         return_str = self.ingredient + " " + str(self.amount)
         if self.units is not None:
