@@ -75,8 +75,9 @@ class RecipeRecommender:
         # print(response.json()["status"] == 404)
         # print(type(results))
 
+
         for index, ingredient in results.iterrows():
-            ingredients.append(IngredientRR(ingredient["name"], ingredient["amount.metric.value"], ingredient["amount.metric.unit"]))
+            ingredients.append(Ingredient(ingredient_full=str(ingredient['amount.metric.value']) + " " + ingredient["amount.metric.unit"] + " " + ingredient["name"], ingredient_name=ingredient["name"], amount=ingredient["amount.metric.value"], units=ingredient["amount.metric.unit"]))
 
         return ingredients
         #return list of Ingredient
