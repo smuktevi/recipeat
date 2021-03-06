@@ -7,6 +7,7 @@ from app.forms.ingredients_form import IngredientForm
 from app.forms.recipe_form import RecipeForm
 from modules.user import User
 from modules.bag_of_ingredients import BagOfIngredients
+from modules.recipe_recommender import RecipeRecommender
 from modules.constants import *
 
 
@@ -16,9 +17,10 @@ from modules.constants import *
 def index():
     if 'username' in session:
         user = session['name']
+        user_obj = User.get_user(session['username'])
     else:
         user = 'New User'
-    return render_template('index.html', user=user)
+    return render_template('index.html', user=user, user_obj=user_obj)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -155,7 +157,7 @@ def ingredients():
                 return render_template('ingredients.html', form=form, ingredients=ingredients_list,
                                        alertmessage3="Ingredient cannot be empty!")
 
-            delete_success= user_boi.delete_ingredient("\'"+ingredient_name+"\'")
+            delete_success = user_boi.delete_ingredient("\'"+ingredient_name+"\'")
 
             # Check if not successful. Return error page.
             if delete_success == False:
@@ -170,8 +172,15 @@ def ingredients():
 @app.route('/recipe', methods=['GET', 'POST'])
 def recipe():
     form = RecipeForm()
+    user_boi = BagOfIngredients(session['username'])
+    ingredients_list = user_boi.get_boi()
+    choices = []
+    for ingredient in ingredients_list:
+        choices.append((ingredient[1], ingredient[1]))
+    form.ingredients.choices = choices
 
     if request.method == 'POST':
+        # nutr is the nutrition dictionary to be passed into recipe recommender
         nutr = {}
 
         min_carb = request.form['min_carb']
@@ -186,8 +195,15 @@ def recipe():
         min_protein = request.form['min_protein']
         max_protein = request.form['max_protein']
 
+        # intolerances and diets are the lists that will be passed into recipe recommender. May need to check if it is empty or not first
         intolerances = request.form.getlist('intolerances')
         diets = request.form.getlist('diets')
+        ingredients = request.form.getlist('ingredients')
+
+        # chosen ingredients is the ingredient list that will need to be passed into recipe recommender
+        chosen_ingredients = []
+        for ingredient in ingredients:
+            chosen_ingredients.append(Ingredient.parse_string(ingredient))
 
         if min_carb != "":
             nutr['minCarbs'] = int(min_carb)
@@ -206,8 +222,14 @@ def recipe():
         if max_protein != "":
             nutr['maxProtein'] = int(max_protein)
 
-    return render_template('recipe.html', form=form)
+        RR = RecipeRecommender()
+        
 
-@app.route('/visual', methods=['GET', 'POST'])
-def visual():
+        
+    recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2)])]
+
+    return render_template('recipe.html', form=form, recipe_list=recipe_list)
+
+@app.route('/compare', methods=['GET', 'POST'])
+def compare():
     return render_template('visual_comparator.html')

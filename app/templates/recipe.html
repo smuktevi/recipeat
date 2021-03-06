@@ -1,46 +1,113 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Recipe Recommender</h1>
-    <form action="" method="post" novalidate>
-        <h3>Nutritional Requirements</h3>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.min_carb.label }}
-            {{ form.min_carb(size=32) }}
-        </p>
-        <p>
-            {{ form.max_carb.label }}
-            {{ form.max_carb(size=32) }}
-        </p>
-        <p>
-            {{ form.min_fat.label }}
-            {{ form.min_fat(size=32) }}
-        </p>
-        <p>
-            {{ form.max_fat.label }}
-            {{ form.max_fat(size=32) }}
-        </p>
-        <p>
-            {{ form.min_cal.label }}
-            {{ form.min_cal(size=32) }}
-        </p>
-        <p>
-            {{ form.max_cal.label }}
-            {{ form.max_cal(size=32) }}
-        </p>
-        <p>
-            {{ form.min_protein.label }}
-            {{ form.min_protein(size=32) }}
-        </p>
-        <p>
-            {{ form.max_protein.label }}
-            {{ form.max_protein(size=32) }}
-        </p>
-        <h3>Intolerances</h3>
-            {{ form.intolerances(size=6) }}
-        <h3>Diets</h3>
-            {{ form.diets(size=6) }}
-        <p>{{ form.submit() }}</p>
-    </form>
+<style>
+    .row {
+        display: flex;
+    }
+
+    .column {
+        flex: 50%;
+    }
+
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+</style>
+<h1>Recipe Recommender</h1>
+<div class="row">
+    <div class="column">
+        <form action="" method="post" novalidate>
+            <hr>
+            <h3>Nutritional Requirements</h3>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.min_carb.label }}
+                {{ form.min_carb(size=32) }}
+            </p>
+            <p>
+                {{ form.max_carb.label }}
+                {{ form.max_carb(size=32) }}
+            </p>
+            <p>
+                {{ form.min_fat.label }}
+                {{ form.min_fat(size=32) }}
+            </p>
+            <p>
+                {{ form.max_fat.label }}
+                {{ form.max_fat(size=32) }}
+            </p>
+            <p>
+                {{ form.min_cal.label }}
+                {{ form.min_cal(size=32) }}
+            </p>
+            <p>
+                {{ form.max_cal.label }}
+                {{ form.max_cal(size=32) }}
+            </p>
+            <p>
+                {{ form.min_protein.label }}
+                {{ form.min_protein(size=32) }}
+            </p>
+            <p>
+                {{ form.max_protein.label }}
+                {{ form.max_protein(size=32) }}
+            </p>
+            <hr>
+            <div class="d-flex flex-row">
+                <!--adding extra divs for padding-->
+                <div style="width: 25px;"></div>
+                <div>
+                    <h3>Ingredients</h3>
+                    {{ form.ingredients(size=6) }}
+                </div>
+                <div style="width: 25px;"></div>
+                <div>
+                    <h3>Intolerances</h3>
+                    {{ form.intolerances(size=6) }}
+                </div>
+                <div style="width: 25px;"></div>
+                <div>
+                    <h3>Diets</h3>
+                    {{ form.diets(size=6) }}
+                </div>
+                <div style="width: 25px;"></div>
+
+            </div>
+            <p style="padding: 10px;">{{ form.submit() }}</p>
+        </form>
+    </div>
+    <div class="column">
+        {% for recipe in recipe_list %}
+        <div class="card" style="width: 15rem;">
+            <img class="card-img-top" src={{ recipe.img_url }} alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{ recipe.recipe_name }}</h5>
+                {% for ingredient in recipe.ingredients %}
+                <a href="" onclick="return false;" title="Ingredients" data-toggle="popover" data-trigger="focus"
+                    data-content={{ ingredient.ingredient }}>Ingredients</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<!--
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="https://spoonacular.com/recipeImages/157109-312x231.jpg" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+    -->
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
+</script>
 {% endblock %}

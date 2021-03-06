@@ -3,6 +3,8 @@ import pandas as pd
 from .constants import *
 from .bag_of_ingredients import BagOfIngredients
 
+
+
 class RecipeRecommender:
     def __init__(self, boi:BagOfIngredients=None, preferences:dict = None):
         self.boi = boi
@@ -74,7 +76,7 @@ class RecipeRecommender:
         # print(type(results))
 
         for index, ingredient in results.iterrows():
-            ingredients.append(Ingredient(ingredient["name"], ingredient["amount.metric.value"], ingredient["amount.metric.unit"]))
+            ingredients.append(IngredientRR(ingredient["name"], ingredient["amount.metric.value"], ingredient["amount.metric.unit"]))
 
         return ingredients
         #return list of Ingredient

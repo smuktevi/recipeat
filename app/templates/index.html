@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
-<h3>Extends Base HTML file</h3>
-
 {% block content %}
-    <h1>Hi, {{ user }}!</h1>
+    <h1>Hi, {{ user_obj.name }}!</h1>
+    <br>
+    <h4>Height: {{ user_obj.height }}</h4>
+    <h4>Weight: {{ user_obj.weight }} lbs</h4>
+    <h4>Years: {{ user_obj.age }} years</h4>
+    <h4>Gender: {{ user_obj.gender }}</h4>
+    <h4>Diet: {{ user_obj.diet }}</h4>
+    <h4>Intolerances: {{ user_obj.intolerances }}</h4>
 {% endblock %}
