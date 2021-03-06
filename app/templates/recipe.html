@@ -58,19 +58,24 @@
             </p>
             <hr>
             <div class="d-flex flex-row">
+                <!--adding extra divs for padding-->
+                <div style="width: 25px;"></div>
                 <div>
-                <h3>Intolerances</h3>
-                {{ form.intolerances(size=6) }}
+                    <h3>Ingredients</h3>
+                    {{ form.ingredients(size=6) }}
                 </div>
                 <div style="width: 25px;"></div>
                 <div>
-                <h3>Diets</h3>
-                {{ form.diets(size=6) }}
+                    <h3>Intolerances</h3>
+                    {{ form.intolerances(size=6) }}
                 </div>
+                <div style="width: 25px;"></div>
                 <div>
-                <h3>Ingredients</h3>
-                {{ form.ingredients(size=6) }}
+                    <h3>Diets</h3>
+                    {{ form.diets(size=6) }}
                 </div>
+                <div style="width: 25px;"></div>
+
             </div>
             <p style="padding: 10px;">{{ form.submit() }}</p>
         </form>
