@@ -16,6 +16,7 @@ class BagOfIngredients:
         self.username = "\'" + username + "\'"  # use a session variable
         self.ingredients = []
         self.number_of_ingredients = 0
+        self.boi = None
         self.db = Database()
         self.db.open()
 
@@ -37,16 +38,45 @@ class BagOfIngredients:
         self.ingredients.append(ing)
         return push_success
 
-    def delete_boi(self):
+    def delete_all(self):
         # Deletes all ingredients from Bag for a User
+        try:
+            print("DELETING ALL from BOI with user_id>>>"+self.username)
+            delete_query = "DELETE FROM bagofingredients WHERE user_id="+self.username+";"
+            self.db.query(delete_query)
+        except:
+            print("ERROR OCCURED IN DELETION!")
+            return False
+        return True
 
-        print("DELETING from BOI with user_id>>>"+self.username)
-        delete_query = "DELETE FROM BagOfIngredients WHERE user_id="+self.username+";"
-        self.db.query(delete_query)
+    def delete_ingredient(self, ingredient_name):
+        #Deletes one ingredient
 
-    def update_boi(self):
-        # Deletes certain rows and adds others if any changes
+        try:
+            print("DELETING ingredient "+ingredient_name+" from BOI with user_id>>>"+self.username)
+            delete_query = "DELETE FROM bagofingredients WHERE user_id="+self.username+ "AND ingredient_name="+ingredient_name+";"
+            self.db.query(delete_query)
+        except:
+            print("ERROR OCCURED IN DELETION!")
+            return False
+        return True
+
+    def update_ingredient(self, ingredient_name, new_quantity):
+        #Updates ingredient with new quantity
+
+        try:
+            print("UPDATING ingredient "+ingredient_name+" from BOI with user_id>>>"+self.username)
+            delete_query = "UPDATE bagofingredients SET amount="+new_quantity+"WHERE user_id="+self.username+"AND ingredient_name="+ingredient_name+";"
+            self.db.query(delete_query)
+        except:
+            print("ERROR OCCURED IN UPDATING!")
+            return False
+        return True
+
+    def update_new_boi(self):
+        # Deletes boi and adds new one
         pass
+
 
 # TEST CASES FOR BOI FOR POSTGRESQL
 # boi_sample = BagOfIngredients(username)
