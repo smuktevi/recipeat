@@ -1,9 +1,8 @@
 os:
   - linux
-
-dist: xenial
+  - windows
 
 language: python
 
 script:
-  - python -m pytest -v
+  - python -m unittest -v
