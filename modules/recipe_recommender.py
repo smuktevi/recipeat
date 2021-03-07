@@ -98,27 +98,27 @@ class RecipeRecommender:
     def recommend_from_boi(self):
         return self.search_recipes(self.boi.get_boi())
 
-if __name__ == '__main__':
-    #test code
-    nutrients = {
-    'minCarbs': 1,
-    'maxCarbs': 100,
-    'minProtein': 1,
-    'maxProtein': 100,
-    'minCalories': 100,
-    'maxCalories': 1000,
-    'minFat': 1,
-    'maxFat': 100
-    }
-    ingredients = ['chicken','potatoes']
-    diet = 'vegetarian'
-    intolerances='dairy'
-    for recipe in RecipeRecommender.search_recipes(ingredients=ingredients, nutritional_req=nutrients):
-        print(recipe)
+# if __name__ == '__main__':
+#     #test code
+#     nutrients = {
+#     'minCarbs': 1,
+#     'maxCarbs': 100,
+#     'minProtein': 1,
+#     'maxProtein': 100,
+#     'minCalories': 100,
+#     'maxCalories': 1000,
+#     'minFat': 1,
+#     'maxFat': 100
+#     }
+#     ingredients = ['chicken','potatoes']
+#     diet = 'vegetarian'
+#     intolerances='dairy'
+#     for recipe in RecipeRecommender.search_recipes(ingredients=ingredients, nutritional_req=nutrients):
+#         print(recipe)
 
-    print(RecipeRecommender.search_recipes(ingredients,nutrients))
-    print(RecipeRecommender.get_recipe_info('fake'))
+#     print(RecipeRecommender.search_recipes(ingredients,nutrients))
+#     print(RecipeRecommender.get_recipe_info('fake'))
 
-    RecipeRecommender.recipe_to_ingredients(641072)
-    for ingredient in RecipeRecommender.recipe_to_ingredients(641072):
-        print(ingredient)
+#     RecipeRecommender.recipe_to_ingredients(641072)
+#     for ingredient in RecipeRecommender.recipe_to_ingredients(641072):
+#         print(ingredient)
