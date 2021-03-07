@@ -8,6 +8,7 @@ from app.forms.recipe_form import RecipeForm
 from modules.user import User
 from modules.bag_of_ingredients import BagOfIngredients
 from modules.recipe_recommender import RecipeRecommender
+from modules.comparator import Compare
 from modules.constants import *
 
 
@@ -180,61 +181,75 @@ def recipe():
     form.ingredients.choices = choices
 
     if request.method == 'POST':
-        min_carb = request.form['min_carb']
-        max_carb = request.form['max_carb']
 
-        min_fat = request.form['min_fat']
-        max_fat = request.form['max_fat']
+        if 'submit' in request.form:
+            min_carb = request.form['min_carb']
+            max_carb = request.form['max_carb']
 
-        min_cal = request.form['min_cal']
-        max_cal = request.form['max_cal']
+            min_fat = request.form['min_fat']
+            max_fat = request.form['max_fat']
 
-        min_protein = request.form['min_protein']
-        max_protein = request.form['max_protein']
+            min_cal = request.form['min_cal']
+            max_cal = request.form['max_cal']
 
-        # nutr is the nutrition dictionary to be passed into recipe recommender
-        nutr = {}
-        if min_carb != "":
-            nutr['minCarbs'] = int(min_carb)
-        if max_carb != "":
-            nutr['maxCarbs'] = int(max_carb)
-        if min_fat != "":
-            nutr['minFat'] = int(min_fat)
-        if max_fat != "":
-            nutr['maxFat'] = int(max_fat)
-        if min_cal != "":
-            nutr['minCalories'] = int(min_cal)
-        if max_cal != "":
-            nutr['maxCalories'] = int(max_cal)
-        if min_protein != "":
-            nutr['minProtein'] = int(min_protein)
-        if max_protein != "":
-            nutr['maxProtein'] = int(max_protein)
+            min_protein = request.form['min_protein']
+            max_protein = request.form['max_protein']
 
-        # intolerances and diets are the lists that will be passed into recipe recommender. May need to check if it is empty or not first
-        intolerances = request.form.getlist('intolerances')
-        diets = request.form.getlist('diets')
-        ingredients = request.form.getlist('ingredients')
+            # nutr is the nutrition dictionary to be passed into recipe recommender
+            nutr = {}
+            if min_carb != "":
+                nutr['minCarbs'] = int(min_carb)
+            if max_carb != "":
+                nutr['maxCarbs'] = int(max_carb)
+            if min_fat != "":
+                nutr['minFat'] = int(min_fat)
+            if max_fat != "":
+                nutr['maxFat'] = int(max_fat)
+            if min_cal != "":
+                nutr['minCalories'] = int(min_cal)
+            if max_cal != "":
+                nutr['maxCalories'] = int(max_cal)
+            if min_protein != "":
+                nutr['minProtein'] = int(min_protein)
+            if max_protein != "":
+                nutr['maxProtein'] = int(max_protein)
 
-        if(len(diets) == 0):
-            diets = ""
-        else:
-            diets = diets[0]
+            # intolerances and diets are the lists that will be passed into recipe recommender. May need to check if it is empty or not first
+            intolerances = request.form.getlist('intolerances')
+            diets = request.form.getlist('diets')
+            ingredients = request.form.getlist('ingredients')
 
-        # chosen ingredients is the ingredient list that will need to be passed into recipe recommender
-        chosen_ingredients_objects = []
-        chosen_ingredients_names = []
-        for ingredient in ingredients:
-            ingredient_obj = Ingredient.parse_string(ingredient)
-            chosen_ingredients_objects.append(ingredient_obj)
-            chosen_ingredients_names.append(ingredient_obj.ingredient)
+            if(len(diets) == 0):
+                diets = ""
+            else:
+                diets = diets[0]
 
-        RR = RecipeRecommender()
-        # TODO add intolerances when the search_recipes has been modified
-        #recipe_list = RR.search_recipes(ingredients=chosen_ingredients_names, nutritional_req=nutr, diet=diets)
-        recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")])]
+            # chosen ingredients is the ingredient list that will need to be passed into recipe recommender
+            chosen_ingredients_objects = []
+            chosen_ingredients_names = []
+            for ingredient in ingredients:
+                ingredient_obj = Ingredient.parse_string(ingredient)
+                chosen_ingredients_objects.append(ingredient_obj)
+                chosen_ingredients_names.append(ingredient_obj.ingredient)
 
-        return render_template('recipe.html', form=form, recipe_list=recipe_list)
+            RR = RecipeRecommender()
+            # TODO add intolerances when the search_recipes has been modified
+            #recipe_list = RR.search_recipes(ingredients=chosen_ingredients_names, nutritional_req=nutr, diet=diets)
+            recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")])]
+
+            return render_template('recipe.html', form=form, recipe_list=recipe_list)
+
+        elif 'compare_submit' in request.form:
+            comparator = Compare()
+
+            recipe_compare_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")]), Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")])]
+
+            html = comparator.ingredient_compare(recipe_compare_list)
+            # this worked
+            print(html)
+
+            return redirect('/compare')
+
 
     return render_template('recipe.html', form=form)
 

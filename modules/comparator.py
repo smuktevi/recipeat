@@ -7,10 +7,9 @@ import matplotlib.pyplot as plt
 import requests
 from IPython.core.display import display, HTML
 from .constants import *
-import recipe_recommender
 
 class Compare:
-    def nutrient_compare(recipes): 
+    def nutrient_compare(self, recipes):
         """
         returns HTML response with a information on nutrients in given recipes
 
@@ -30,7 +29,7 @@ class Compare:
             nutr_html_list.append(HTML('<div class="header"><h1>{recipe_name}</h1></div>'.format(recipe_name=recipe.recipe_name) + response.text))
         return nutr_html_list
 
-    def ingredient_compare(recipes):
+    def ingredient_compare(self, recipes):
         """
         returns HTML response with a information on ingredients in given recipes
 

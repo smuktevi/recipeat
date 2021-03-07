@@ -25,3 +25,4 @@ class RecipeForm(FlaskForm):
 
     submit = SubmitField('Search Recipes')
 
+    compare_submit = SubmitField('Compare Recipes')
