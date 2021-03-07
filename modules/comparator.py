@@ -26,7 +26,7 @@ class Compare:
                 'Cookie': '__cfduid=d443da310537f29e03b78e744720641111613622052'
                     }  
             response = requests.request("GET", url, headers=headers, data=payload)
-            nutr_html_list.append(HTML('<div class="header"><h1>{recipe_name}</h1></div>'.format(recipe_name=recipe.recipe_name) + response.text))
+            nutr_html_list.append('<div class="header"><h3>{recipe_name}</h3></div>'.format(recipe_name=recipe.recipe_name) + response.text)
         return nutr_html_list
 
     def ingredient_compare(self, recipes):
@@ -46,7 +46,7 @@ class Compare:
                 'Cookie': '__cfduid=d443da310537f29e03b78e744720641111613622052'
                     }  
             response = requests.request("GET", url, headers=headers, data=payload)   
-            ingrd_html_list.append(HTML('<div class="header"><h1>{recipe_name}</h1></div>'.format(recipe_name=recipe.recipe_name) + response.text))
+            ingrd_html_list.append('<div class="header"><h3>{recipe_name}</h3></div>'.format(recipe_name=recipe.recipe_name) + response.text)
         return ingrd_html_list
 
 

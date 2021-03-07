@@ -11,6 +11,10 @@ from modules.recipe_recommender import RecipeRecommender
 from modules.comparator import Compare
 from modules.constants import *
 
+global nutrient_compare_html
+nutrient_compare_html = None
+global ingredient_compare_html
+ingredient_compare_html = None
 
 # when url inside this function is called the following function executes and returns to the browser page that called it.
 @app.route('/index')
@@ -150,10 +154,10 @@ def ingredients():
             ingredients_list = user_boi.get_boi()
             return render_template('ingredients.html', form=form, ingredients=ingredients_list, updatesuccess="Successfully updated ingredient!")
 
-        
+
         elif 'delete_submit' in request.form:
             ingredient_name = request.form['delete_ingredient']
-            
+
             if ingredient_name == "":
                 return render_template('ingredients.html', form=form, ingredients=ingredients_list,
                                        alertmessage3="Ingredient cannot be empty!")
@@ -242,17 +246,31 @@ def recipe():
         elif 'compare_submit' in request.form:
             comparator = Compare()
 
-            recipe_compare_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")]), Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")])]
+            recipe_compare_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")]), Recipe(recipe_id=632944, recipe_name="Asparagus Soup", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")])]
 
-            html = comparator.ingredient_compare(recipe_compare_list)
-            # this worked
-            print(html)
+            global nutrient_compare_html
+            nutrient_compare_html = comparator.nutrient_compare(recipe_compare_list)
+            global ingredient_compare_html
+            ingredient_compare_html = comparator.ingredient_compare(recipe_compare_list)
+            #print(nutrient_compare_html)
+            #print(ingredient_compare_html)
+            #nutrient_compare_html = ["test","test2","test3"]
+            #ingredient_compare_html = ["test","test2","test3"]
 
             return redirect('/compare')
-
+            #return render_template('visual_comparator.html', ingredient_compare=ingredient_compare_html, nutrient_compare=nutrient_compare_html)
 
     return render_template('recipe.html', form=form)
 
 @app.route('/compare', methods=['GET', 'POST'])
 def compare():
-    return render_template('visual_comparator.html')
+    global nutrient_compare_html
+    global ingredient_compare_html
+    if nutrient_compare_html is None or ingredient_compare_html is None:
+        return render_template('visual_comparator.html')
+    else:
+        t1 = nutrient_compare_html
+        t2 = ingredient_compare_html
+        nutrient_compare_html = None
+        ingredient_compare_html = None
+        return render_template('visual_comparator.html', ingredient_compare=t2, nutrient_compare=t1)
