@@ -53,7 +53,7 @@ class TestGetUser(unittest.TestCase):
 
     def test_non_existing_user(self):
         """
-        Test a non registered user. Should get a user object back
+        Test a non registered user. Should raise an exception
         """
         self.assertRaises(Exception, User.get_user, "nuathreuishr@aa.com")
 
