@@ -6,7 +6,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import requests
 from IPython.core.display import display, HTML
-from constants import * #change this to .constants when I integrate with website
+from .constants import
+import recipe_recommender
 
 class Compare:
     def get_nutrient_compare(recipes):
@@ -26,12 +27,8 @@ class Compare:
                 'Cookie': '__cfduid=d443da310537f29e03b78e744720641111613622052'
                     }  
             response = requests.request("GET", url, headers=headers, data=payload)
-            nutr_html_list.append(HTML('<div class="header"><h1>{receipe_id}</h1></div>'.format(recipe_id=recipe.recipe_id) + response.text))
+            nutr_html_list.append(HTML('<div class="header"><h1>{recipe_name}</h1></div>'.format(recipe_name=recipe.recipe_name) + response.text))
         return nutr_html_list
-
-    recipe_list = []
-    get_nutrient_compare(recipe_list) #GET RID OF THIS LATER
-
 
     def get_ingredient_img(recipes):
         """
@@ -50,10 +47,9 @@ class Compare:
                 'Cookie': '__cfduid=d443da310537f29e03b78e744720641111613622052'
                     }  
             response = requests.request("GET", url, headers=headers, data=payload)   
-            ingrd_html_list.append(HTML('<div class="header"><h1>{receipe_id}</h1></div>'.format(receipe_id=recipe.recipe_id) + response.text))
+            ingrd_html_list.append(HTML('<div class="header"><h1>{recipe_name}</h1></div>'.format(recipe_name=recipe.recipe_name) + response.text))
         return ingrd_html_list
 
-    Compare.get_ingredient_img([1082037,1082038,1082039]) #GET RID OF THIS LATER
 
 
 
