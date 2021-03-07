@@ -50,7 +50,7 @@ class BagOfIngredients:
         return True
 
     def delete_ingredient(self, ingredient_name):
-        #Deletes one ingredient
+        # Deletes one ingredient
 
         try:
             print("DELETING ingredient "+ingredient_name+" from BOI with user_id>>>"+self.username)
@@ -62,7 +62,7 @@ class BagOfIngredients:
         return True
 
     def update_ingredient(self, ingredient_name, new_quantity):
-        #Updates ingredient with new quantity
+        # Updates ingredient with new quantity
 
         try:
             print("UPDATING ingredient "+ingredient_name+" from BOI with user_id>>>"+self.username)
@@ -75,6 +75,7 @@ class BagOfIngredients:
 
     def update_new_boi(self):
         # Deletes boi and adds new one
+        
         pass
 
 
@@ -82,7 +83,6 @@ class BagOfIngredients:
 # boi_sample = BagOfIngredients(username)
 # boi_sample.get_boi()
 # boi_sample.push_boi(sample_ingredient)
-
 
 '''
 THIS CAN BE USED FOR TESTING FIREBASE (OLD).
