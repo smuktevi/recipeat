@@ -122,7 +122,10 @@ class Ingredient:
         return ingredient
 
     def __str__(self):
-        return "ingredients: {ingredients} \n amount: {amount} {unit} \n".format(ingredients=self.ingredient, amount=self.amount, unit=self.units)
+        return_str = self.ingredient + " " + str(self.amount)
+        if self.units is not None:
+            return_str += " " + self.units
+        return return_str
 
     def __repr__(self):
         return_str = self.ingredient + " " + str(self.amount)
