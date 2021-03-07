@@ -9,7 +9,7 @@ from IPython.core.display import display, HTML
 from constants import * #change this to .constants when I integrate with website
 
 class Compare:
-    def get_nutrient_compare(self,recipes):
+    def get_nutrient_compare(recipes):
         """
         returns HTML response with a information on nutrients in given recipes
 
@@ -19,22 +19,21 @@ class Compare:
         Returns: list of HTML responses with nutrition information graphics   
         """
         nutr_html_list = []
-        for recipe_id in recipes: #need to use recipe object
-            #need to make this use constants instead and use recipe object for id
-            url = "https://api.spoonacular.com/recipes/{id}/nutritionWidget?{apikey}&defaultCss=true".format(id=recipe_id,apikey="apiKey=d18b19ea103f46929e677ecacef2c15c")    
+        for recipe in recipes:
+            url = "https://api.spoonacular.com/recipes/{id}/nutritionWidget?{apikey}&defaultCss=true".format(id=recipe.recipe_id,apikey=apikey6)    
             payload={}
             headers = {
                 'Cookie': '__cfduid=d443da310537f29e03b78e744720641111613622052'
                     }  
             response = requests.request("GET", url, headers=headers, data=payload)
-            nutr_html_list.append(HTML('<div class="header"><h1>{receipe_id}</h1></div>'.format(receipe_id=recipe_id) + response.text))
+            nutr_html_list.append(HTML('<div class="header"><h1>{receipe_id}</h1></div>'.format(recipe_id=recipe.recipe_id) + response.text))
         return nutr_html_list
 
-    recipe_list = [1082037,1082038,1082039]
+    recipe_list = []
     get_nutrient_compare(recipe_list) #GET RID OF THIS LATER
 
 
-    def get_ingredient_img(self, recipes):
+    def get_ingredient_img(recipes):
         """
         returns HTML response with a information on ingredients in given recipes
 
@@ -44,17 +43,17 @@ class Compare:
         Returns: list of HTML responses with ingredient graphics   
         """
         ingrd_html_list = []
-        for recipe_id in recipes: #need to use recipe object
-            url = "https://api.spoonacular.com/recipes/{id}/ingredientWidget?{apikey}&defaultCss=true".format(id=recipe_id,apikey="apiKey=d18b19ea103f46929e677ecacef2c15c")    
+        for recipe in recipes: 
+            url = "https://api.spoonacular.com/recipes/{id}/ingredientWidget?{apikey}&defaultCss=true".format(id=recipe.recipe_id,apikey=apikey6)    
             payload={}
             headers = {
                 'Cookie': '__cfduid=d443da310537f29e03b78e744720641111613622052'
                     }  
             response = requests.request("GET", url, headers=headers, data=payload)   
-            ingrd_html_list.append(HTML('<div class="header"><h1>{receipe_id}</h1></div>'.format(receipe_id=recipe_id) + response.text))
+            ingrd_html_list.append(HTML('<div class="header"><h1>{receipe_id}</h1></div>'.format(receipe_id=recipe.recipe_id) + response.text))
         return ingrd_html_list
 
-    #get_ingredient_img([1082037,1082038,1082039]) GET RID OF THIS LATER
+    Compare.get_ingredient_img([1082037,1082038,1082039]) #GET RID OF THIS LATER
 
 
 
