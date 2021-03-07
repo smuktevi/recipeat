@@ -75,11 +75,12 @@ def register():
         weight = request.form['weight']
         gender = request.form['gender']
 
-        register_success = User.register_user(
-            username, password, name, age, height, weight, gender)
+
         unsuccessful = 'Failed to register account! Check if formats are valid! Check if password is long enough! Email may already be registered! There cannot be empty Fields!'
         if name == "" or age == "" or height == "" or weight == "":
             return render_template('register.html', title='Register', form=form, alertmessage=unsuccessful)
+
+        register_success = User.register_user(username, password, name, age, height, weight, gender)
 
         if register_success:
             # Successful Registration
