@@ -1,21 +1,21 @@
 import requests
 import pandas as pd
-from constants import *
+from .constants import *
 
 
 class RecipeRecommender:
-    def search_recipes(self, ingredients: list = [], nutritional_req: dict = {}, diet: str = "", intolerances: str = ""):
+    def search_recipes(self, ingredients: list = [], nutritional_req: dict = {}, diet: str = "", intolerances: list = []):
         search_recipes_url = "https://api.spoonacular.com/recipes/complexSearch"
-        result_option_url = 'instructionsRequired=true&ignorePantry=true&sort=min-missing-ingredients&number=15&limitLicense=true'
+        result_option_url = 'instructionsRequired=true&ignorePantry=true&sort=min-missing-ingredients&number=1&limitLicense=true'
         preferences_url = 'diet={diet}&intolerances={intolerances}'.format(
-            diet=diet, intolerances=intolerances)
+            diet=diet, intolerances=','.join(intolerances))
         ingredients_url = 'includeIngredients=' + ','.join(ingredients)
         nutr_url = '&'.join("{!s}={!r}".format(key, val)
                             for (key, val) in nutritional_req.items())
 
         search_url = "{search}?{apikey}&{result_options}&{ingredients}&{nutrition}&{preferences}".format(
             search=search_recipes_url,
-            apikey=apikey6,
+            apikey=apikey1,
             result_options=result_option_url,
             ingredients=ingredients_url,
             nutrition=nutr_url,
@@ -39,7 +39,7 @@ class RecipeRecommender:
                                               for id in list(search_results["id"]))
             recipe_info_url = "{get_recipe}?{apikey}&{recipe_ids}".format(
                 get_recipe=get_bulk_recipe_info_url,
-                apikey=apikey6,
+                apikey=apikey1,
                 recipe_ids=recipe_id_url)
 
             source_response = requests.request(
@@ -56,18 +56,19 @@ class RecipeRecommender:
                     recipe["title"],
                     recipe["sourceUrl"],
                     recipe["image"],
-                    str(self.get_recipe_info(recipe["id"])),
-                    self.recipe_to_ingredients(recipe["id"])))
+                    str(RecipeRecommender.get_recipe_info(recipe["id"])),
+                    RecipeRecommender.recipe_to_ingredients(recipe["id"])))
 
         return recipes
 
+    @staticmethod
     def recipe_to_ingredients(recipe_id):
         request_url = 'https://api.spoonacular.com/recipes/{}/ingredientWidget.json?'.format(
             recipe_id)
 
         ingredients = []
 
-        url = request_url + apikey6
+        url = request_url + apikey1
         payload = {}
         headers = {
             'Cookie': '__cfduid=dff952ebbf9c020c4f07c314e6bcb9c711613423774'
@@ -85,11 +86,12 @@ class RecipeRecommender:
         return ingredients
         # return list of Ingredient
 
+    @staticmethod
     def get_recipe_info(recipe_id):
         request_url = 'https://api.spoonacular.com/recipes/{}/analyzedInstructions?'.format(
             recipe_id)
 
-        url = request_url + apikey6
+        url = request_url + apikey1
         payload = {}
         headers = {
             'Cookie': '__cfduid=dff952ebbf9c020c4f07c314e6bcb9c711613423774'
