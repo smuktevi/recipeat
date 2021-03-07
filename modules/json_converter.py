@@ -1,33 +1,29 @@
 import pandas as pd
 
 
-def boi_convert_to_json(df):
+class JsonConverter:
     """
-    Takes in dataframe object and converts it to a JSON object.
-    Returns the JSON object
-
-    :param df:
-    :return: json object
+    Class used to convert json to pandas dataframe and vice versa.
     """
 
-    return df.to_json(orient="records")
+    def convert_to_json(self, df):
+        """
+        Takes in dataframe object and converts it to a JSON object.
+        Returns the JSON object
 
+        :param df: dataframe
+        :return: json object
+        """
 
-def boi_convert_to_df(json):
-    """
+        return df.to_json(orient="records")
 
-    :param json:
-    :return: pandas DataFrame object
-    """
+    def convert_to_df(self, json):
+        """
+        Takes in json object and converts it to a dataframe object.
+        Returns the JSON object
 
-    return pd.read_json(json_obj, orient="records")
+        :param json: json object
+        :return: pandas DataFrame object
+        """
 
-
-'''
-if __name__ == '__main__':
-    dataframe = pd.DataFrame({"a": [1, 2, 3], "b": [9, 8, 7], "c": [10, 20, 30]})
-    json_obj = boi_convert_to_json(dataframe)
-    print(json_obj)
-
-    print(boi_convert_to_df(json_obj))
-'''
+        return pd.read_json(json, orient="records")
