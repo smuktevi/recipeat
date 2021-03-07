@@ -81,17 +81,47 @@
             <p style="padding: 10px;">{{ form.compare_submit() }}</p>
         </form>
     </div>
+
     <div class="column">
         {% for recipe in recipe_list %}
-        <div class="card" style="width: 15rem;">
-            <img class="card-img-top" src={{ recipe.img_url }} alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">{{ recipe.recipe_name }}</h5>
-                <a href="" onclick="return false;" title="Ingredients" data-toggle="popover" data-trigger="focus" data-content={% for ingredient in recipe.ingredients %}{{ ingredient }}{% endfor %}>Ingredients</a>
+        <div class="col-sm-6">
+            <div class="card" style="width: 15rem;">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs pull-right" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="recipe-tab" data-toggle="tab" href="#recipe" role="tab"
+                                aria-controls="recipe" aria-selected="true">Recipe</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab"
+                                aria-controls="info" aria-selected="false">Ingredients</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-body">
+                    <div class="tab-content" id="myTabContent">
+                        <!-- Recipe Tab -->
+                        <div class="tab-pane show active" id="recipe" role="tabpanel" aria-labelledby="recipe-tab">
+                            <img class="card-img-top" src={{ recipe.img_url }} alt="Card image cap">
+                            <h5 class="card-title">{{ recipe.recipe_name }}</h5>
+                        </div>
+                        <!-- Info Tab -->
+                        <div class="tab-pane" id="info" role="tabpanel" aria-labelledby="info-tab">
+                            <div class="card-text">
+                                {%for ingredient in recipe.ingredients %}
+                                <p>{{ ingredient}}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
+
+</div>
 </div>
 <!--
     <div class="card" style="width: 18rem;">
