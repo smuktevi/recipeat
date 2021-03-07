@@ -254,7 +254,7 @@ def recipe():
             RR = RecipeRecommender()
             # TODO add intolerances when the search_recipes has been modified
             #recipe_list = RR.search_recipes(ingredients=chosen_ingredients_names, nutritional_req=nutr, diet=diets)
-            recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")]), Recipe(recipe_id=632944, recipe_name="Asparagus Soup", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")])]
+            recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")], source_url='https://spoonacular.com/recipes/warm-and-luscious-sipping-chocolate-with-xocai-healthy-dark-sipping-xocolate-631763'), Recipe(recipe_id=632944, recipe_name="Asparagus Soup", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")], source_url='https://www.onceuponachef.com/recipes/asparagus-soup-with-lemon-and-parmesan.html')]
             #recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")])]
 
             return render_template('recipe.html', form=form, recipe_list=recipe_list)
@@ -272,9 +272,9 @@ def recipe():
             if len(recipe_compare_list) < 2:
                 return render_template('recipe.html', form=form, recipe_list=recipe_list, alertmessage="At least two recipes must be selected!")
 
-            print(recipe_compare_list)
+            #print(recipe_compare_list)
 
-            recipe_compare_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")]), Recipe(recipe_id=632944, recipe_name="Asparagus Soup", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")])]
+            #recipe_compare_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")]), Recipe(recipe_id=632944, recipe_name="Asparagus Soup", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")])]
 
             global nutrient_compare_html
             nutrient_compare_html = comparator.nutrient_compare(recipe_compare_list)
