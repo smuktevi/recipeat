@@ -12,7 +12,7 @@ class RecipeRecommender:
     def search_recipes(self, ingredients:list=[], nutritional_req:dict={}, diet:str="", intolerances:str=""):
         search_recipes_url = "https://api.spoonacular.com/recipes/complexSearch"
         result_option_url = 'instructionsRequired=true&ignorePantry=true&sort=min-missing-ingredients&number=15&limitLicense=true'
-        preferences_url = 'diet={diet}&intolderance={intolerances}'.format(diet=diet,intolerances=intolerances)
+        preferences_url = 'diet={diet}&intolderance={intolerances}'.format(diet=diet, intolerances=intolerances)
         ingredients_url = 'includeIngredients=' + ','.join(ingredients)
         nutr_url = '&'.join("{!s}={!r}".format(key,val) for (key,val) in nutritional_req.items())
 
