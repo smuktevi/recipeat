@@ -1,4 +1,4 @@
-# RecipEat
+# RecipEat test
 **By: Corina Geier, Jeffery Lai, Edward Lou, Sai Muktevi, Andrew Zhou**
 
 ## Background
