@@ -1,4 +1,4 @@
-import comparator as cp
+import modules.comparator as cp
 import unittest
 import pandas as pd
 
