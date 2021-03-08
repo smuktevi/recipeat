@@ -15,7 +15,7 @@ class RecipeRecommender:
 
         search_url = "{search}?{apikey}&{result_options}&{ingredients}&{nutrition}&{preferences}".format(
             search=search_recipes_url,
-            apikey=apikey1,
+            apikey=apikey3,
             result_options=result_option_url,
             ingredients=ingredients_url,
             nutrition=nutr_url,
@@ -30,7 +30,10 @@ class RecipeRecommender:
 
         search_response = requests.request(
             "GET", search_url, headers=headers, data=payload)
+        # print(search_response.json())
+        check_api_errors(search_response)
         search_results = pd.DataFrame(search_response.json()["results"])
+
         if not search_results.empty:
             search_results = search_results[["id", "image", "title"]]
             # print(search_results)
@@ -39,7 +42,7 @@ class RecipeRecommender:
                                               for id in list(search_results["id"]))
             recipe_info_url = "{get_recipe}?{apikey}&{recipe_ids}".format(
                 get_recipe=get_bulk_recipe_info_url,
-                apikey=apikey1,
+                apikey=apikey3,
                 recipe_ids=recipe_id_url)
 
             source_response = requests.request(
@@ -68,16 +71,17 @@ class RecipeRecommender:
 
         ingredients = []
 
-        url = request_url + apikey1
+        url = request_url + apikey3
         payload = {}
         headers = {
             'Cookie': '__cfduid=dff952ebbf9c020c4f07c314e6bcb9c711613423774'
         }
 
         response = requests.request("GET", url, headers=headers, data=payload)
-        results = pd.json_normalize(response.json()['ingredients'])
-        # print(response.json()["status"] == 404)
-        # print(type(results))
+
+        check_api_errors(response)
+
+        results = pd.json_normalize(response.json()["ingredients"])
 
         for index, ingredient in results.iterrows():
             ingredients.append(Ingredient(ingredient_full=str(ingredient['amount.metric.value']) + " " + ingredient["amount.metric.unit"] + " " +
@@ -91,7 +95,7 @@ class RecipeRecommender:
         request_url = 'https://api.spoonacular.com/recipes/{}/analyzedInstructions?'.format(
             recipe_id)
 
-        url = request_url + apikey1
+        url = request_url + apikey3
         payload = {}
         headers = {
             'Cookie': '__cfduid=dff952ebbf9c020c4f07c314e6bcb9c711613423774'
@@ -99,26 +103,28 @@ class RecipeRecommender:
 
         response = requests.request("GET", url, headers=headers, data=payload)
 
+        check_api_errors(response)
+
         return response.json()
 
-if __name__ == '__main__':
-    #test code
-    nutrients = {
-    'minCarbs': 1,
-    'maxCarbs': 100,
-    'minProtein': 1,
-    'maxProtein': 100,
-    'minCalories': 100,
-    'maxCalories': 1000,
-    'minFat': 1,
-    'maxFat': 100
-    }
-    ingredients = ['chicken','potatoes']
-    diet = 'vegetarian'
-    intolerances='dairy'
-    rr = RecipeRecommender()
-    for recipe in rr.search_recipes(ingredients=ingredients, nutritional_req=nutrients):
-        print(recipe)
+# if __name__ == '__main__':
+#     #test code
+#     nutrients = {
+#     'minCarbs': 1,
+#     'maxCarbs': 100,
+#     'minProtein': 1,
+#     'maxProtein': 100,
+#     'minCalories': 100,
+#     'maxCalories': 1000,
+#     'minFat': 1,
+#     'maxFat': 100
+#     }
+#     ingredients = ['chicken','potatoes']
+#     diet = 'vegetarian'
+#     intolerances='dairy'
+#     rr = RecipeRecommender()
+#     for recipe in rr.search_recipes(ingredients=ingredients, nutritional_req=nutrients):
+#         print(recipe)
 
 #     print(RecipeRecommender.search_recipes(ingredients,nutrients))
 #     print(RecipeRecommender.get_recipe_info('fake'))
