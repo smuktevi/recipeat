@@ -13,6 +13,9 @@ A class that has methods to search for recipes with given inputs:
 * Diet (i.e. Gluten Free, Ketogenic, etc)
 
 ### comparator.py
+A class that has methods to visually compare nutrients and ingredients for selected recipes.
+* the nutrient comparator shows a bargraph of different nutrional information amounts per each recipe
+* the ingredient comparator shows pictures of the ingredients in a selected recipe
 
 
 ## Project Data (or API?)
