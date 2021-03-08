@@ -7,10 +7,10 @@ Figuring out what to eat based on the food you have in your fridge can be a diff
 ## Modules
 ### recipe_recommender.py
 A class that has methods to search for recipes with given inputs:
-*Desired ingredients (i.e. chicken, potatoes, etc)
-*Nutritional Requirements (i.e. calories, carbohydrates, proteins, and fats)
-*Intolerances (i.e. dairy, egg, etc)
-*Diet (i.e. Gluten Free, Ketogenic, etc)
+* Desired ingredients (i.e. chicken, potatoes, etc)
+* Nutritional Requirements (i.e. calories, carbohydrates, proteins, and fats)
+* Intolerances (i.e. dairy, egg, etc)
+* Diet (i.e. Gluten Free, Ketogenic, etc)
 
 
 ## Project Data (or API?)
