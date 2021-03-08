@@ -1,4 +1,6 @@
-import modules.comparator as cp
+from bs4 import BeautifulSoup
+from modules.comparator import *
+from modules.recipe_recommender import *
 import unittest
 import pandas as pd
 
@@ -21,7 +23,9 @@ class testComparator(unittest.TestCase):
             'maxFat': 100
             }
         ingredients = ['chicken', 'potatoes']
-        recipe_list = RecipeRecommender.search_recipes(ingredients=ingredients, nutritional_req=nutrients)
+        rr = RecipeRecommender()
+        cp = Compare()
+        recipe_list = rr.search_recipes(ingredients=ingredients, nutritional_req=nutrients)
         self.assertEqual(len(recipe_list), len(cp.nutrient_compare(recipe_list)))
         self.assertEqual(len(recipe_list), len(cp.ingredient_compare(recipe_list)))
 
@@ -42,7 +46,9 @@ class testComparator(unittest.TestCase):
             'maxFat': 100
         }
         ingredients = ['chicken', 'potatoes']
-        recipe_list = RecipeRecommender.search_recipes(ingredients=ingredients, nutritional_req=nutrients)
+        rr = RecipeRecommender()
+        cp = Compare()
+        recipe_list = rr.search_recipes(ingredients=ingredients, nutritional_req=nutrients)
         HTML_list = cp.nutrient_compare(recipe_list)
         self.assertTrue(all(bool(BeautifulSoup(html, "html.parser").find()) for html in HTML_list))
         
@@ -63,7 +69,9 @@ class testComparator(unittest.TestCase):
             'maxFat': 100
         }
         ingredients = ['chicken', 'potatoes']
-        recipe_list = RecipeRecommender.search_recipes(ingredients=ingredients, nutritional_req=nutrients)
+        rr = RecipeRecommender()
+        cp = Compare()
+        recipe_list = rr.search_recipes(ingredients=ingredients, nutritional_req=nutrients)
         HTML_list = cp.ingredient_compare(recipe_list)
         self.assertTrue(all(bool(BeautifulSoup(html, "html.parser").find()) for html in HTML_list))
         
