@@ -8,6 +8,8 @@ Figuring out what to eat based on the food you have in your fridge can be a diff
 recipe_recommender.py
 
 ## Project Data (or API?)
+### Spoonacular: 
+Spoonacular is a Recipe-Food-Nutrition API providing access to over 365,000 recipes through ingredient- and nutrient-based queries. The user can also include keywords or phrases, such as ‘lactose intolerance’, to search for recipes that accommodate any special dietary restrictions or preferences. Additionally, the user can analyze nutritional information for each recipe by utilizing the visualization widgets.
 
 ## Testing
 
