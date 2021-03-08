@@ -1,9 +1,7 @@
 import pandas as pd
-# from constants import *
 from .constants import *
 import json
 from pyrebase import pyrebase
-# from bag_of_ingredients import BagOfIngredients
 from .bag_of_ingredients import BagOfIngredients
 
 firebase = pyrebase.initialize_app(config)
@@ -35,13 +33,15 @@ class User:
 
         if row is None:
             raise Exception("User is not registered")
-        new_user = User(name=row[1], email=row[0], height=row[3], weight=row[4], age=row[5], gender=row[6])
+        new_user = User(name=row[1], email=row[0], height=row[3],
+                        weight=row[4], age=row[5], gender=row[6])
         return new_user
 
     @staticmethod
     def authenticate_user(username, password):
         try:
-            auth.sign_in_with_email_and_password(username, password)  # Log the user in
+            auth.sign_in_with_email_and_password(
+                username, password)  # Log the user in
         except:
             return False
         return True
@@ -64,7 +64,3 @@ class User:
             return True
         except:
             return False
-
-
-
-

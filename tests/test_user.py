@@ -24,19 +24,22 @@ class TestUserAuthentication(unittest.TestCase):
         """
         Test a registered email address with correct password
         """
-        self.assertTrue(User.authenticate_user(username="aa@aa.com", password="asdfasdf"))
+        self.assertTrue(User.authenticate_user(
+            username="aa@aa.com", password="asdfasdf"))
 
     def test_correct_email_wrong_password(self):
         """
         Test a registered email address with wrong password
         """
-        self.assertFalse(User.authenticate_user(username="aa@aa.com", password="wrong"))
+        self.assertFalse(User.authenticate_user(
+            username="aa@aa.com", password="wrong"))
 
     def test_not_registered_email(self):
         """
         Test a registered email address with wrong password
         """
-        self.assertFalse(User.authenticate_user(username="nuathreuishr@aa.com", password="whatever"))
+        self.assertFalse(User.authenticate_user(
+            username="nuathreuishr@aa.com", password="whatever"))
 
 
 class TestGetUser(unittest.TestCase):

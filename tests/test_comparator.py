@@ -1,5 +1,4 @@
-from bs4 import BeautifulSoup
-from .modules import Compare as cp
+import modules.comparator as cp
 import unittest
 import pandas as pd
 
