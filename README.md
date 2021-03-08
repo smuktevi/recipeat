@@ -5,6 +5,7 @@
 Figuring out what to eat based on the food you have in your fridge can be a difficult task for many. This task is made even harder when someone is trying to eat healthy. RecipEat aims to solve this problem by providing healthy recipes that can be made with the food someone has on hand. RecipEat works with a user’s dietary constraints and nutritional goals to provide recipe recommendations that are the most relevant to the user. RecipEat also allows for a visual comparison of recipes so that users can quickly decide which recipe they would rather make. 
 
 ## Modules
+recipe_recommender.py
 
 ## Project Data (or API?)
 
