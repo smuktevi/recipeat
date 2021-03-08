@@ -1,4 +1,4 @@
-# RecipEat test
+# RecipEat
 **By: Corina Geier, Jeffery Lai, Edward Lou, Sai Muktevi, Andrew Zhou**
 
 ## Background
@@ -11,6 +11,8 @@ A class that has methods to search for recipes with given inputs:
 * Nutritional Requirements (i.e. calories, carbohydrates, proteins, and fats)
 * Intolerances (i.e. dairy, egg, etc)
 * Diet (i.e. Gluten Free, Ketogenic, etc)
+
+### comparator.py
 
 
 ## Project Data (or API?)
