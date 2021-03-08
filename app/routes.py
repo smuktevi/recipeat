@@ -187,6 +187,8 @@ def ingredients():
 
     return render_template('ingredients.html', form=form, ingredients=ingredients_list)
 
+
+# TODO known bug in the recipe.html. The ingredients tab opens up ingredient of the wrong card. Need to be fixed
 @app.route('/recipe', methods=['GET', 'POST'])
 def recipe():
     form = RecipeForm()
@@ -256,6 +258,10 @@ def recipe():
             #recipe_list = RR.search_recipes(ingredients=chosen_ingredients_names, nutritional_req=nutr, diet=diets)
             recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")], source_url='https://spoonacular.com/recipes/warm-and-luscious-sipping-chocolate-with-xocai-healthy-dark-sipping-xocolate-631763'), Recipe(recipe_id=632944, recipe_name="Asparagus Soup", img_url="https://spoonacular.com/recipeImages/632944-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")], source_url='https://www.onceuponachef.com/recipes/asparagus-soup-with-lemon-and-parmesan.html')]
             #recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")])]
+
+            #recipe_list = []
+            if len(recipe_list) == 0:
+                return render_template('recipe.html', form=form, empty_search="Found no recipes! Sorry!")
 
             return render_template('recipe.html', form=form, recipe_list=recipe_list)
 

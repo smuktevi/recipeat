@@ -80,6 +80,11 @@
             <p style="padding: 10px;">{{ form.submit() }}</p>
         </div>
         <div class="column">
+            {% if empty_search %}
+                <div class="alert alert-danger">
+                    {{ empty_search }}
+                </div>
+            {% endif %}
             {% for recipe in recipe_list %}
             <div class="col-sm-6">
                 <div class="card" style="width: 15rem;">
