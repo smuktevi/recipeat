@@ -5,8 +5,22 @@
 Figuring out what to eat based on the food you have in your fridge can be a difficult task for many. This task is made even harder when someone is trying to eat healthy. RecipEat aims to solve this problem by providing healthy recipes that can be made with the food someone has on hand. RecipEat works with a user’s dietary constraints and nutritional goals to provide recipe recommendations that are the most relevant to the user. RecipEat also allows for a visual comparison of recipes so that users can quickly decide which recipe they would rather make. 
 
 ## Modules
+### recipe_recommender.py
+A class that has methods to search for recipes with given inputs:
+* Desired ingredients (i.e. chicken, potatoes, etc)
+* Nutritional Requirements (i.e. calories, carbohydrates, proteins, and fats)
+* Intolerances (i.e. dairy, egg, etc)
+* Diet (i.e. Gluten Free, Ketogenic, etc)
+
+### comparator.py
+A class that has methods to visually compare nutrients and ingredients for selected recipes.
+* the nutrient comparator shows a bargraph of different nutrional information amounts per each recipe
+* the ingredient comparator shows pictures of the ingredients in a selected recipe
+
 
 ## Project Data (or API?)
+### Spoonacular: 
+Spoonacular is a Recipe-Food-Nutrition API providing access to over 365,000 recipes through ingredient- and nutrient-based queries. The user can also include keywords or phrases, such as ‘lactose intolerance’, to search for recipes that accommodate any special dietary restrictions or preferences. Additionally, the user can analyze nutritional information for each recipe by utilizing the visualization widgets.
 
 ## Testing
 
