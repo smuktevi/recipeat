@@ -38,7 +38,7 @@ class TestSearchRecipes(unittest.TestCase):
         slicer = slice(0, -1, 1)
         for recipe in recipes:
             get_nutrition_url = "https://api.spoonacular.com/recipes/{id}/nutritionWidget.json?{apikey}".format(
-                id=recipe.recipe_id, apikey=apikey7)
+                id=recipe.recipe_id, apikey=apikey4)
 
             response = requests.request(
                 "GET", get_nutrition_url, headers=self.headers, data=self.payload)
@@ -97,7 +97,7 @@ class TestSearchRecipes(unittest.TestCase):
 
         for recipe in recipes_gf:
             get_recipe_info_url = "https://api.spoonacular.com/recipes/{id}/information?{apikey}".format(
-                id=recipe.recipe_id, apikey=apikey7)
+                id=recipe.recipe_id, apikey=apikey4)
 
             response = requests.request(
                 "GET", get_recipe_info_url, headers=self.headers, data=self.payload)
@@ -110,7 +110,7 @@ class TestSearchRecipes(unittest.TestCase):
 
         for recipe in recipes_veg:
             get_recipe_info_url = "https://api.spoonacular.com/recipes/{id}/information?{apikey}".format(
-                id=recipe.recipe_id, apikey=apikey7)
+                id=recipe.recipe_id, apikey=apikey4)
 
             response = requests.request(
                 "GET", get_recipe_info_url, headers=self.headers, data=self.payload)
@@ -123,7 +123,7 @@ class TestSearchRecipes(unittest.TestCase):
 
         for recipe in recipes_vegan:
             get_recipe_info_url = "https://api.spoonacular.com/recipes/{id}/information?{apikey}".format(
-                id=recipe.recipe_id, apikey=apikey7)
+                id=recipe.recipe_id, apikey=apikey4)
 
             response = requests.request(
                 "GET", get_recipe_info_url, headers=self.headers, data=self.payload)
@@ -135,29 +135,32 @@ class TestSearchRecipes(unittest.TestCase):
         """
         Test if the Recipes returned meet intolerance requirements
         """
-        intolerances = ["dairy", "gluten"]
+        intolerances = ["gluten"]#, "dairy"]
         for intolerance in intolerances:
-            # print(intolerance)
-            recipes = self.rr.search_recipes(intolerances=intolerance)
+            print('------------')
+            print(intolerance)
+            print('------------')
+            recipes = self.rr.search_recipes(intolerances=list(intolerance))
             for recipe in recipes:
                 get_recipe_info_url = "https://api.spoonacular.com/recipes/{id}/information?{apikey}".format(
-                    id=recipe.recipe_id, apikey=apikey7)
+                    id=recipe.recipe_id, apikey=apikey4)
                 response = requests.request(
                     "GET", get_recipe_info_url, headers=self.headers, data=self.payload)
                 results = response.json()
-                # print(results)
+                print('------------')
+                print(results)
+                print('------------')
                 self.assertTrue(
                     results[intolerance+"Free"], "recipes are not {intolerance}Free".format(intolerance=intolerance))
 
-        intolerances = ["gluten", "dairy"]
         recipes = self.rr.search_recipes(intolerances=intolerances)
         for recipe in recipes:
             get_recipe_info_url = "https://api.spoonacular.com/recipes/{id}/information?{apikey}".format(
-                id=recipe.recipe_id, apikey=apikey7)
+                id=recipe.recipe_id, apikey=apikey4)
             response = requests.request(
                 "GET", get_recipe_info_url, headers=self.headers, data=self.payload)
             results = response.json()
-            # print(results)
+            print(results)
             for intolerance in intolerances:
                 self.assertTrue(
                     results[intolerance+"Free"], "recipes are not {intolerance}Free".format(intolerance=intolerance))

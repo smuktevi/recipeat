@@ -28,7 +28,7 @@ class RecipeRecommender:
         search_recipes_url = "https://api.spoonacular.com/recipes/complexSearch"
         result_option_url = 'instructionsRequired=true&ignorePantry=true&sort={sort}&number={num_results}&limitLicense=true'.format(
             sort="min-missing-ingredients",
-            num_results=2)
+            num_results=5)
         preferences_url = 'diet={diet}&intolerances={intolerances}'.format(
             diet=diet, intolerances=','.join(intolerances))
         ingredients_url = 'includeIngredients=' + ','.join(ingredients)
@@ -36,7 +36,7 @@ class RecipeRecommender:
                             for (key, val) in nutritional_req.items())
         search_url = "{search}?{apikey}&{result_options}&{ingredients}&{nutrition}&{preferences}".format(
             search=search_recipes_url,
-            apikey=apikey5,
+            apikey=apikey4,
             result_options=result_option_url,
             ingredients=ingredients_url,
             nutrition=nutr_url,
@@ -57,7 +57,7 @@ class RecipeRecommender:
                                               for id in list(search_results["id"]))
             recipe_info_url = "{get_recipe}?{apikey}&{recipe_ids}".format(
                 get_recipe=get_bulk_recipe_info_url,
-                apikey=apikey5,
+                apikey=apikey4,
                 recipe_ids=recipe_id_url)
             source_response = requests.request(
                 "GET", recipe_info_url, headers=headers, data=payload)
@@ -92,7 +92,7 @@ class RecipeRecommender:
         # calls Spoonacular to pull ingredients for given recipe ID
         request_url = 'https://api.spoonacular.com/recipes/{}/ingredientWidget.json?'.format(
             recipe_id)
-        url = request_url + apikey5
+        url = request_url + apikey4
         payload = {}
         headers = {
             'Cookie': '__cfduid=dff952ebbf9c020c4f07c314e6bcb9c711613423774'
@@ -122,7 +122,7 @@ class RecipeRecommender:
         # calls Spoonacular to pull recipe directions
         request_url = 'https://api.spoonacular.com/recipes/{}/analyzedInstructions?'.format(
             recipe_id)
-        url = request_url + apikey5
+        url = request_url + apikey4
         payload = {}
         headers = {
             'Cookie': '__cfduid=dff952ebbf9c020c4f07c314e6bcb9c711613423774'
