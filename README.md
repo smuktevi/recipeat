@@ -5,6 +5,12 @@
 Figuring out what to eat based on the food you have in your fridge can be a difficult task for many. This task is made even harder when someone is trying to eat healthy. RecipEat aims to solve this problem by providing healthy recipes that can be made with the food someone has on hand. RecipEat works with a user’s dietary constraints and nutritional goals to provide recipe recommendations that are the most relevant to the user. RecipEat also allows for a visual comparison of recipes so that users can quickly decide which recipe they would rather make. 
 
 ## Modules
+
+### bagofingredients.py
+A class that maintains a user's Bag of Ingredients. A user can:
+* add ingredients to their bag.
+* delete/update ingredients in their bag.
+
 ### recipe_recommender.py
 A class that has methods to search for recipes with given inputs:
 * Desired ingredients (i.e. chicken, potatoes, etc)
@@ -16,6 +22,10 @@ A class that has methods to search for recipes with given inputs:
 A class that has methods to visually compare nutrients and ingredients for selected recipes.
 * the nutrient comparator shows a bargraph of different nutrional information amounts per each recipe
 * the ingredient comparator shows pictures of the ingredients in a selected recipe
+
+### database.py
+A class that acts as a wrapper around psycopg2 to enable easier PostrgreSQL database access.
+* interacts with the Bag of Ingredients to maintain user data in the backend.
 
 
 ## Project Data (or API?)
