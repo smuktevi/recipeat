@@ -6,7 +6,7 @@ Figuring out what to eat based on the food you have in your fridge can be a diff
 
 ## Modules
 
-### bagofingredients.py
+### bag_of_ingredients.py
 A class that maintains a user's Bag of Ingredients. A user can:
 * add ingredients to their bag.
 * delete/update ingredients in their bag.
