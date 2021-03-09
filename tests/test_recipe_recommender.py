@@ -135,7 +135,7 @@ class TestSearchRecipes(unittest.TestCase):
         """
         Test if the Recipes returned meet intolerance requirements
         """
-        intolerances = ["gluten"]#, "dairy"]
+        intolerances = ["gluten"]  # , "dairy"]
         for intolerance in intolerances:
             print('------------')
             print(intolerance)
