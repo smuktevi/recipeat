@@ -6,7 +6,7 @@ from .constants import *
 class RecipeRecommender:
     def search_recipes(self, ingredients: list = [], nutritional_req: dict = {}, diet: str = "", intolerances: list = []):
         search_recipes_url = "https://api.spoonacular.com/recipes/complexSearch"
-        result_option_url = 'instructionsRequired=true&ignorePantry=true&sort=min-missing-ingredients&number=1&limitLicense=true'
+        result_option_url = 'instructionsRequired=true&ignorePantry=true&sort=min-missing-ingredients&number=2&limitLicense=true'
         preferences_url = 'diet={diet}&intolerances={intolerances}'.format(
             diet=diet, intolerances=','.join(intolerances))
         ingredients_url = 'includeIngredients=' + ','.join(ingredients)
@@ -15,7 +15,7 @@ class RecipeRecommender:
 
         search_url = "{search}?{apikey}&{result_options}&{ingredients}&{nutrition}&{preferences}".format(
             search=search_recipes_url,
-            apikey=apikey1,
+            apikey=apikey2,
             result_options=result_option_url,
             ingredients=ingredients_url,
             nutrition=nutr_url,
@@ -42,7 +42,7 @@ class RecipeRecommender:
                                               for id in list(search_results["id"]))
             recipe_info_url = "{get_recipe}?{apikey}&{recipe_ids}".format(
                 get_recipe=get_bulk_recipe_info_url,
-                apikey=apikey1,
+                apikey=apikey2,
                 recipe_ids=recipe_id_url)
 
             source_response = requests.request(
@@ -71,7 +71,7 @@ class RecipeRecommender:
 
         ingredients = []
 
-        url = request_url + apikey1
+        url = request_url + apikey2
         payload = {}
         headers = {
             'Cookie': '__cfduid=dff952ebbf9c020c4f07c314e6bcb9c711613423774'
@@ -95,7 +95,7 @@ class RecipeRecommender:
         request_url = 'https://api.spoonacular.com/recipes/{}/analyzedInstructions?'.format(
             recipe_id)
 
-        url = request_url + apikey1
+        url = request_url + apikey2
         payload = {}
         headers = {
             'Cookie': '__cfduid=dff952ebbf9c020c4f07c314e6bcb9c711613423774'
