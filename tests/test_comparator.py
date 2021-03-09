@@ -6,7 +6,7 @@ import pandas as pd
 
 
 class testComparator(unittest.TestCase):
-    
+
     def test_output_length(self):
         """
         tests HTML output list is the correct length for both nutrient_compare
@@ -25,13 +25,17 @@ class testComparator(unittest.TestCase):
         ingredients = ['chicken', 'potatoes']
         rr = RecipeRecommender()
         cp = Compare()
-        recipe_list = rr.search_recipes(ingredients=ingredients, nutritional_req=nutrients)
-        self.assertEqual(len(recipe_list), len(cp.nutrient_compare(recipe_list)))
-        self.assertEqual(len(recipe_list), len(cp.ingredient_compare(recipe_list)))
+        recipe_list = rr.search_recipes(ingredients=ingredients,
+                                        nutritional_req=nutrients)
+        self.assertEqual(len(recipe_list),
+                         len(cp.nutrient_compare(recipe_list)))
+        self.assertEqual(len(recipe_list),
+                         len(cp.ingredient_compare(recipe_list)))
 
     def test_html_nutrient(self):
         """
-        tests that the HTML format is correct HTML format for nutrient_compare output
+        tests that the HTML format is correct HTML format
+        for nutrient_compare output
 
         Returns:
         """
@@ -48,13 +52,16 @@ class testComparator(unittest.TestCase):
         ingredients = ['chicken', 'potatoes']
         rr = RecipeRecommender()
         cp = Compare()
-        recipe_list = rr.search_recipes(ingredients=ingredients, nutritional_req=nutrients)
+        recipe_list = rr.search_recipes(ingredients=ingredients,
+                                        nutritional_req=nutrients)
         HTML_list = cp.nutrient_compare(recipe_list)
-        self.assertTrue(all(bool(BeautifulSoup(html, "html.parser").find()) for html in HTML_list))
-        
+        self.assertTrue(all(bool(BeautifulSoup(html, "html.parser").find())
+                        for html in HTML_list))
+
     def test_html_ingredients(self):
         """
-        tests that the HTML format is correct HTML format for ingredrient_compare output
+        tests that the HTML format is correct HTML format
+        for ingredrient_compare output
 
         Returns:
         """
@@ -71,7 +78,8 @@ class testComparator(unittest.TestCase):
         ingredients = ['chicken', 'potatoes']
         rr = RecipeRecommender()
         cp = Compare()
-        recipe_list = rr.search_recipes(ingredients=ingredients, nutritional_req=nutrients)
+        recipe_list = rr.search_recipes(ingredients=ingredients,
+                                        nutritional_req=nutrients)
         HTML_list = cp.ingredient_compare(recipe_list)
-        self.assertTrue(all(bool(BeautifulSoup(html, "html.parser").find()) for html in HTML_list))
-        
+        self.assertTrue(all(bool(BeautifulSoup(html, "html.parser").find())
+                        for html in HTML_list))
