@@ -2,5 +2,17 @@
 
 {% block content %}
     <h1>Visual Comparator</h1>
+    {% if ingredient_compare %}
+        <h2>Compare Ingredients</h2>
+        {% for comparison in ingredient_compare %}
+            {{ comparison | safe }}
+        {% endfor %}
+    {% endif %}
+    {% if ingredient_compare %}
+        <h2>Compare Nutrients</h2>
+        {% for comparison in nutrient_compare %}
+            {{ comparison | safe }}
+        {% endfor %}
+    {% endif %}
     <a href="/recipe">Go Back to Recipe Recommender!</a>
 {% endblock %}
