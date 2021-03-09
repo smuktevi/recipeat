@@ -91,11 +91,11 @@
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs pull-right" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="recipe-tab" data-toggle="tab" href="#recipe" role="tab"
+                                <a class="nav-link active" id="recipe-tab-{{recipe.recipe_id}}" data-toggle="tab" href="#recipe-{{recipe.recipe_id}}" role="tab"
                                     aria-controls="recipe" aria-selected="true">Recipe</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab"
+                                <a class="nav-link" id="info-tab-{{recipe.recipe_id}}" data-toggle="tab" href="#info-{{recipe.recipe_id}}" role="tab"
                                     aria-controls="info" aria-selected="false">Ingredients</a>
                             </li>
                         </ul>
@@ -104,7 +104,7 @@
                     <div class="card-body">
                         <div class="tab-content" id="myTabContent">
                             <!-- Recipe Tab -->
-                            <div class="tab-pane show active" id="recipe" role="tabpanel" aria-labelledby="recipe-tab">
+                            <div class="tab-pane show active" id="recipe-{{recipe.recipe_id}}" role="tabpanel" aria-labelledby="recipe-tab-{{recipe.recipe_id}}">
                                 <img class="card-img-top" src={{ recipe.img_url }} alt="Card image cap">
                                 <h5 class="card-title">{{ recipe.recipe_name }}</h5>
                                 <input type="checkbox" id={{ recipe.recipe_id }} name={{ recipe.recipe_id }} value={{ recipe.recipe_id }}>
@@ -112,7 +112,7 @@
                                 <a href={{ recipe.source_url }} class="btn btn-primary">Cook this recipe!</a>
                             </div>
                             <!-- Info Tab -->
-                            <div class="tab-pane" id="info" role="tabpanel" aria-labelledby="info-tab">
+                            <div class="tab-pane" id="info-{{recipe.recipe_id}}" role="tabpanel" aria-labelledby="info-tab-{{recipe.recipe_id}}">
                                 <div class="card-text">
                                     {%for ingredient in recipe.ingredients %}
                                     <p>{{ ingredient}}</p>
