@@ -161,7 +161,7 @@ def ingredients():
 
             # Check if not successful. Return error page.
             if update_success == False:
-                return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage="Cannot update that quantity!")
+                return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage2="Cannot update that quantity!")
 
             # Get the new list to display
             ingredients_list = user_boi.get_boi()
@@ -179,7 +179,7 @@ def ingredients():
 
             # Check if not successful. Return error page.
             if delete_success == False:
-                return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage="Ingredient not in the bag!")
+                return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage3="Ingredient not in the bag!")
 
             # Get the new list to display
             ingredients_list = user_boi.get_boi()
