@@ -2,6 +2,7 @@ language: python
 
 python:
     - 3.7
+    - 3.6
 
 branches:
     only:
@@ -17,7 +18,7 @@ install:
     - pip install pytest-cov==2.7.1
 
 script:
-    - pytest --cov=. tests/user.py
+    - pytest --cov=modules tests/test_user.py
 
 after_success:
     - coverage report
@@ -26,5 +27,6 @@ after_success:
 deploy:
   provider: heroku
   api_key:
-    secure: "b4032cf9-e3fa-4dbc-8abb-b7ce0e13b308"
-  on: main
+    secure: b4032cf9-e3fa-4dbc-8abb-b7ce0e13b308
+  app: recipeat
+  on: recipeat/main
