@@ -30,7 +30,7 @@ A class that acts as a wrapper around psycopg2 to enable easier PostrgreSQL data
 * interacts with the Bag of Ingredients to maintain user data in the backend.
 
 
-## Project Data (or API?)
+## Project Data
 ### Spoonacular: 
 Spoonacular is a Recipe-Food-Nutrition API providing access to over 365,000 recipes through ingredient- and nutrient-based queries. The user can also include keywords or phrases, such as ‘lactose intolerance’, to search for recipes that accommodate any special dietary restrictions or preferences. Additionally, the user can analyze nutritional information for each recipe by utilizing the visualization widgets.
 
