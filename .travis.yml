@@ -16,11 +16,11 @@ install:
     - pip install codecov==2.0.15
     - pip install pytest-cov==2.7.1
 
-before_script:
-    - "flake8 app modules"
-
 script:
     - pytest --cov-report term --cov=investpy tests/
+
+after_script:
+    - "flake8 app modules tests"
 
 after_success:
     - coverage report
