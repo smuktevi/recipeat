@@ -1,10 +1,5 @@
-import pandas as pd
-# from constants import *
 from .constants import *
-import json
 from pyrebase import pyrebase
-from urllib.parse import parse_qsl, urljoin, urlparse
-# from database import Database
 from .database import Database
 
 firebase = pyrebase.initialize_app(config)
@@ -77,10 +72,12 @@ class BagOfIngredients:
             return False
         return True
 
+    '''
     def update_new_boi(self):
         # Deletes boi and adds new one
         
         pass
+    '''
 
 
 # TEST CASES FOR BOI FOR POSTGRESQL
