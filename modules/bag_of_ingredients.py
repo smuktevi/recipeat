@@ -8,7 +8,7 @@ db = firebase.database()  # Get a reference to the database service
 
 class BagOfIngredients:
     def __init__(self, username):
-        self.username = "\'" + username + "\'"  # use a session variable
+        self.username = "'" + username + "'"  # use a session variable
         self.ingredients = []
         self.number_of_ingredients = 0
         self.boi = None
@@ -18,8 +18,10 @@ class BagOfIngredients:
     def get_boi(self):
         # Gets bag of ingredients for a certain User
 
-        #print("Getting Bag of Ingredients from DB>>>\n", self.db.get("bagofingredients", "*", where="user_id="+self.username))
-        self.ingredients = self.db.get("BagOfIngredients", "*", where="user_id="+self.username)
+        # print("Getting Bag of Ingredients from DB>>>\n", self.db.get("bagofingredients", "*", where="user_id="+self.username))
+        self.ingredients = self.db.get(
+            "BagOfIngredients", "*", where="user_id=" + self.username
+        )
         print(">>>>")
         return self.ingredients
 
@@ -27,31 +29,32 @@ class BagOfIngredients:
         # Pushes an ingredient into Bag of Ingredients for the User
 
         columns = "user_id, ingredient, ingredient_name, amount, unit"
-        data = "{0},'{1}','{2}',{3},'{4}'".format(self.username,
-                                            ing.ingredient_full, ing.ingredient, ing.amount, ing.units)
-        print("Pushing "+ing.ingredient_full+" into DB>>> Bag of Ingredients.")
+        data = "{0},'{1}','{2}',{3},'{4}'".format(
+            self.username, ing.ingredient_full, ing.ingredient, ing.amount, ing.units
+        )
+        print("Pushing " + ing.ingredient_full + " into DB>>> Bag of Ingredients.")
         push_success = self.db.write("BagOfIngredients", columns, data)
         self.number_of_ingredients += 1
         self.ingredients.append(ing)
         return push_success
 
-    def delete_all(self):
-        # Deletes all ingredients from Bag for a User
-        try:
-            print("DELETING ALL from BOI with user_id>>>"+self.username)
-            delete_query = "DELETE FROM bagofingredients WHERE user_id="+self.username+";"
-            self.db.query(delete_query)
-        except:
-            print("ERROR OCCURED IN DELETION!")
-            return False
-        return True
-
     def delete_ingredient(self, ingredient_name):
         # Deletes one ingredient
 
         try:
-            print("DELETING ingredient "+ingredient_name+" from BOI with user_id>>>"+self.username)
-            delete_query = "DELETE FROM bagofingredients WHERE user_id="+self.username+ "AND ingredient_name="+ingredient_name+";"
+            print(
+                "DELETING ingredient "
+                + ingredient_name
+                + " from BOI with user_id>>>"
+                + self.username
+            )
+            delete_query = (
+                "DELETE FROM bagofingredients WHERE user_id="
+                + self.username
+                + "AND ingredient_name="
+                + ingredient_name
+                + ";"
+            )
             self.db.query(delete_query)
         except:
             print("ERROR OCCURED IN DELETION!")
@@ -61,23 +64,29 @@ class BagOfIngredients:
     def update_ingredient(self, ingredient_name, new_quantity):
         # Updates ingredient with new quantity
 
-        #NEED TO IMPLEMENT CHECK IF INGREDIENT ALREADY IN BAG.
+        # NEED TO IMPLEMENT CHECK IF INGREDIENT ALREADY IN BAG.
 
         try:
-            print("UPDATING ingredient "+ingredient_name+" from BOI with user_id>>>"+self.username)
-            delete_query = "UPDATE bagofingredients SET amount="+new_quantity+"WHERE user_id="+self.username+"AND ingredient_name="+ingredient_name+";"
+            print(
+                "UPDATING ingredient "
+                + ingredient_name
+                + " from BOI with user_id>>>"
+                + self.username
+            )
+            delete_query = (
+                "UPDATE bagofingredients SET amount="
+                + new_quantity
+                + "WHERE user_id="
+                + self.username
+                + "AND ingredient_name="
+                + ingredient_name
+                + ";"
+            )
             self.db.query(delete_query)
         except:
             print("ERROR OCCURED IN UPDATING!")
             return False
         return True
-
-    '''
-    def update_new_boi(self):
-        # Deletes boi and adds new one
-        
-        pass
-    '''
 
 
 # TEST CASES FOR BOI FOR POSTGRESQL
@@ -85,7 +94,7 @@ class BagOfIngredients:
 # boi_sample.get_boi()
 # boi_sample.push_boi(sample_ingredient)
 
-'''
+"""
 THIS CAN BE USED FOR TESTING FIREBASE (OLD).
 data = sample_user #check constants.py
 
@@ -98,4 +107,4 @@ if authenticated:
     boi_sample.push_boi(sample_user)
     boi_sample.update_boi("diet","non-vegetarian")
     # boi_sample.delete_boi()
-'''
+"""

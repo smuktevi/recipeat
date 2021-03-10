@@ -5,32 +5,47 @@ import unittest
 import pandas as pd
 
 
-class testComparator(unittest.TestCase):
+class TestComparator(unittest.TestCase):
+
+    def __init__(self, *args, **kwargs):
+        super(TestComparator, self).__init__(*args, **kwargs)
+        self.recipe_list, self.cp = [], None
+        self.generate_stubs()
+
+    def generate_stubs(self):
+        self.cp = Compare()
+        self.recipe_list = [
+            Recipe(
+                recipe_id=631763,
+                recipe_name="Warm and Luscious Sipping Chocolate",
+                img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg",
+                ingredients=[
+                    Ingredient(ingredient_name="salt", amount=2),
+                    Ingredient(ingredient_name="potato", amount=3, units="gram"),
+                ],
+                source_url="https://spoonacular.com/recipes/warm-and-luscious-sipping-chocolate-with-xocai-healthy-dark-sipping-xocolate-631763",
+            ),
+            Recipe(
+                recipe_id=632944,
+                recipe_name="Asparagus Soup",
+                img_url="https://spoonacular.com/recipeImages/632944-312x231.jpg",
+                ingredients=[
+                    Ingredient(ingredient_name="not salt", amount=99),
+                    Ingredient(
+                        ingredient_name="not potato", amount=999, units="grammys"
+                    ),
+                ],
+                source_url="https://www.onceuponachef.com/recipes/asparagus-soup-with-lemon-and-parmesan.html",
+            ),
+        ]
 
     def test_output_length(self):
         """
         tests HTML output list is the correct length for both nutrient_compare
         and ingredient_compare
         """
-        nutrients = {
-            'minCarbs': 1,
-            'maxCarbs': 100,
-            'minProtein': 1,
-            'maxProtein': 100,
-            'minCalories': 100,
-            'maxCalories': 1000,
-            'minFat': 1,
-            'maxFat': 100
-            }
-        ingredients = ['chicken', 'potatoes']
-        rr = RecipeRecommender()
-        cp = Compare()
-        recipe_list = rr.search_recipes(ingredients=ingredients,
-                                        nutritional_req=nutrients)
-        self.assertEqual(len(recipe_list),
-                         len(cp.nutrient_compare(recipe_list)))
-        self.assertEqual(len(recipe_list),
-                         len(cp.ingredient_compare(recipe_list)))
+        self.assertEqual(len(self.recipe_list), len(self.cp.nutrient_compare(self.recipe_list)))
+        self.assertEqual(len(self.recipe_list), len(self.cp.ingredient_compare(self.recipe_list)))
 
     def test_html_nutrient(self):
         """
@@ -39,24 +54,11 @@ class testComparator(unittest.TestCase):
 
         Returns:
         """
-        nutrients = {
-            'minCarbs': 1,
-            'maxCarbs': 100,
-            'minProtein': 1,
-            'maxProtein': 100,
-            'minCalories': 100,
-            'maxCalories': 1000,
-            'minFat': 1,
-            'maxFat': 100
-        }
-        ingredients = ['chicken', 'potatoes']
-        rr = RecipeRecommender()
-        cp = Compare()
-        recipe_list = rr.search_recipes(ingredients=ingredients,
-                                        nutritional_req=nutrients)
-        HTML_list = cp.nutrient_compare(recipe_list)
-        self.assertTrue(all(bool(BeautifulSoup(html, "html.parser").find())
-                        for html in HTML_list))
+        
+        HTML_list = self.cp.nutrient_compare(self.recipe_list)
+        self.assertTrue(
+            all(bool(BeautifulSoup(html, "html.parser").find()) for html in HTML_list)
+        )
 
     def test_html_ingredients(self):
         """
@@ -65,21 +67,7 @@ class testComparator(unittest.TestCase):
 
         Returns:
         """
-        nutrients = {
-            'minCarbs': 1,
-            'maxCarbs': 100,
-            'minProtein': 1,
-            'maxProtein': 100,
-            'minCalories': 100,
-            'maxCalories': 1000,
-            'minFat': 1,
-            'maxFat': 100
-        }
-        ingredients = ['chicken', 'potatoes']
-        rr = RecipeRecommender()
-        cp = Compare()
-        recipe_list = rr.search_recipes(ingredients=ingredients,
-                                        nutritional_req=nutrients)
-        HTML_list = cp.ingredient_compare(recipe_list)
-        self.assertTrue(all(bool(BeautifulSoup(html, "html.parser").find())
-                        for html in HTML_list))
+        HTML_list = self.cp.ingredient_compare(self.recipe_list)
+        self.assertTrue(
+            all(bool(BeautifulSoup(html, "html.parser").find()) for html in HTML_list)
+        )
