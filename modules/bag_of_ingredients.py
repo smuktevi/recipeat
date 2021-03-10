@@ -24,7 +24,9 @@ class BagOfIngredients:
         # Gets bag of ingredients for a certain User
 
         #print("Getting Bag of Ingredients from DB>>>\n", self.db.get("bagofingredients", "*", where="user_id="+self.username))
-        return self.db.get("BagOfIngredients", "*", where="user_id="+self.username)
+        self.ingredients = self.db.get("BagOfIngredients", "*", where="user_id="+self.username)
+        print(">>>>")
+        return self.ingredients
 
     def push_boi(self, ing: Ingredient):
         # Pushes an ingredient into Bag of Ingredients for the User
@@ -63,6 +65,8 @@ class BagOfIngredients:
 
     def update_ingredient(self, ingredient_name, new_quantity):
         # Updates ingredient with new quantity
+
+        #NEED TO IMPLEMENT CHECK IF INGREDIENT ALREADY IN BAG.
 
         try:
             print("UPDATING ingredient "+ingredient_name+" from BOI with user_id>>>"+self.username)
