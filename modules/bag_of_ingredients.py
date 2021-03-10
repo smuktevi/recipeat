@@ -24,15 +24,26 @@ class BagOfIngredients:
         # Gets bag of ingredients for a certain User
 
         #print("Getting Bag of Ingredients from DB>>>\n", self.db.get("bagofingredients", "*", where="user_id="+self.username))
-        return self.db.get("BagOfIngredients", "*", where="user_id="+self.username)
+        return self.db.get(
+            "BagOfIngredients",
+            "*",
+            where="user_id=" +
+            self.username)
 
     def push_boi(self, ing: Ingredient):
         # Pushes an ingredient into Bag of Ingredients for the User
 
         columns = "user_id, ingredient, ingredient_name, amount, unit"
-        data = "{0},'{1}','{2}',{3},'{4}'".format(self.username,
-                                            ing.ingredient_full, ing.ingredient, ing.amount, ing.units)
-        print("Pushing "+ing.ingredient_full+" into DB>>> Bag of Ingredients.")
+        data = "{0},'{1}','{2}',{3},'{4}'".format(
+            self.username,
+            ing.ingredient_full,
+            ing.ingredient,
+            ing.amount,
+            ing.units)
+        print(
+            "Pushing " +
+            ing.ingredient_full +
+            " into DB>>> Bag of Ingredients.")
         push_success = self.db.write("BagOfIngredients", columns, data)
         self.number_of_ingredients += 1
         self.ingredients.append(ing)
@@ -41,34 +52,44 @@ class BagOfIngredients:
     def delete_all(self):
         # Deletes all ingredients from Bag for a User
         try:
-            print("DELETING ALL from BOI with user_id>>>"+self.username)
-            delete_query = "DELETE FROM bagofingredients WHERE user_id="+self.username+";"
+            print("DELETING ALL from BOI with user_id>>>" + self.username)
+            delete_query = "DELETE FROM bagofingredients WHERE user_id=" + self.username + ";"
             self.db.query(delete_query)
-        except:
+        except BaseException:
             print("ERROR OCCURED IN DELETION!")
             return False
         return True
 
     def delete_ingredient(self, ingredient_name):
-        #Deletes one ingredient
+        # Deletes one ingredient
 
         try:
-            print("DELETING ingredient "+ingredient_name+" from BOI with user_id>>>"+self.username)
-            delete_query = "DELETE FROM bagofingredients WHERE user_id="+self.username+ "AND ingredient_name="+ingredient_name+";"
+            print(
+                "DELETING ingredient " +
+                ingredient_name +
+                " from BOI with user_id>>>" +
+                self.username)
+            delete_query = "DELETE FROM bagofingredients WHERE user_id=" + \
+                self.username + "AND ingredient_name=" + ingredient_name + ";"
             self.db.query(delete_query)
-        except:
+        except BaseException:
             print("ERROR OCCURED IN DELETION!")
             return False
         return True
 
     def update_ingredient(self, ingredient_name, new_quantity):
-        #Updates ingredient with new quantity
+        # Updates ingredient with new quantity
 
         try:
-            print("UPDATING ingredient "+ingredient_name+" from BOI with user_id>>>"+self.username)
-            delete_query = "UPDATE bagofingredients SET amount="+new_quantity+"WHERE user_id="+self.username+"AND ingredient_name="+ingredient_name+";"
+            print(
+                "UPDATING ingredient " +
+                ingredient_name +
+                " from BOI with user_id>>>" +
+                self.username)
+            delete_query = "UPDATE bagofingredients SET amount=" + new_quantity + \
+                "WHERE user_id=" + self.username + "AND ingredient_name=" + ingredient_name + ";"
             self.db.query(delete_query)
-        except:
+        except BaseException:
             print("ERROR OCCURED IN UPDATING!")
             return False
         return True

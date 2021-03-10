@@ -9,7 +9,12 @@ from .constants import *
 
 
 class RecipeRecommender:
-    def search_recipes(self, ingredients: list = [], nutritional_req: dict = {}, diet: str = "", intolerances: list = []):
+    def search_recipes(
+            self,
+            ingredients: list = [],
+            nutritional_req: dict = {},
+            diet: str = "",
+            intolerances: list = []):
         """
         Call Spoonacular API with given inputs and finds recipes that meet the requirements.
 
@@ -24,11 +29,11 @@ class RecipeRecommender:
             'Cookie': '__cfduid=d443da310537f29e03b78e744720641111613622052'
         }
 
-        # builds url and calls Spoonacular API to search for recipes with the given input requirements
+        # builds url and calls Spoonacular API to search for recipes with the
+        # given input requirements
         search_recipes_url = "https://api.spoonacular.com/recipes/complexSearch"
         result_option_url = 'instructionsRequired=true&ignorePantry=true&sort={sort}&number={num_results}&limitLicense=true'.format(
-            sort="min-missing-ingredients",
-            num_results=5)
+            sort="min-missing-ingredients", num_results=5)
         preferences_url = 'diet={diet}&intolerances={intolerances}'.format(
             diet=diet, intolerances=','.join(intolerances))
         ingredients_url = 'includeIngredients=' + ','.join(ingredients)
@@ -105,8 +110,17 @@ class RecipeRecommender:
 
         # builds list[Ingredient] for the output
         for index, ingredient in results.iterrows():
-            ingredients.append(Ingredient(ingredient_full=str(ingredient['amount.metric.value']) + " " + ingredient["amount.metric.unit"] + " " +
-                                          ingredient["name"], ingredient_name=ingredient["name"], amount=ingredient["amount.metric.value"], units=ingredient["amount.metric.unit"]))
+            ingredients.append(
+                Ingredient(
+                    ingredient_full=str(
+                        ingredient['amount.metric.value']) +
+                    " " +
+                    ingredient["amount.metric.unit"] +
+                    " " +
+                    ingredient["name"],
+                    ingredient_name=ingredient["name"],
+                    amount=ingredient["amount.metric.value"],
+                    units=ingredient["amount.metric.unit"]))
 
         return ingredients
 

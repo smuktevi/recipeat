@@ -1,8 +1,7 @@
 import unittest
 import requests
-import pandas as pd
 from modules.constants import *
-from modules.recipe_recommender import *
+from modules.recipe_recommender import RecipeRecommender
 
 
 class TestSearchRecipes(unittest.TestCase):
@@ -41,7 +40,10 @@ class TestSearchRecipes(unittest.TestCase):
                 id=recipe.recipe_id, apikey=apikey4)
 
             response = requests.request(
-                "GET", get_nutrition_url, headers=self.headers, data=self.payload)
+                "GET",
+                get_nutrition_url,
+                headers=self.headers,
+                data=self.payload)
             results = response.json()
 
             recipeCalories = int(results["calories"])
@@ -50,20 +52,28 @@ class TestSearchRecipes(unittest.TestCase):
             recipeFat = int(results["fat"][slicer])
 
             self.assertGreaterEqual(
-                nutrients["maxCalories"], recipeCalories, "Recipe calories > maxCalories")
+                nutrients["maxCalories"],
+                recipeCalories,
+                "Recipe calories > maxCalories")
             self.assertGreaterEqual(
                 nutrients["maxCarbs"], recipeCarbs, "Recipe carbs > maxCarbs")
             self.assertGreaterEqual(
-                nutrients["maxProtein"], recipeProtein, "Recipe protein > maxProtein")
+                nutrients["maxProtein"],
+                recipeProtein,
+                "Recipe protein > maxProtein")
             self.assertGreaterEqual(
                 nutrients["maxFat"], recipeFat, "Recipe fat > maxFat")
 
             self.assertLessEqual(
-                nutrients["minCalories"], recipeCalories, "Recipe calories < minCalories")
+                nutrients["minCalories"],
+                recipeCalories,
+                "Recipe calories < minCalories")
             self.assertLessEqual(
                 nutrients["minCarbs"], recipeCarbs, "Recipe carbs < minCarbs")
             self.assertLessEqual(
-                nutrients["minProtein"], recipeProtein, "Recipe protein < minProtein")
+                nutrients["minProtein"],
+                recipeProtein,
+                "Recipe protein < minProtein")
             self.assertLessEqual(
                 nutrients["minFat"], recipeFat, "Recipe fat < minFat")
 
@@ -84,13 +94,14 @@ class TestSearchRecipes(unittest.TestCase):
                 contains_ingredient = contains_ingredient or recipe_ingredient.ingredient in ingredients
 
         self.assertTrue(
-            contains_ingredient, "recipes do not contain at least one provided ingredient")
+            contains_ingredient,
+            "recipes do not contain at least one provided ingredient")
 
     def test_diet_requirements(self):
         """
         Test if the recipes returned meet diet requirements
         """
-        diets = ["glutenFree", "vegetarian", "vegan"]
+        diets = ["gluten free", "vegetarian", "vegan"]
 
         # test gluten-free
         recipes_gf = self.rr.search_recipes(diet=diets[0])
@@ -100,7 +111,10 @@ class TestSearchRecipes(unittest.TestCase):
                 id=recipe.recipe_id, apikey=apikey4)
 
             response = requests.request(
-                "GET", get_recipe_info_url, headers=self.headers, data=self.payload)
+                "GET",
+                get_recipe_info_url,
+                headers=self.headers,
+                data=self.payload)
             results = response.json()
             self.assertTrue(results["glutenFree"],
                             "recipes are not gluten free")
@@ -113,7 +127,10 @@ class TestSearchRecipes(unittest.TestCase):
                 id=recipe.recipe_id, apikey=apikey4)
 
             response = requests.request(
-                "GET", get_recipe_info_url, headers=self.headers, data=self.payload)
+                "GET",
+                get_recipe_info_url,
+                headers=self.headers,
+                data=self.payload)
             results = response.json()
             self.assertTrue(results["vegetarian"],
                             "recipes are not vegetarian")
@@ -126,7 +143,10 @@ class TestSearchRecipes(unittest.TestCase):
                 id=recipe.recipe_id, apikey=apikey4)
 
             response = requests.request(
-                "GET", get_recipe_info_url, headers=self.headers, data=self.payload)
+                "GET",
+                get_recipe_info_url,
+                headers=self.headers,
+                data=self.payload)
             results = response.json()
             # print(results)
             self.assertTrue(results["vegan"], "recipes are not vegan")
@@ -145,25 +165,31 @@ class TestSearchRecipes(unittest.TestCase):
                 get_recipe_info_url = "https://api.spoonacular.com/recipes/{id}/information?{apikey}".format(
                     id=recipe.recipe_id, apikey=apikey4)
                 response = requests.request(
-                    "GET", get_recipe_info_url, headers=self.headers, data=self.payload)
+                    "GET",
+                    get_recipe_info_url,
+                    headers=self.headers,
+                    data=self.payload)
                 results = response.json()
                 print('------------')
                 print(results)
                 print('------------')
-                self.assertTrue(
-                    results[intolerance+"Free"], "recipes are not {intolerance}Free".format(intolerance=intolerance))
+                self.assertTrue(results[intolerance + "Free"],
+                                "recipes are not {intolerance}Free".format(intolerance=intolerance))
 
         recipes = self.rr.search_recipes(intolerances=intolerances)
         for recipe in recipes:
             get_recipe_info_url = "https://api.spoonacular.com/recipes/{id}/information?{apikey}".format(
                 id=recipe.recipe_id, apikey=apikey4)
             response = requests.request(
-                "GET", get_recipe_info_url, headers=self.headers, data=self.payload)
+                "GET",
+                get_recipe_info_url,
+                headers=self.headers,
+                data=self.payload)
             results = response.json()
             print(results)
             for intolerance in intolerances:
-                self.assertTrue(
-                    results[intolerance+"Free"], "recipes are not {intolerance}Free".format(intolerance=intolerance))
+                self.assertTrue(results[intolerance + "Free"],
+                                "recipes are not {intolerance}Free".format(intolerance=intolerance))
 
 
 class TestRecipeToIngredients(unittest.TestCase):
@@ -179,7 +205,7 @@ class TestRecipeToIngredients(unittest.TestCase):
             RecipeRecommender.recipe_to_ingredients("invalid_recipe_id")
         except InvalidRecipeID:
             pass
-        except:
+        except BaseException:
             self.fail("InvalidRecipeID exception was not thrown")
 
     # def test_apikey_out_of_points(self):
@@ -207,7 +233,7 @@ class TestGetRecipeInfo(unittest.TestCase):
             RecipeRecommender.get_recipe_info("invalid_recipe_id")
         except InvalidRecipeID:
             pass
-        except:
+        except BaseException:
             self.fail("InvalidRecipeID exception was not thrown")
 
     # def test_apikey_out_of_points(self):

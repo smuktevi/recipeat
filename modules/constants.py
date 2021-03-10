@@ -27,9 +27,12 @@ db_url = "postgres://fbporsgtkyccmc:846ffc72335cec44f0861518fc4d1acfda4f890f5247
 
 
 def get_postgresql_connection():
-    conn = psycopg2.connect(dbname="d9umass2brvfdv", user="fbporsgtkyccmc",
-                            password="846ffc72335cec44f0861518fc4d1acfda4f890f52471fdb31dda4a637f3932a",
-                            host="ec2-100-24-139-146.compute-1.amazonaws.com", sslmode='require')
+    conn = psycopg2.connect(
+        dbname="d9umass2brvfdv",
+        user="fbporsgtkyccmc",
+        password="846ffc72335cec44f0861518fc4d1acfda4f890f52471fdb31dda4a637f3932a",
+        host="ec2-100-24-139-146.compute-1.amazonaws.com",
+        sslmode='require')
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     return conn
 
@@ -80,7 +83,12 @@ sample_user = {
 
 
 class Preferences:
-    def __init__(self, cuisine: list, intolerances: list, diet: list, calories_per_day: int):
+    def __init__(
+            self,
+            cuisine: list,
+            intolerances: list,
+            diet: list,
+            calories_per_day: int):
         self.cuisine = cuisine
         self.intolerances = intolerances
         self.diet = diet
@@ -88,7 +96,12 @@ class Preferences:
 
 
 class Ingredient:
-    def __init__(self, ingredient_full=None, ingredient_name=None, amount=None, units=None):
+    def __init__(
+            self,
+            ingredient_full=None,
+            ingredient_name=None,
+            amount=None,
+            units=None):
         self.ingredient_full = ingredient_full
         self.ingredient = ingredient_name
         self.amount = amount
@@ -98,11 +111,16 @@ class Ingredient:
     def parse_string(ingredient_full):
         ingredient_string = ingredient_full.split()
         if(len(ingredient_string) == 2):
-            ingredient = Ingredient(ingredient_full=ingredient_full,
-                                    ingredient_name=ingredient_string[1], amount=ingredient_string[0])
+            ingredient = Ingredient(
+                ingredient_full=ingredient_full,
+                ingredient_name=ingredient_string[1],
+                amount=ingredient_string[0])
         else:
-            ingredient = Ingredient(ingredient_full=ingredient_full,
-                                    ingredient_name=ingredient_string[2], amount=ingredient_string[0], units=ingredient_string[1])
+            ingredient = Ingredient(
+                ingredient_full=ingredient_full,
+                ingredient_name=ingredient_string[2],
+                amount=ingredient_string[0],
+                units=ingredient_string[1])
         return ingredient
 
     def __str__(self):
@@ -123,7 +141,14 @@ sample_ingredient = Ingredient(
 
 
 class Recipe:
-    def __init__(self, recipe_id=None, recipe_name: str = None, source_url: str = None, img_url: str = None, description: str = None, ingredients: list = None):
+    def __init__(
+            self,
+            recipe_id=None,
+            recipe_name: str = None,
+            source_url: str = None,
+            img_url: str = None,
+            description: str = None,
+            ingredients: list = None):
         self.recipe_id = recipe_id
         self.recipe_name = recipe_name
         self.source_url = source_url
@@ -132,17 +157,19 @@ class Recipe:
         self.ingredients = ingredients
 
     def __str__(self):
-        return "recipe id: {recipe_id} \n recipe name {recipe_name} \n source_url: {source_url} \n".format(recipe_id=self.recipe_id, recipe_name=self.recipe_name, source_url=self.source_url)
+        return "recipe id: {recipe_id} \n recipe name {recipe_name} \n source_url: {source_url} \n".format(
+            recipe_id=self.recipe_id, recipe_name=self.recipe_name, source_url=self.source_url)
 
 
 def check_api_errors(response):
     response_keys = []
     response_json = response.json()
-    if type(response_json) == dict:
+    if isinstance(response_json, dict):
         response_keys = list(response.json().keys())
         if "status" in response_keys and response_json["status"] == 404 and response_json["code"] == 0:
             raise InvalidRecipeID("Recipe ID is invalid")
-        if "status" in response_keys and response_json["status"] == "failure" and response_json["code"] == 402:
+        if "status" in response_keys and response_json[
+                "status"] == "failure" and response_json["code"] == 402:
             raise ApikeyOutOfPoints(
                 "This API Key is out of points for the day")
 

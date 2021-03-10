@@ -12,7 +12,14 @@ class TestUserRegistration(unittest.TestCase):
         Test an already registered email address. Should return false
         """
         self.assertFalse(
-            User.register_user(username="aa@aa.com", password="", name="", age=1, height=2, weight=3, gender=""))
+            User.register_user(
+                username="aa@aa.com",
+                password="",
+                name="",
+                age=1,
+                height=2,
+                weight=3,
+                gender=""))
 
 
 class TestUserAuthentication(unittest.TestCase):

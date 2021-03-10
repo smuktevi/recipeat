@@ -11,7 +11,14 @@ db = firebase.database()  # Get a reference to the database service
 
 class User:
 
-    def __init__(self, name="", email="", height=0, weight=0, age=0, gender=""):
+    def __init__(
+            self,
+            name="",
+            email="",
+            height=0,
+            weight=0,
+            age=0,
+            gender=""):
         self.name = name
         self.email = email
         self.height = height
@@ -22,7 +29,8 @@ class User:
 
     @staticmethod
     def get_user(username):
-        # TODO Read from firebase realtime database. Build user object and return it.
+        # TODO Read from firebase realtime database. Build user object and
+        # return it.
         conn = get_postgresql_connection()
         cur = conn.cursor()
         command = "select * from Users where user_id = '{}'".format(username)
@@ -42,7 +50,7 @@ class User:
         try:
             auth.sign_in_with_email_and_password(
                 username, password)  # Log the user in
-        except:
+        except BaseException:
             return False
         return True
 
@@ -53,8 +61,8 @@ class User:
             # Writes new user to postgreSQL
             conn = get_postgresql_connection()
             cur = conn.cursor()
-            command = "INSERT INTO Users VALUES('{}','{}','{}',{},{},{},'{}')".format(username, name, username, height,
-                                                                                      weight, age, gender)
+            command = "INSERT INTO Users VALUES('{}','{}','{}',{},{},{},'{}')".format(
+                username, name, username, height, weight, age, gender)
             cur.execute(command)
             cur.close()
             conn.close()
@@ -62,5 +70,5 @@ class User:
             auth.create_user_with_email_and_password(username, password)
 
             return True
-        except:
+        except BaseException:
             return False

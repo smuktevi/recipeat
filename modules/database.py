@@ -66,7 +66,7 @@ class Database:
             )
             self.conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
             self.cursor = self.conn.cursor()
-        except:
+        except BaseException:
             print("Log: Error has occurred while opening database!")
             return False
         print("Log: Opening database!")
@@ -79,7 +79,7 @@ class Database:
         otherwise changes might be lost. You can also manage the database
         connection as a context manager, then the closing is done for you. If
         you opened the database connection with the open() method or with the
-        constructor ( \__init\__() ), you must close the connection with this
+        constructor ( \\__init\\__() ), you must close the connection with this
         method.
 
         param: self
@@ -112,17 +112,18 @@ class Database:
         """
 
         if where:  # check if the query has a where clause
-            query = "SELECT {0} from {1} WHERE {2};".format(columns, table, where)
+            query = "SELECT {0} from {1} WHERE {2};".format(
+                columns, table, where)
         else:
             query = "SELECT {0} from {1};".format(columns, table)
             print(">>>", query)
         try:
             self.cursor.execute(query)
             rows = self.cursor.fetchall()  # fetch data
-        except:
+        except BaseException:
             print("Log: Could not fetch rows!")
             return False
-        return rows[len(rows) - limit if limit else 0 :]
+        return rows[len(rows) - limit if limit else 0:]
 
     def write(self, table, columns, data):
         """
@@ -137,11 +138,12 @@ class Database:
         return: Boolean
         """
 
-        query = "INSERT INTO {0} ({1}) VALUES ({2});".format(table, columns, data)
+        query = "INSERT INTO {0} ({1}) VALUES ({2});".format(
+            table, columns, data)
         print(">>>", query)
         try:
             self.cursor.execute(query)
-        except:
+        except BaseException:
             print("Log: Error in Inserting!")
             return False
         return True
@@ -157,7 +159,7 @@ class Database:
         """
         try:
             self.cursor.execute(sql)
-        except:
+        except BaseException:
             print("Log: Error in query execution!")
             return False
         return True
