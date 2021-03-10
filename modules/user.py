@@ -52,6 +52,7 @@ class User:
         cur.close()
         conn.close()
 
+        # Check if user exists. If not raise Exception.
         if row is None:
             raise Exception("User is not registered")
         new_user = User(name=row[1], email=row[0], height=row[3],
