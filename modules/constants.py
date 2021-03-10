@@ -1,7 +1,6 @@
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
-
 # AVAILABLE API KEYS
 apikey1 = 'apiKey=4078ba908cf14212b9c3754a84a262f5'
 apikey2 = 'apiKey=d18b19ea103f46929e677ecacef2c15c'
@@ -23,7 +22,9 @@ config = {
     "measurementId": "G-SHGP23CXCE"
 }
 
-db_url = "postgres://fbporsgtkyccmc:846ffc72335cec44f0861518fc4d1acfda4f890f52471fdb31dda4a637f3932a@ec2-100-24-139-146.compute-1.amazonaws.com:5432/d9umass2brvfdv"
+db_url = ("postgres://fbporsgtkyccmc:846ffc72335cec44f0861518fc4d1acfda4f890f5"
+          "2471fdb31dda4a637f3932a@ec2-100-24-139-146.compute-1.amazonaws.com:"
+          "5432/d9umass2brvfdv")
 
 
 def get_postgresql_connection():
@@ -96,12 +97,23 @@ class Preferences:
 
 
 class Ingredient:
+    """
+    Ingredient class used to make ingredient objects.
+    """
     def __init__(
             self,
             ingredient_full=None,
             ingredient_name=None,
             amount=None,
             units=None):
+        """
+        Constructor for the Ingredient object.
+
+        :param ingredient_full: String. Full ingredient name
+        :param ingredient_name: String. Ingredient name
+        :param amount: int. Amount of ingredient
+        :param units: String. Unit of ingredient
+        """
         self.ingredient_full = ingredient_full
         self.ingredient = ingredient_name
         self.amount = amount
@@ -109,6 +121,13 @@ class Ingredient:
 
     @staticmethod
     def parse_string(ingredient_full):
+        """
+        Static method used to get an Ingredient object from ingredient
+        full name.
+
+        :param ingredient_full: String. Ingredient full name
+        :return: Ingredient. Returns the constructed ingredient object
+        """
         ingredient_string = ingredient_full.split()
         if(len(ingredient_string) == 2):
             ingredient = Ingredient(
@@ -124,12 +143,22 @@ class Ingredient:
         return ingredient
 
     def __str__(self):
+        """
+        Override __str__ method.
+
+        :return: String. Formatted print for Ingredient object
+        """
         return_str = self.ingredient + " " + str(self.amount)
         if self.units is not None:
             return_str += " " + self.units
         return return_str
 
     def __repr__(self):
+        """
+        Override __repr__ method.
+
+        :return: String. Formatted print for Ingredient object
+        """
         return_str = self.ingredient + " " + str(self.amount)
         if self.units is not None:
             return_str += " " + self.units
@@ -141,6 +170,9 @@ sample_ingredient = Ingredient(
 
 
 class Recipe:
+    """
+    Recipe class for Recipe object.
+    """
     def __init__(
             self,
             recipe_id=None,
@@ -149,6 +181,17 @@ class Recipe:
             img_url: str = None,
             description: str = None,
             ingredients: list = None):
+        """
+        Constructor for the recipe object
+
+        :param recipe_id: int. Recipe id
+        :param recipe_name: String. Recipe name
+        :param source_url: String. Source url for the recipe
+        :param img_url: String. Image url for the recipe
+        :param description: String. Description of the recipe
+        :param ingredients: list(Ingredient). List of the ingredients used to
+        make the recipe.
+        """
         self.recipe_id = recipe_id
         self.recipe_name = recipe_name
         self.source_url = source_url
@@ -157,6 +200,11 @@ class Recipe:
         self.ingredients = ingredients
 
     def __str__(self):
+        """
+        Override __str__ method.
+
+        :return: String. Formatted print for Recipe object
+        """
         return "recipe id: {recipe_id} \n recipe name {recipe_name} \n source_url: {source_url} \n".format(
             recipe_id=self.recipe_id, recipe_name=self.recipe_name, source_url=self.source_url)
 
@@ -166,7 +214,8 @@ def check_api_errors(response):
     response_json = response.json()
     if isinstance(response_json, dict):
         response_keys = list(response.json().keys())
-        if "status" in response_keys and response_json["status"] == 404 and response_json["code"] == 0:
+        if "status" in response_keys and response_json["status"] == 404 and \
+                response_json["code"] == 0:
             raise InvalidRecipeID("Recipe ID is invalid")
         if "status" in response_keys and response_json[
                 "status"] == "failure" and response_json["code"] == 402:
@@ -175,8 +224,14 @@ def check_api_errors(response):
 
 
 class InvalidRecipeID(Exception):
+    """
+    Exception class. Raised when Recipe ID does not exist in the API.
+    """
     pass
 
 
 class ApikeyOutOfPoints(Exception):
+    """
+    Exception class. Raised when API key is out of points.
+    """
     pass

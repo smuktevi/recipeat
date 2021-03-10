@@ -4,11 +4,20 @@ from wtforms.validators import DataRequired
 
 
 class RegisterForm(FlaskForm):
+    """
+    Register form class. Sets up all the required form widgets for
+    registration here.
+    """
     name = StringField('Full Name', validators=[DataRequired()])
+<<<<<<< HEAD
     username = StringField(
         'Username (Email Address)',
         validators=[
             DataRequired()])
+=======
+    username = StringField('Username (Email Address)',
+                           validators=[DataRequired()])
+>>>>>>> develop
     password = PasswordField('Password', validators=[DataRequired()])
     age = IntegerField('Age (Number)')
     height = IntegerField('Height (Number)')

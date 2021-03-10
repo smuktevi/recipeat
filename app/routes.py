@@ -205,12 +205,8 @@ def ingredients():
                 "\'" + ingredient_name + "\'", "\'" + quantity + "\'")
 
             # Check if not successful. Return error page.
-            if not update_success:
-                return render_template(
-                    'ingredients.html',
-                    form=form,
-                    ingredients=ingredients_list,
-                    alertmessage="Cannot update that quantity!")
+            if update_success == False:
+                return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage2="Cannot update that quantity!")
 
             # Get the new list to display
             ingredients_list = user_boi.get_boi()
@@ -234,12 +230,8 @@ def ingredients():
                 "\'" + ingredient_name + "\'")
 
             # Check if not successful. Return error page.
-            if not delete_success:
-                return render_template(
-                    'ingredients.html',
-                    form=form,
-                    ingredients=ingredients_list,
-                    alertmessage="Ingredient not in the bag!")
+            if delete_success == False:
+                return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage3="Ingredient not in the bag!")
 
             # Get the new list to display
             ingredients_list = user_boi.get_boi()
@@ -326,34 +318,8 @@ def recipe():
 
             RR = RecipeRecommender()
             # TODO add intolerances when the search_recipes has been modified
-            #recipe_list = RR.search_recipes(ingredients=chosen_ingredients_names, nutritional_req=nutr, diet=diets)
-            recipe_list = [
-                Recipe(
-                    recipe_id=631763,
-                    recipe_name="Warm and Luscious Sipping Chocolate",
-                    img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg",
-                    ingredients=[
-                        Ingredient(
-                            ingredient_name="salt",
-                            amount=2),
-                        Ingredient(
-                            ingredient_name="potato",
-                            amount=3,
-                            units="gram")],
-                    source_url='https://spoonacular.com/recipes/warm-and-luscious-sipping-chocolate-with-xocai-healthy-dark-sipping-xocolate-631763'),
-                Recipe(
-                    recipe_id=632944,
-                    recipe_name="Asparagus Soup",
-                    img_url="https://spoonacular.com/recipeImages/632944-312x231.jpg",
-                    ingredients=[
-                            Ingredient(
-                                ingredient_name="salt",
-                                amount=2),
-                            Ingredient(
-                                ingredient_name="potato",
-                                amount=3,
-                                units="gram")],
-                    source_url='https://www.onceuponachef.com/recipes/asparagus-soup-with-lemon-and-parmesan.html')]
+            recipe_list = RR.search_recipes(ingredients=chosen_ingredients_names, nutritional_req=nutr, diet=diets)
+            # recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")], source_url='https://spoonacular.com/recipes/warm-and-luscious-sipping-chocolate-with-xocai-healthy-dark-sipping-xocolate-631763'), Recipe(recipe_id=632944, recipe_name="Asparagus Soup", img_url="https://spoonacular.com/recipeImages/632944-312x231.jpg", ingredients=[Ingredient(ingredient_name="not salt", amount=99), Ingredient(ingredient_name="not potato", amount=999, units="grammys")], source_url='https://www.onceuponachef.com/recipes/asparagus-soup-with-lemon-and-parmesan.html')]
             #recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")])]
 
             #recipe_list = []

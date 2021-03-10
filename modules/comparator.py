@@ -1,15 +1,12 @@
-from bs4 import BeautifulSoup
-import re
-import pandas as pd
 import requests
-import seaborn as sns
-import matplotlib.pyplot as plt
-import requests
-from IPython.core.display import display, HTML
 from .constants import *
 
 
 class Compare:
+    """
+    Class that is used to compare recipes.
+    """
+
     def nutrient_compare(self, recipes):
         """
         returns HTML response with a information on nutrients in given recipes
@@ -35,7 +32,8 @@ class Compare:
 
     def ingredient_compare(self, recipes):
         """
-        returns HTML response with a information on ingredients in given recipes
+        returns HTML response with a information on ingredients in given
+        recipes
 
         Args:
             recipes: list of recipe objects
