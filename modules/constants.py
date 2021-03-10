@@ -22,7 +22,9 @@ config = {
     "measurementId": "G-SHGP23CXCE"
 }
 
-db_url = "postgres://fbporsgtkyccmc:846ffc72335cec44f0861518fc4d1acfda4f890f52471fdb31dda4a637f3932a@ec2-100-24-139-146.compute-1.amazonaws.com:5432/d9umass2brvfdv"
+db_url = ("postgres://fbporsgtkyccmc:846ffc72335cec44f0861518fc4d1acfda4f890f5"
+          "2471fdb31dda4a637f3932a@ec2-100-24-139-146.compute-1.amazonaws.com:"
+          "5432/d9umass2brvfdv")
 
 
 def get_postgresql_connection():
