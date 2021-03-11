@@ -14,7 +14,7 @@ class BagOfIngredients:
         self.boi = None
         self.db = Database()
         self.db.open()
-
+        
     def get_boi(self):
         # Gets bag of ingredients for a certain User
 
