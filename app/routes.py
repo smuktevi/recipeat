@@ -219,21 +219,23 @@ def recipe():
             # nutr is the nutrition dictionary to be passed into recipe recommender
             nutr = {}
             if min_carb != "":
-                nutr['minCarbs'] = int(min_carb)
+                nutr['minCarbs'] = str(min_carb)
             if max_carb != "":
-                nutr['maxCarbs'] = int(max_carb)
+                nutr['maxCarbs'] = str(max_carb)
             if min_fat != "":
-                nutr['minFat'] = int(min_fat)
+                nutr['minFat'] = str(min_fat)
             if max_fat != "":
-                nutr['maxFat'] = int(max_fat)
+                nutr['maxFat'] = str(max_fat)
             if min_cal != "":
-                nutr['minCalories'] = int(min_cal)
+                nutr['minCalories'] = str(min_cal)
             if max_cal != "":
-                nutr['maxCalories'] = int(max_cal)
+                nutr['maxCalories'] = str(max_cal)
             if min_protein != "":
-                nutr['minProtein'] = int(min_protein)
+                nutr['minProtein'] = str(min_protein)
             if max_protein != "":
-                nutr['maxProtein'] = int(max_protein)
+                nutr['maxProtein'] = str(max_protein)
+
+            print(nutr)
 
             # intolerances and diets are the lists that will be passed into recipe recommender. May need to check if it is empty or not first
             intolerances = request.form.getlist('intolerances')
