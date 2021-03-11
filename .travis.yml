@@ -31,6 +31,3 @@ deploy:
     app: recipeat-production
     on:
         branch: main
-
-notifications:
-    email: false
