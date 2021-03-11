@@ -24,7 +24,7 @@ class BagOfIngredients:
         )
         print(">>>>")
         return self.ingredients
-        
+
     def push_boi(self, ing: Ingredient):
         # Pushes an ingredient into Bag of Ingredients for the User
 
@@ -40,7 +40,7 @@ class BagOfIngredients:
 
     def delete_ingredient(self, ingredient_name):
         # Deletes one ingredient
-
+        # TODO delete the except part return from database number of delete items
         try:
             print(
                 "DELETING ingredient "
@@ -63,9 +63,7 @@ class BagOfIngredients:
 
     def update_ingredient(self, ingredient_name, new_quantity):
         # Updates ingredient with new quantity
-
-        # NEED TO IMPLEMENT CHECK IF INGREDIENT ALREADY IN BAG.
-
+        # TODO delete the except part return from database number of update items
         try:
             print(
                 "UPDATING ingredient "
