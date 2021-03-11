@@ -2,6 +2,20 @@ import unittest
 from modules.user import User
 
 
+class TestUserConstructor(unittest.TestCase):
+    """
+    This unittest class is used to test the constructor for the User object.
+    """
+
+    def test_user_constructor(self):
+        """
+        Create a user object and see if it is an User object.
+        """
+        user = User(name="AJZ", email="aa@aa.com", height=170, weight=100,
+                    age=0, gender="male")
+        self.assertIsInstance(user, User)
+
+
 class TestUserRegistration(unittest.TestCase):
     """
     This unittest class is used to test the register_user function in the User class.
@@ -12,7 +26,8 @@ class TestUserRegistration(unittest.TestCase):
         Test an already registered email address. Should return false
         """
         self.assertFalse(
-            User.register_user(username="aa@aa.com", password="", name="", age=1, height=2, weight=3, gender=""))
+            User.register_user(username="aa@aa.com", password="", name="",
+                               age=1, height=2, weight=3, gender=""))
 
 
 class TestUserAuthentication(unittest.TestCase):
