@@ -235,7 +235,7 @@ def recipe():
             if max_protein != "":
                 nutr['maxProtein'] = str(max_protein)
 
-            print(nutr)
+            #print(nutr)
 
             # intolerances and diets are the lists that will be passed into recipe recommender. May need to check if it is empty or not first
             intolerances = request.form.getlist('intolerances')
