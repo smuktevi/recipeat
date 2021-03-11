@@ -27,5 +27,6 @@ after_success:
 deploy:
     provider: heroku
     api_key: b4032cf9-e3fa-4dbc-8abb-b7ce0e13b308
+    app: recipeat
     on:
         branch: main
