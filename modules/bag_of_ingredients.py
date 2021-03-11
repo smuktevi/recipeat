@@ -14,7 +14,7 @@ class BagOfIngredients:
         self.boi = None
         self.db = Database()
         self.db.open()
-        
+
     def get_boi(self):
         # Gets bag of ingredients for a certain User
 
@@ -24,7 +24,7 @@ class BagOfIngredients:
         )
         print(">>>>")
         return self.ingredients
-
+        
     def push_boi(self, ing: Ingredient):
         # Pushes an ingredient into Bag of Ingredients for the User
 
