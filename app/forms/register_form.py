@@ -9,15 +9,8 @@ class RegisterForm(FlaskForm):
     registration here.
     """
     name = StringField('Full Name', validators=[DataRequired()])
-<<<<<<< HEAD
-    username = StringField(
-        'Username (Email Address)',
-        validators=[
-            DataRequired()])
-=======
     username = StringField('Username (Email Address)',
                            validators=[DataRequired()])
->>>>>>> develop
     password = PasswordField('Password', validators=[DataRequired()])
     age = IntegerField('Age (Number)')
     height = IntegerField('Height (Number)')

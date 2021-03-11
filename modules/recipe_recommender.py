@@ -1,20 +1,24 @@
 import requests
 import pandas as pd
-from .constants import *
+from .constants import constants
 
 ###########################################################################
 # The RecipeRecommender class allows the user to interact with the
 # Spoonacular API and get recipes that meet the given requirements.
 ###########################################################################
 
+"""
+search_response.request.body
+search_response.json()["results"]
+search_response.status_code
+"""
 
 class RecipeRecommender:
-    def search_recipes(
-            self,
-            ingredients: list = [],
-            nutritional_req: dict = {},
-            diet: str = "",
-            intolerances: list = []):
+    def __init__(self, baseUrl:str = constants.api_base_url):
+        self.baseUrl = baseUrl
+
+    # revert back to original input
+    def search_recipes(self, search_inputs_user:dict = {}):
         """
         Call Spoonacular API with given inputs and finds recipes that meet the requirements.
 
@@ -24,35 +28,23 @@ class RecipeRecommender:
         """
         recipes = []
 
-        payload = {}
-        headers = {
-            'Cookie': '__cfduid=d443da310537f29e03b78e744720641111613622052'
-        }
+        search_url = "{baseUrl}/recipes/searchComplex".format(baseUrl=self.baseUrl)
 
-        # builds url and calls Spoonacular API to search for recipes with the
-        # given input requirements
-        search_recipes_url = "https://api.spoonacular.com/recipes/complexSearch"
-        result_option_url = 'instructionsRequired=true&ignorePantry=true&sort={sort}&number={num_results}&limitLicense=true'.format(
-            sort="min-missing-ingredients", num_results=5)
-        preferences_url = 'diet={diet}&intolerances={intolerances}'.format(
-            diet=diet, intolerances=','.join(intolerances))
-        ingredients_url = 'includeIngredients=' + ','.join(ingredients)
-        nutr_url = '&'.join("{!s}={!r}".format(key, val)
-                            for (key, val) in nutritional_req.items())
-        search_url = "{search}?{apikey}&{result_options}&{ingredients}&{nutrition}&{preferences}".format(
-            search=search_recipes_url,
-            apikey=apikey4,
-            result_options=result_option_url,
-            ingredients=ingredients_url,
-            nutrition=nutr_url,
-            preferences=preferences_url)
-        search_response = requests.request(
-            "GET", search_url, headers=headers, data=payload)
+        search_inputs = {
+            "limitLicense":"true",
+            "ranking":"0",
+            "number":"5"}
 
-        check_api_errors(search_response)
+        search_inputs.update(search_inputs_user)
+
+        search_response = requests.get(search_url,params=search_inputs,headers=constants.api_request_headers)
+
+        constants.check_api_errors(search_response)
 
         search_results = pd.DataFrame(search_response.json()["results"])
 
+        get_bulk_recipe_info_url = "{baseUrl}/recipes/informationBulk".format(baseUrl=self.baseUrl)
+        
         if not search_results.empty:
             search_results = search_results[["id", "image", "title"]]
 

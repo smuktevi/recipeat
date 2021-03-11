@@ -235,3 +235,18 @@ class ApikeyOutOfPoints(Exception):
     Exception class. Raised when API key is out of points.
     """
     pass
+
+api_points = {
+"X-RateLimit-requests-Limit": None,
+"X-RateLimit-requests-Remaining": None,
+"X-RateLimit-results-Limit": None,
+"X-RateLimit-results-Remaining": None,
+"X-RateLimit-tinyrequests-Limit": None,
+"X-RateLimit-tinyrequests-Remaining": None}
+
+api_request_headers ={
+    'x-rapidapi-key': "c65a4130b1msh767c11b9104ee56p1a93cdjsn9f1028eb2e98",
+    'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
+}
+
+api_base_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
