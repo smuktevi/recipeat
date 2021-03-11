@@ -94,6 +94,7 @@ class Ingredient:
     """
     Ingredient class used to make ingredient objects.
     """
+
     def __init__(self, ingredient_full=None, ingredient_name=None, amount=None,
                  units=None):
         """
@@ -161,6 +162,7 @@ class Recipe:
     """
     Recipe class for Recipe object.
     """
+
     def __init__(self, recipe_id=None, recipe_name: str = None,
                  source_url: str = None, img_url: str = None,
                  description: str = None, ingredients: list = None):
@@ -188,34 +190,34 @@ class Recipe:
 
         :return: String. Formatted print for Recipe object
         """
-        return "recipe id: {recipe_id} \n recipe name {recipe_name} \n source_url: {source_url} \n".format(
+        return "recipe id: {recipe_id} \n recipe name {recipe_name} \n source_url: {source_url}".format(
             recipe_id=self.recipe_id, recipe_name=self.recipe_name,
             source_url=self.source_url)
 
-
+api_out_of_points_threshold = 100
 def check_api_errors(response):
-    response_keys = []
-    response_json = response.json()
-    if type(response_json) == dict:
-        response_keys = list(response.json().keys())
-        if "status" in response_keys and response_json["status"] == 404 and \
-                response_json["code"] == 0:
-            raise InvalidRecipeID("Recipe ID is invalid")
-        if "status" in response_keys and response_json[
-            "status"] == "failure" and response_json["code"] == 402:
-            raise ApikeyOutOfPoints(
-                "This API Key is out of points for the day")
+    if int(response.headers["X-RateLimit-requests-Remaining"]) <= api_out_of_points_threshold or int(response.headers["X-RateLimit-results-Remaining"]) <= api_out_of_points_threshold or int(response.headers["X-RateLimit-tinyrequests-Remaining"]) <= api_out_of_points_threshold:
+        raise ApikeyOutOfPoints("This API Key is out of points for the day")
 
-
-class InvalidRecipeID(Exception):
-    """
-    Exception class. Raised when Recipe ID does not exist in the API.
-    """
-    pass
-
-
+"""
+Relevant Headers:
+    "X-RateLimit-requests-Limit": None,
+    "X-RateLimit-requests-Remaining": None,
+    "X-RateLimit-results-Limit": None,
+    "X-RateLimit-results-Remaining": None,
+    "X-RateLimit-tinyrequests-Limit": None,
+    "X-RateLimit-tinyrequests-Remaining": None
+"""
 class ApikeyOutOfPoints(Exception):
     """
     Exception class. Raised when API key is out of points.
     """
     pass
+
+
+api_request_headers = {
+    'x-rapidapi-key': "c65a4130b1msh767c11b9104ee56p1a93cdjsn9f1028eb2e98",
+    'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
+}
+
+api_base_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
