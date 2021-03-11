@@ -25,6 +25,12 @@ after_success:
     - coveralls
 
 deploy:
-  provider: heroku
-  api_key:
+    provider: heroku
+    api_key:
     secure: b4032cf9-e3fa-4dbc-8abb-b7ce0e13b308
+    app: recipeat-production
+    on:
+        branch: main
+
+notifications:
+    email: false
