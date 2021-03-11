@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-from .constants import *
+import modules.constants as constants
 
 ###########################################################################
 # The RecipeRecommender class allows the user to interact with the
@@ -26,7 +26,7 @@ class RecipeRecommender:
         recipes = []
 
         search_url = "{baseUrl}/recipes/complexSearch".format(
-            baseUrl=api_base_url)
+            baseUrl=constants.api_base_url)
 
         search_params = {
             "limitLicense": "true",
@@ -41,20 +41,20 @@ class RecipeRecommender:
             search_params["intolerances"] = ",".join(intolerances)
 
         search_response = requests.get(
-            search_url, params=search_params, headers=api_request_headers)
+            search_url, params=search_params, headers=constants.api_request_headers)
 
-        # check_api_errors(search_response)
+        # constants.check_api_errors(search_response)
 
         search_results = pd.DataFrame(search_response.json()["results"])
 
         if not search_results.empty:
             search_results = search_results[["id", "image", "title"]]
             get_bulk_recipe_info_url = "{baseUrl}/recipes/informationBulk".format(
-                baseUrl=api_base_url)
+                baseUrl=constants.api_base_url)
             get_info_params = {'ids': ','.join(
                 str(id) for id in list(search_results["id"]))}
             get_info_response = requests.get(
-                url=get_bulk_recipe_info_url, params=get_info_params, headers=api_request_headers)
+                url=get_bulk_recipe_info_url, params=get_info_params, headers=constants.api_request_headers)
             get_info_results = pd.DataFrame(get_info_response.json())[
                 ["id", "sourceUrl"]]
             results = search_results.join(get_info_results.set_index(
@@ -63,7 +63,7 @@ class RecipeRecommender:
             # builds list[Recipe] for the output
             for index, recipe in results.iterrows():
                 recipes.append(
-                    Recipe(
+                    constants.Recipe(
                         recipe["id"],
                         recipe["title"],
                         recipe["sourceUrl"],
@@ -88,12 +88,12 @@ class RecipeRecommender:
 
         # calls Spoonacular to pull ingredients for given recipe ID
         get_ingredients_url = "{baseUrl}/recipes/{recipe_id}/ingredientWidget.json".format(
-            baseUrl=api_base_url, recipe_id=recipe_id)
+            baseUrl=constants.api_base_url, recipe_id=recipe_id)
 
         get_ingredients_response = requests.get(
-            url=get_ingredients_url, headers=api_request_headers)
+            url=get_ingredients_url, headers=constants.api_request_headers)
 
-        check_api_errors(get_ingredients_response)
+        constants.check_api_errors(get_ingredients_response)
 
         get_ingredient_results = pd.json_normalize(
             get_ingredients_response.json()["ingredients"])
@@ -101,7 +101,7 @@ class RecipeRecommender:
         # builds list[Ingredient] for the output
         for index, ingredient in get_ingredient_results.iterrows():
             ingredients.append(
-                Ingredient(
+                constants.Ingredient(
                     ingredient_full=str(
                         ingredient['amount.metric.value']) +
                     " " +
@@ -125,12 +125,12 @@ class RecipeRecommender:
         """
         # calls Spoonacular to pull recipe directions
         get_recipe_info_url = "{baseUrl}/recipes/{recipe_id}/information".format(
-            baseUrl=api_base_url, recipe_id=recipe_id)
+            baseUrl=constants.api_base_url, recipe_id=recipe_id)
 
         get_recipe_info_response = requests.get(
-            url=get_recipe_info_url, headers=api_request_headers)
+            url=get_recipe_info_url, headers=constants.api_request_headers)
 
-        check_api_errors(get_recipe_info_response)
+        constants.check_api_errors(get_recipe_info_response)
 
         return get_recipe_info_response
 
