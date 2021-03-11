@@ -1,5 +1,6 @@
 # RecipEat
 [![Build Status](https://api.travis-ci.com/smuktevi/recipeat.svg?branch=main)](https://travis-ci.org/smuktevi/recipeat)
+
 **By: Corina Geier, Jeffery Lai, Edward Lou, Sai Muktevi, Andrew Zhou**
 
 **Here's our Web App: [RecipEat!](https://recipeat-app.herokuapp.com/login)**
