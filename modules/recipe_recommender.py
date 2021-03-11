@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-import .constants
+import modules.constants as constants
 
 ###########################################################################
 # The RecipeRecommender class allows the user to interact with the
