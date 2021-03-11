@@ -16,6 +16,7 @@
         border: 0;
         border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
+
 </style>
 <h1>Recipe Recommender</h1>
 <form action="" method="post" novalidate>
@@ -124,7 +125,9 @@
                                     aria-labelledby="info-tab-{{recipe.recipe_id}}">
                                     <div class="card-text">
                                         {%for ingredient in recipe.ingredients %}
-                                        <p>{{ ingredient}}</p>
+                                        <ol class="list-group list-group-flush">
+                                            <li class="list-group-item">{{ ingredient}}</li>
+                                        </ol>
                                         {% endfor %}
                                     </div>
                                 </div>
