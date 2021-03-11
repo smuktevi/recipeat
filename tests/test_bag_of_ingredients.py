@@ -51,14 +51,6 @@ class TestBagOfIngredients(unittest.TestCase):
         delete_check = boi.delete_ingredient(ingredient_name="anything")
         self.assertTrue(delete_check)
 
-    def test_delete_all_ingredient(self):
-        """
-        Tests to delete all ingredients. Should return True
-        """
-        boi = BagOfIngredients("cc@cc.com")
-        delete_check = boi.delete_all()
-        self.assertTrue(delete_check)
-
     def test_update_ingredient(self):
         """
         Tests to update a specific ingredient. Should return True
