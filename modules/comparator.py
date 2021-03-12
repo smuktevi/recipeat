@@ -26,8 +26,10 @@ class Compare:
             payload = {}
             headers = {
                 "accept": "text/html",
-                "x-rapidapi-key": "c65a4130b1msh767c11b9104ee56p1a93cdjsn9f1028eb2e98",
-                "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+                "x-rapidapi-key": ("c65a4130b1msh767c11b9104"
+                                   "ee56p1a93cdjsn9f1028eb2e98"),
+                "x-rapidapi-host": ("spoonacular-recipe-food"
+                                    "-nutrition-v1.p.rapidapi.com"),
             }
             response = requests.request("GET", url,
                                         headers=headers, data=payload)
@@ -68,8 +70,10 @@ class Compare:
             payload = {}
             headers = {
                 "accept": "text/html",
-                "x-rapidapi-key": "c65a4130b1msh767c11b9104ee56p1a93cdjsn9f1028eb2e98",
-                "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+                "x-rapidapi-key": ("c65a4130b1msh767c11b9104"
+                                   "ee56p1a93cdjsn9f1028eb2e98"),
+                "x-rapidapi-host": ("spoonacular-recipe-food-"
+                                    "nutrition-v1.p.rapidapi.com"),
             }
             response = requests.request("GET", url,
                                         headers=headers, data=payload)
