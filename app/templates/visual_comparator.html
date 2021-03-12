@@ -10,7 +10,7 @@
     }
 </style>
     <h1>Visual Comparator</h1>
-    <button onclick="/recipe">Go Back to Recipe Recommender!</button>
+    <a class="btn btn-primary" role="button" href="/recipe">Go Back to Recipe Recommender!</a>
     {% if msg %}
         <div class="alert alert-danger">
             {{ msg }}
@@ -29,7 +29,7 @@
         {% for comparison in nutrient_compare %}
             {{ comparison | safe }}
         {% endfor %}
-    <a href="/recipe">Go Back to Recipe Recommender!</a>
+    <a class="btn btn-primary" role="button" href="/recipe">Go Back to Recipe Recommender!</a>
     {% endif %}
 
 {% endblock %}

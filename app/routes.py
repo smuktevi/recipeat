@@ -173,7 +173,6 @@ def ingredients():
     return render_template('ingredients.html', form=form, ingredients=ingredients_list)
 
 
-# TODO known bug in the recipe.html. The ingredients tab opens up ingredient of the wrong card. Need to be fixed
 @app.route('/recipe', methods=['GET', 'POST'])
 def recipe():
     form = RecipeForm()
@@ -183,8 +182,6 @@ def recipe():
     for ingredient in ingredients_list:
         choices.append((ingredient[1], ingredient[1]))
     form.ingredients.choices = choices
-
-    global recipe_list
 
     if request.method == 'POST':
 
@@ -282,11 +279,13 @@ def recipe():
     if RecipeRecommender.recipe_recommender is None:
         return render_template('recipe.html', form=form)
     else:
-        return render_template('recipe.html', form=form, recipe_list = RecipeRecommender.recipe_recommender.recipe_list)
+        return render_template('recipe.html', form=form, recipe_list=RecipeRecommender.recipe_recommender.recipe_list)
 
 
 @app.route('/compare', methods=['GET', 'POST'])
 def compare():
+
+    # TODO uncomment out button in visual_compare.html
 
     if Compare.compare is None:
         return render_template('visual_comparator.html')
