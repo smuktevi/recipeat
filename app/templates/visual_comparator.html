@@ -1,23 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+</style>
     <h1>Visual Comparator</h1>
+    <button onclick="/recipe">Go Back to Recipe Recommender!</button>
     {% if msg %}
         <div class="alert alert-danger">
             {{ msg }}
         </div>
         {% endif %}
     {% if ingredient_compare %}
+        <hr>
         <h2>Compare Ingredients</h2>
         {% for comparison in ingredient_compare %}
             {{ comparison | safe }}
         {% endfor %}
     {% endif %}
     {% if ingredient_compare %}
+        <hr>
         <h2>Compare Nutrients</h2>
         {% for comparison in nutrient_compare %}
             {{ comparison | safe }}
         {% endfor %}
-    {% endif %}
     <a href="/recipe">Go Back to Recipe Recommender!</a>
+    {% endif %}
+
 {% endblock %}

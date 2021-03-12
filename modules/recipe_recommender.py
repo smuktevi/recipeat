@@ -9,6 +9,21 @@ import modules.constants as constants
 
 
 class RecipeRecommender:
+
+    recipe_recommender = None
+
+    def __init__(self, recipe_list=[]):
+        self.recipe_list = recipe_list
+
+    @staticmethod
+    def construct_recipe_recommender():
+        if RecipeRecommender.recipe_recommender is None:
+            RecipeRecommender.recipe_recommender = RecipeRecommender()
+            return RecipeRecommender.recipe_recommender
+        else:
+            RecipeRecommender.recipe_recommender.recipe_list = []
+            return RecipeRecommender.recipe_recommender
+
     def search_recipes(
         self,
         ingredients: list = [],
@@ -72,7 +87,7 @@ class RecipeRecommender:
                         RecipeRecommender.recipe_to_ingredients(recipe["id"]),
                     )
                 )
-
+        self.recipe_list = recipes
         return recipes
 
     @staticmethod

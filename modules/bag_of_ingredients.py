@@ -22,7 +22,6 @@ class BagOfIngredients:
         self.ingredients = self.db.get(
             "BagOfIngredients", "*", where="user_id=" + self.username
         )
-        print(">>>>")
         return self.ingredients
 
     def push_boi(self, ing: Ingredient):
@@ -42,12 +41,6 @@ class BagOfIngredients:
         # Deletes one ingredient
         # TODO delete the except part return from database number of delete items
         try:
-            print(
-                "DELETING ingredient "
-                + ingredient_name
-                + " from BOI with user_id>>>"
-                + self.username
-            )
             delete_query = (
                 "DELETE FROM bagofingredients WHERE user_id="
                 + self.username
@@ -65,12 +58,6 @@ class BagOfIngredients:
         # Updates ingredient with new quantity
         # TODO delete the except part return from database number of update items
         try:
-            print(
-                "UPDATING ingredient "
-                + ingredient_name
-                + " from BOI with user_id>>>"
-                + self.username
-            )
             delete_query = (
                 "UPDATE bagofingredients SET amount="
                 + new_quantity
