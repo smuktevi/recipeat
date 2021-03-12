@@ -17,7 +17,8 @@ class RecipeRecommender:
         intolerances: list = [],
     ):
         """
-        Call Spoonacular API with given inputs and finds recipes that meet the requirements.
+        Call Spoonacular API with given inputs and finds recipes that meet
+        the requirements.
 
         param: self, ingredients, nutritional_req, diet, intolerances
 
@@ -41,24 +42,29 @@ class RecipeRecommender:
             search_params["intolerances"] = ",".join(intolerances)
 
         search_response = requests.get(
-            search_url, params=search_params, headers=constants.api_request_headers)
+            search_url, params=search_params,
+            headers=constants.api_request_headers)
 
-        # constants.check_api_errors(search_response)
+        constants.check_api_errors(search_response)
 
         search_results = pd.DataFrame(search_response.json()["results"])
 
         if not search_results.empty:
             search_results = search_results[["id", "image", "title"]]
-            get_bulk_recipe_info_url = "{baseUrl}/recipes/informationBulk".format(
+            get_bulk_recipe_info_url = ("{baseUrl}"
+                                        "/recipes/informationBulk").format(
                 baseUrl=constants.api_base_url)
             get_info_params = {'ids': ','.join(
                 str(id) for id in list(search_results["id"]))}
             get_info_response = requests.get(
-                url=get_bulk_recipe_info_url, params=get_info_params, headers=constants.api_request_headers)
+                url=get_bulk_recipe_info_url,
+                params=get_info_params,
+                headers=constants.api_request_headers)
             get_info_results = pd.DataFrame(get_info_response.json())[
                 ["id", "sourceUrl"]]
             results = search_results.join(get_info_results.set_index(
-                "id"), on="id", how='left', rsuffix='right')[["id", "title", "sourceUrl", "image"]]
+                "id"), on="id", how='left', rsuffix='right')[
+                    ["id", "title", "sourceUrl", "image"]]
 
             # builds list[Recipe] for the output
             for index, recipe in results.iterrows():
@@ -78,7 +84,8 @@ class RecipeRecommender:
     @staticmethod
     def recipe_to_ingredients(recipe_id):
         """
-        Call Spoonacular API to retrieve ingredients required for the given recipe ID.
+        Call Spoonacular API to retrieve ingredients required for the
+        given recipe ID.
 
         param: recipe_id
 
@@ -87,7 +94,9 @@ class RecipeRecommender:
         ingredients = []
 
         # calls Spoonacular to pull ingredients for given recipe ID
-        get_ingredients_url = "{baseUrl}/recipes/{recipe_id}/ingredientWidget.json".format(
+        get_ingredients_url = ("{baseUrl}"
+                               "/recipes/{recipe_id}"
+                               "/ingredientWidget.json").format(
             baseUrl=constants.api_base_url, recipe_id=recipe_id)
 
         get_ingredients_response = requests.get(
@@ -114,7 +123,7 @@ class RecipeRecommender:
 
         return ingredients
 
-    @staticmethod
+    @ staticmethod
     def get_recipe_info(recipe_id):
         """
         Call Spoonacular API to retrieve instructions to make recipe.
@@ -124,7 +133,9 @@ class RecipeRecommender:
         return: json
         """
         # calls Spoonacular to pull recipe directions
-        get_recipe_info_url = "{baseUrl}/recipes/{recipe_id}/information".format(
+        get_recipe_info_url = ("{baseUrl}"
+                               "/recipes/{recipe_id}"
+                               "/information").format(
             baseUrl=constants.api_base_url, recipe_id=recipe_id)
 
         get_recipe_info_response = requests.get(
@@ -133,34 +144,3 @@ class RecipeRecommender:
         constants.check_api_errors(get_recipe_info_response)
 
         return get_recipe_info_response
-
-
-
-# if __name__ == '__main__':
-#     # test code
-#     nutrients = {
-#         'minCarbs': '1',
-#         'maxCarbs': '100',
-#         'minProtein': '1',
-#         'maxProtein': '100',
-#         'minCalories': '100',
-#         'maxCalories': '1000',
-#         'minFat': '1',
-#         'maxFat': '100'
-#     }
-#     ingredients = ['chicken', 'potatoes']
-#     diet = 'vegetarian'
-#     intolerances = 'dairy'
-#     rr = RecipeRecommender()
-#     # response = rr.search_recipes(ingredients=ingredients, nutritional_req=nutrients)
-#     # print(response.json())
-#     for recipe in rr.search_recipes(diet=diet, intolerances=intolerances):
-#         print(recipe)
-
-    #     print(RecipeRecommender.search_recipes(ingredients,nutrients))
-    # print(RecipeRecommender.get_recipe_info('fake').status_code)
-    # print(RecipeRecommender.get_recipe_info(641072))
-
-    # RecipeRecommender.recipe_to_ingredients(641072)
-    # for ingredient in RecipeRecommender.recipe_to_ingredients(641072):
-    #     print(ingredient)
