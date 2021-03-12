@@ -18,7 +18,7 @@ install:
     - pip install pytest-cov==2.7.1
 
 script:
-    - pytest --cov=modules
+    - pytest --cov=modules --cov-config=.coveragerc
 
 after_success:
     - coverage report
