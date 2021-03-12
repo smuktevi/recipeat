@@ -1,8 +1,6 @@
 from bs4 import BeautifulSoup
 from modules.comparator import *
-from modules.recipe_recommender import *
 import unittest
-import pandas as pd
 
 
 class TestComparator(unittest.TestCase):
@@ -13,7 +11,6 @@ class TestComparator(unittest.TestCase):
         self.generate_stubs()
 
     def generate_stubs(self):
-        self.cp = Compare()
         self.recipe_list = [
             Recipe(
                 recipe_id=631763,
@@ -38,14 +35,15 @@ class TestComparator(unittest.TestCase):
                 source_url="https://www.onceuponachef.com/recipes/asparagus-soup-with-lemon-and-parmesan.html",
             ),
         ]
+        self.cp = Compare(self.recipe_list)
 
     def test_output_length(self):
         """
         tests HTML output list is the correct length for both nutrient_compare
         and ingredient_compare
         """
-        self.assertEqual(len(self.recipe_list), len(self.cp.nutrient_compare(self.recipe_list)))
-        self.assertEqual(len(self.recipe_list), len(self.cp.ingredient_compare(self.recipe_list)))
+        self.assertEqual(len(self.recipe_list), len(self.cp.nutrient_compare()))
+        self.assertEqual(len(self.recipe_list), len(self.cp.ingredient_compare()))
 
     def test_html_nutrient(self):
         """
@@ -55,7 +53,7 @@ class TestComparator(unittest.TestCase):
         Returns:
         """
         
-        HTML_list = self.cp.nutrient_compare(self.recipe_list)
+        HTML_list = self.cp.nutrient_compare()
         self.assertTrue(
             all(bool(BeautifulSoup(html, "html.parser").find()) for html in HTML_list)
         )
@@ -67,7 +65,7 @@ class TestComparator(unittest.TestCase):
 
         Returns:
         """
-        HTML_list = self.cp.ingredient_compare(self.recipe_list)
+        HTML_list = self.cp.ingredient_compare()
         self.assertTrue(
             all(bool(BeautifulSoup(html, "html.parser").find()) for html in HTML_list)
         )
