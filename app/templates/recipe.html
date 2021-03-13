@@ -90,6 +90,11 @@
             {% if recipe_list %}
             <p style="padding: 10px;">{{ form.compare_submit() }}</p>
             {% endif %}
+            {% if alertmessage %}
+                <div class="alert alert-danger">
+                    {{ alertmessage }}
+                </div>
+            {% endif %}
             <div class="d-flex flex-wrap">
                 {% for recipe in recipe_list %}
                 <div class="col-sm-6" style="padding:10px">
@@ -137,11 +142,6 @@
                     </div>
                 </div>
                 {% endfor %}
-                {% if alertmessage %}
-                <div class="alert alert-danger">
-                    {{ alertmessage }}
-                </div>
-                {% endif %}
             </div>
         </div>
 </form>
