@@ -9,13 +9,6 @@ class TestSearchRecipes(unittest.TestCase):
     This unittest class is used to test the recipe_recommender module
     """
 
-    def __init__(self, *args, **kwargs):
-        """
-        This is a setup constructor. Used to help unit testing.
-        """
-        super(TestSearchRecipes, self).__init__(*args, **kwargs)
-        self.rr = RecipeRecommender()
-
     def test_search_recipes(self):
         """
         Search for a recipe with given attributes. Should get a list of
@@ -25,7 +18,7 @@ class TestSearchRecipes(unittest.TestCase):
         ingredients = ['potatoes']
         diet = 'vegetarian'
         intolerances = ['dairy']
-        recipe_list = self.rr.search_recipes(ingredients, nutrients, diet,
+        recipe_list = RecipeRecommender.search_recipes(ingredients, nutrients, diet,
                                              intolerances)
         self.assertIsInstance(recipe_list, list)
         self.assertIsInstance(recipe_list[0], Recipe)
