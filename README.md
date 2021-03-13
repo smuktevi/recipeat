@@ -42,65 +42,77 @@ Spoonacular is a Recipe-Food-Nutrition API providing access to over 365,000 reci
 
 ## Directory Structure
 ```bash
-.
-|-- Procfile
-|-- README.md
-|-- __pycache__
-|   |-- config.cpython-38.pyc
-|   `-- recipeat.cpython-38.pyc
 |-- app
-|   |-- __init__.py
-|   |-- __pycache__
-|   |   |-- __init__.cpython-38.pyc
-|   |   `-- routes.cpython-38.pyc
 |   |-- forms
-|   |   |-- __pycache__
-|   |   |   |-- ingredients_form.cpython-38.pyc
-|   |   |   `-- register_form.cpython-38.pyc
 |   |   |-- ingredients_form.py
 |   |   |-- login_form.py
 |   |   |-- recipe_form.py
 |   |   `-- register_form.py
-|   |-- routes.py
 |   |-- static
 |   |   `-- styles
 |   |       `-- base.css
-|   `-- templates
-|       |-- base.html
-|       |-- index.html
-|       |-- ingredients.html
-|       |-- login.html
-|       |-- recipe.html
-|       |-- register.html
-|       `-- visual_comparator.html
+|   |-- templates
+|   |   |-- base.html
+|   |   |-- index.html
+|   |   |-- ingredients.html
+|   |   |-- login.html
+|   |   |-- recipe.html
+|   |   |-- register.html
+|   |   `-- visual_comparator.html
+|   |-- __init__.py
+|   `-- routes.py
 |-- commands
-|   |-- command.py
 |   `-- create_table.py
-|-- config.py
-|-- github_commands.md
+|-- docs
+|   |-- Component\ Specification.pdf
+|   |-- Functional\ Specification.pdf
+|   `-- Technology\ Review.pdf
+|-- htmlcov
+|   |-- coverage_html.js
+|   |-- favicon_32.png
+|   |-- index.html
+|   |-- jquery.ba-throttle-debounce.min.js
+|   |-- jquery.hotkeys.js
+|   |-- jquery.isonscreen.js
+|   |-- jquery.min.js
+|   |-- jquery.tablesorter.min.js
+|   |-- keybd_closed.png
+|   |-- keybd_open.png
+|   |-- modules___init___py.html
+|   |-- modules_bag_of_ingredients_py.html
+|   |-- modules_comparator_py.html
+|   |-- modules_constants_py.html
+|   |-- modules_database_py.html
+|   |-- modules_recipe_recommender_py.html
+|   |-- modules_user_py.html
+|   |-- status.json
+|   `-- style.css
 |-- modules
 |   |-- __init__.py
-|   |-- __pycache__
-|   |   |-- __init__.cpython-38.pyc
-|   |   |-- bag_of_ingredients.cpython-38.pyc
-|   |   |-- constants.cpython-38.pyc
-|   |   |-- database.cpython-38.pyc
-|   |   `-- user.cpython-38.pyc
 |   |-- bag_of_ingredients.py
+|   |-- comparator.py
 |   |-- constants.py
 |   |-- database.py
-|   |-- jsonConverter.py
 |   |-- readme.txt
 |   |-- recipe_recommender.py
 |   `-- user.py
 |-- notebooks
+|   |-- comparator_notebook.ipynb
 |   `-- spoonapi.ipynb
-|-- recipeat.py
-|-- requirements.txt
 |-- tests
 |   |-- __init__.py
-|   |-- test_jsonConverter.py
-|   `-- test_recipe_recommender.py
+|   |-- test_bag_of_ingredients.py
+|   |-- test_comparator.py
+|   |-- test_database.py
+|   |-- test_recipe_recommender.py
+|   `-- test_user.py
+|-- LICENSE
+|-- Procfile
+|-- README.md
+|-- config.py
+|-- github_commands.md
+|-- recipeat.py
+|-- requirements.txt
 `-- wsgi.py
 ```
 
