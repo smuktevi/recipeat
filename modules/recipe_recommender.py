@@ -9,6 +9,10 @@ import modules.constants as constants
 
 
 class RecipeRecommender:
+    """
+    The RecipeRecommender class allows the user to interact with the
+    Spoonacular API and get recipes that meet the given requirements.
+    """
 
     @staticmethod
     def search_recipes(
