@@ -17,6 +17,14 @@ class TestDatabaseConnection(unittest.TestCase):
         """
         self.assertTrue(Database(self.good_url))
 
+    def test_enter_exit(self):
+        """
+        Test if database enter and exit work.
+        """
+        with Database() as mydbconn:
+            self.assertEqual(type(Database()), type(mydbconn))
+            self.assertFalse(mydbconn.close())
+
     def test_open_database_failure(self):
         """
         Test if database connection successful. Should return true.
@@ -72,7 +80,7 @@ class TestDatabaseSelectQuery(unittest.TestCase):
         """
         self.assertTrue(self.db.get(table="bagofingredients", columns="*"))
         self.assertTrue(self.db.get(table="bagofingredients", columns="*",
-                               where="user_id='q@gmail.com'"))   # test where clause
+                               where="user_id='temp_test@gmail.com'"))   # test where clause
 
     def test_select_query_users(self):
         """
@@ -80,7 +88,14 @@ class TestDatabaseSelectQuery(unittest.TestCase):
         """
         self.assertTrue(self.db.get(table="users", columns="*"))
         self.assertTrue(self.db.get(table="users", columns="*",
-                               where="user_id='q@gmail.com'"))   # test where clause
+                               where="user_id='temp_test@gmail.com'"))   # test where clause
+    
+    def test_select_wrong_query(self):
+        """
+        Test if a faulty query returns False for 'get' method.
+        """
+        self.assertFalse(self.db.get(table="table_does_not_exist", columns="*"))
+
     
 class TestDatabaseDeleteQuery(unittest.TestCase):
     """ 
@@ -99,5 +114,7 @@ class TestDatabaseDeleteQuery(unittest.TestCase):
         """
         Test if DELETE works for both Tables.
         """
-        self.assertTrue(self.db.query("DELETE FROM users WHERE user_id='temp_test@gmail.com'"))
-        self.assertTrue(self.db.query("DELETE FROM bagofingredients WHERE user_id='temp_test@gmail.com'"))
+        self.assertTrue(self.db.query("DELETE FROM users WHERE user_id='temp_test@gmail.com'"))     #returns True because we delete user_id
+        self.assertFalse(self.db.query("DELETE FROM bagofingredients WHERE user_id='temp_test@gmail.com'"))     #returns Fakse because we enabled 'on delete cascade' 
+                                                                                                                #for user_id and now user_id doesn't exist in this table
+        self.assertFalse(self.db.query("BAD QUERY"))

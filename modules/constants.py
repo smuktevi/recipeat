@@ -80,16 +80,6 @@ sample_user = {
     "diet": "vegetarian"
 }
 
-
-class Preferences:
-    def __init__(self, cuisine: list, intolerances: list, diet: list,
-                 calories_per_day: int):
-        self.cuisine = cuisine
-        self.intolerances = intolerances
-        self.diet = diet
-        self.calories_per_day = calories_per_day
-
-
 class Ingredient:
     """
     Ingredient class used to make ingredient objects.

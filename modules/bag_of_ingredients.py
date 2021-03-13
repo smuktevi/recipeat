@@ -44,34 +44,35 @@ class BagOfIngredients:
             delete_query = (
                 "DELETE FROM bagofingredients WHERE user_id="
                 + self.username
-                + "AND ingredient_name="
+                + " AND ingredient_name="
                 + ingredient_name
                 + ";"
             )
-            self.db.query(delete_query)
+            print(delete_query)
+            check = self.db.query(delete_query)
         except:
             print("ERROR OCCURED IN DELETION!")
             return False
-        return True
+        return check
 
     def update_ingredient(self, ingredient_name, new_quantity):
         # Updates ingredient with new quantity
         # TODO delete the except part return from database number of update items
         try:
-            delete_query = (
+            update_query = (
                 "UPDATE bagofingredients SET amount="
                 + new_quantity
                 + "WHERE user_id="
                 + self.username
-                + "AND ingredient_name="
+                + " AND ingredient_name="
                 + ingredient_name
                 + ";"
             )
-            self.db.query(delete_query)
+            check = self.db.query(update_query)
         except:
             print("ERROR OCCURED IN UPDATING!")
             return False
-        return True
+        return check
 
 
 # TEST CASES FOR BOI FOR POSTGRESQL

@@ -78,7 +78,7 @@ class Database:
         otherwise changes might be lost. You can also manage the database
         connection as a context manager, then the closing is done for you. If
         you opened the database connection with the open() method or with the
-        constructor ( \__init\__() ), you must close the connection with this
+        constructor, you must close the connection with this
         method.
 
         param: self
@@ -152,6 +152,9 @@ class Database:
         """
         try:
             self.cursor.execute(sql)
+            if ("DELETE" in sql) or ("UPDATE" in sql):
+                if self.cursor.rowcount == 0:
+                    return False
         except:
             print("Log: Error in query execution!")
             return False
