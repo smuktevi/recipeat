@@ -1,5 +1,6 @@
-# render_template() invokes Jinja2 template engine for powerful operations in templates
-from flask import *
+# render_template() invokes Jinja2 template engine for powerful operations in
+# templates
+from flask import session, render_template, request, redirect, url_for, flash
 from app import app
 from app.forms.login_form import LoginForm
 from app.forms.register_form import RegisterForm
@@ -9,10 +10,10 @@ from modules.user import User
 from modules.bag_of_ingredients import BagOfIngredients
 from modules.recipe_recommender import RecipeRecommender
 from modules.comparator import Compare
-from modules.constants import *
+from modules.constants import Recipe, Ingredient, ApikeyOutOfPoints
 import json
 
-# when url inside this function is called the following function executes and returns to the browser page that called it.
+
 @app.route('/index')
 # view function
 def index():
@@ -30,7 +31,11 @@ def login():
     form = LoginForm()
     if 'username' in session:
         username = session['username']
-        return 'Logged in as ' + username + '<br>' + "<a href='/index'>Go to main page!</a><br><b><a href = '/logout'>Click here to log out!</a></b>"
+        return 'Logged in as ' + username + '<br>' + ("<a href='/index'>Go to "
+                                                      "main page!</a><br><b><a"
+                                                      " href = '/logout'>Click"
+                                                      " here to log out!</a></"
+                                                      "b>")
 
     if request.method == 'POST':
         username = request.form['username']
@@ -50,7 +55,8 @@ def login():
         else:
             # Failed login
             unsuccessful = 'Please check your credentials'
-            return render_template('login.html', title='Sign In', form=form, alertmessage=unsuccessful)
+            return render_template('login.html', title='Sign In', form=form,
+                                   alertmessage=unsuccessful)
 
     if form.validate_on_submit():
         flash('Login requested for user {}, remember_me={}'.format(
@@ -73,19 +79,26 @@ def register():
         weight = request.form['weight']
         gender = request.form['gender']
 
-
-        unsuccessful = 'Failed to register account! Check if formats are valid! Check if password is long enough! Email may already be registered! There cannot be empty Fields!'
+        unsuccessful = ('Failed to register account! Check if formats are vali'
+                        'd! Check if password is long enough! Email may alread'
+                        'y be registered! There cannot be empty Fields!')
         if name == "" or age == "" or height == "" or weight == "":
-            return render_template('register.html', title='Register', form=form, alertmessage=unsuccessful)
+            return render_template('register.html', title='Register',
+                                   form=form, alertmessage=unsuccessful)
 
-        register_success = User.register_user(username, password, name, age, height, weight, gender)
+        register_success = User.register_user(username, password, name, age,
+                                              height, weight, gender)
 
         if register_success:
             # Successful Registration
-            return render_template('register.html', title='Register', form=form, successmessage='Successfully Registered Account!')
+            return render_template('register.html', title='Register',
+                                   form=form,
+                                   successmessage=('Successfully Registered Ac'
+                                                   'count!'))
         else:
             # Failed Registration
-            return render_template('register.html', title='Register', form=form, alertmessage=unsuccessful)
+            return render_template('register.html', title='Register',
+                                   form=form, alertmessage=unsuccessful)
 
     if form.validate_on_submit():
         flash('Login requested for user {}, remember_me={}'.format(
@@ -124,57 +137,90 @@ def ingredients():
             units = request.form['units']
 
             if ingredient == "" or quantity == "":
-                return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage="Ingredient and Quantity cannot be empty! Make sure Quantity is a number!")
+                return render_template('ingredients.html', form=form,
+                                       ingredients=ingredients_list,
+                                       alertmessage=("Ingredient and Quantity "
+                                                     "cannot be empty! Make su"
+                                                     "re Quantity is a number!"
+                                                     ))
 
             # Add ingredient to database
-            ingredient_obj = Ingredient(ingredient_full=quantity+" "+units+" "+ingredient, ingredient_name=ingredient, amount=quantity, units=units)
+            ingredient_obj = Ingredient(
+                ingredient_full=quantity+" "+units+" "+ingredient,
+                ingredient_name=ingredient, amount=quantity, units=units)
             push_success = user_boi.push_boi(ingredient_obj)
 
             # Check if push to database was not successful. Return error page.
-            if push_success == False:
-                return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage="Ingredient is already in bag!")
+            if not push_success:
+                return render_template('ingredients.html', form=form,
+                                       ingredients=ingredients_list,
+                                       alertmessage=("Ingredient is already in"
+                                                     " bag!"))
 
             # Get the new list to display
             ingredients_list = user_boi.get_boi()
-            return render_template('ingredients.html', form=form, ingredients=ingredients_list, pushsuccess="Successfully added ingredient!")
+            return render_template('ingredients.html', form=form,
+                                   ingredients=ingredients_list,
+                                   pushsuccess="Successfully added ingredient!"
+                                   )
 
         elif 'update_submit' in request.form:
             ingredient_name = request.form['update_ingredient']
             quantity = request.form['update_quantity']
 
-            if(ingredient_name == "" or quantity == ""):
-                return render_template('ingredients.html', form=form, ingredients=ingredients_list,
-                                       alertmessage2="Ingredient and Quantity cannot be empty! Make sure Quantity is a number!")
+            if ingredient_name == "" or quantity == "":
+                return render_template('ingredients.html', form=form,
+                                       ingredients=ingredients_list,
+                                       alertmessage2=("Ingredient and Quantity"
+                                                      " cannot be empty! Make "
+                                                      "sure Quantity is a numb"
+                                                      "er!"))
 
-            update_success= user_boi.update_ingredient("\'"+ingredient_name+"\'", "\'"+quantity+"\'")
+            update_success = user_boi.update_ingredient(
+                "\'"+ingredient_name+"\'", "\'"+quantity+"\'")
 
             # Check if not successful. Return error page.
-            if update_success == False:
-                return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage2="Cannot update that quantity!")
+            if not update_success:
+                return render_template('ingredients.html', form=form,
+                                       ingredients=ingredients_list,
+                                       alertmessage2=("Cannot update that quan"
+                                                      "tity!"))
 
             # Get the new list to display
             ingredients_list = user_boi.get_boi()
-            return render_template('ingredients.html', form=form, ingredients=ingredients_list, updatesuccess="Successfully updated ingredient!")
-
+            return render_template('ingredients.html', form=form,
+                                   ingredients=ingredients_list,
+                                   updatesuccess=("Successfully updated ingred"
+                                                  "ient!"))
 
         elif 'delete_submit' in request.form:
             ingredient_name = request.form['delete_ingredient']
 
             if ingredient_name == "":
-                return render_template('ingredients.html', form=form, ingredients=ingredients_list,
-                                       alertmessage3="Ingredient cannot be empty!")
+                return render_template('ingredients.html', form=form,
+                                       ingredients=ingredients_list,
+                                       alertmessage3=("Ingredient cannot be em"
+                                                      "pty!"))
 
-            delete_success = user_boi.delete_ingredient("\'"+ingredient_name+"\'")
+            delete_success = user_boi.delete_ingredient(
+                "\'"+ingredient_name+"\'")
 
             # Check if not successful. Return error page.
-            if delete_success == False:
-                return render_template('ingredients.html', form=form, ingredients=ingredients_list, alertmessage3="Ingredient not in the bag!")
+            if not delete_success:
+                return render_template('ingredients.html', form=form,
+                                       ingredients=ingredients_list,
+                                       alertmessage3=("Ingredient not in the b"
+                                                      "ag!"))
 
             # Get the new list to display
             ingredients_list = user_boi.get_boi()
-            return render_template('ingredients.html', form=form, ingredients=ingredients_list, deletesuccess="Successfully deleted ingredient!")
+            return render_template('ingredients.html', form=form,
+                                   ingredients=ingredients_list,
+                                   deletesuccess=("Successfully deleted "
+                                                  "ingredient!"))
 
-    return render_template('ingredients.html', form=form, ingredients=ingredients_list)
+    return render_template('ingredients.html', form=form,
+                           ingredients=ingredients_list)
 
 
 @app.route('/recipe', methods=['GET', 'POST'])
@@ -202,7 +248,8 @@ def recipe():
             min_protein = request.form['min_protein']
             max_protein = request.form['max_protein']
 
-            # nutr is the nutrition dictionary to be passed into recipe recommender
+            # nutr is the nutrition dictionary to be passed into recipe
+            # recommender
             nutr = {}
             if min_carb != "":
                 nutr['minCarbs'] = str(min_carb)
@@ -221,9 +268,8 @@ def recipe():
             if max_protein != "":
                 nutr['maxProtein'] = str(max_protein)
 
-            #print(nutr)
-
-            # intolerances and diets are the lists that will be passed into recipe recommender. May need to check if it is empty or not first
+            # intolerances and diets are the lists that will be passed into
+            # recipe recommender. May need to check if it is empty or not first
             intolerances = request.form.getlist('intolerances')
             diets = request.form.getlist('diets')
             ingredients = request.form.getlist('ingredients')
@@ -233,7 +279,8 @@ def recipe():
             else:
                 diets = diets[0]
 
-            # chosen ingredients is the ingredient list that will need to be passed into recipe recommender
+            # chosen ingredients is the ingredient list that will need to be
+            # passed into recipe recommender
             chosen_ingredients_objects = []
             chosen_ingredients_names = []
             for ingredient in ingredients:
@@ -243,7 +290,10 @@ def recipe():
 
             # TODO add intolerances when the search_recipes has been modified
             try:
-                recipe_list = RecipeRecommender.search_recipes(ingredients=chosen_ingredients_names, nutritional_req=nutr, diet=diets, intolerances=intolerances)
+                recipe_list = RecipeRecommender.search_recipes(
+                    ingredients=chosen_ingredients_names,
+                    nutritional_req=nutr, diet=diets,
+                    intolerances=intolerances)
                 session['recipe_list'] = to_json(recipe_list)
             except ApikeyOutOfPoints:
                 return render_template('recipe.html', form=form,
@@ -252,14 +302,11 @@ def recipe():
                 return render_template('recipe.html', form=form,
                                        empty_search="Back End Error!")
 
-            # recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")], source_url='https://spoonacular.com/recipes/warm-and-luscious-sipping-chocolate-with-xocai-healthy-dark-sipping-xocolate-631763'), Recipe(recipe_id=632944, recipe_name="Asparagus Soup", img_url="https://spoonacular.com/recipeImages/632944-312x231.jpg", ingredients=[Ingredient(ingredient_name="not salt", amount=99), Ingredient(ingredient_name="not potato", amount=999, units="grammys")], source_url='https://www.onceuponachef.com/recipes/asparagus-soup-with-lemon-and-parmesan.html')]
-            #recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")])]
-
-            #recipe_list = []
-
             if len(recipe_list) == 0:
-                return render_template('recipe.html', form=form, empty_search="Found no recipes! Sorry!")
-            return render_template('recipe.html', form=form, recipe_list=recipe_list)
+                return render_template('recipe.html', form=form,
+                                       empty_search="Found no recipes! Sorry!")
+            return render_template('recipe.html', form=form,
+                                   recipe_list=recipe_list)
 
         elif 'compare_submit' in request.form:
             try:
@@ -271,22 +318,26 @@ def recipe():
                         recipe_compare_list.append(recipe)
 
                 if len(recipe_compare_list) < 2:
-                    return render_template('recipe.html', form=form, recipe_list=recipe_list, alertmessage="At least two recipes must be selected!")
+                    return render_template('recipe.html', form=form,
+                                           recipe_list=recipe_list,
+                                           alertmessage=("At least two recipes"
+                                                         " must be selected!"))
 
                 session['compare_list'] = to_json(recipe_compare_list)
-                #recipe_compare_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")]), Recipe(recipe_id=632944, recipe_name="Asparagus Soup", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")])]
-
             except:
                 print("ERROR IN COMPARATOR")
                 redirect('/compare')
-                return render_template('visual_comparator.html', msg="Sorry, please try again, error occurred in the Back End!")
+                return render_template('visual_comparator.html',
+                                       msg=("Sorry, please try again, error oc"
+                                            "curred in the Back End!"))
             return redirect('/compare')
 
     recipe_list = from_json(session['recipe_list'])
-    if len(recipe_list) == 0 :
+    if len(recipe_list) == 0:
         return render_template('recipe.html', form=form)
     else:
-        return render_template('recipe.html', form=form, recipe_list=recipe_list)
+        return render_template('recipe.html', form=form,
+                               recipe_list=recipe_list)
 
 
 @app.route('/compare', methods=['GET', 'POST'])
@@ -303,11 +354,14 @@ def compare():
     if nutrient_compare_html is None or ingredient_compare_html is None:
         return render_template('visual_comparator.html')
     else:
-        return render_template('visual_comparator.html', ingredient_compare=ingredient_compare_html, nutrient_compare=nutrient_compare_html)
+        return render_template('visual_comparator.html',
+                               ingredient_compare=ingredient_compare_html,
+                               nutrient_compare=nutrient_compare_html)
 
 
 def to_json(recipe_list):
-    return json.dumps(recipe_list, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+    return json.dumps(recipe_list, default=lambda o: o.__dict__,
+                      sort_keys=True, indent=4)
 
 
 def from_json(json_list):
@@ -330,9 +384,15 @@ def reconstruct_recipe_list(recipe_dictionary_list):
             ingredient_name = ingredient['ingredient']
             ingredient_amount = ingredient['amount']
             ingredient_unit = ingredient['units']
-            new_ingredient = Ingredient(ingredient_full=ingredient_full_name, ingredient_name=ingredient_name, amount=ingredient_amount, units=ingredient_unit)
+            new_ingredient = Ingredient(ingredient_full=ingredient_full_name,
+                                        ingredient_name=ingredient_name,
+                                        amount=ingredient_amount,
+                                        units=ingredient_unit)
             ingredient_list.append(new_ingredient)
-        new_recipe = Recipe(recipe_id=recipe_id, recipe_name=recipe_name, source_url=recipe_source_url, img_url=recipe_img_url, description=recipe_description, ingredients=ingredient_list)
+        new_recipe = Recipe(recipe_id=recipe_id, recipe_name=recipe_name,
+                            source_url=recipe_source_url,
+                            img_url=recipe_img_url,
+                            description=recipe_description,
+                            ingredients=ingredient_list)
         recipe_list.append(new_recipe)
     return recipe_list
-
