@@ -67,26 +67,6 @@ Spoonacular is a Recipe-Food-Nutrition API providing access to over 365,000 reci
 |   |-- Component\ Specification.pdf
 |   |-- Functional\ Specification.pdf
 |   `-- Technology\ Review.pdf
-|-- htmlcov
-|   |-- coverage_html.js
-|   |-- favicon_32.png
-|   |-- index.html
-|   |-- jquery.ba-throttle-debounce.min.js
-|   |-- jquery.hotkeys.js
-|   |-- jquery.isonscreen.js
-|   |-- jquery.min.js
-|   |-- jquery.tablesorter.min.js
-|   |-- keybd_closed.png
-|   |-- keybd_open.png
-|   |-- modules___init___py.html
-|   |-- modules_bag_of_ingredients_py.html
-|   |-- modules_comparator_py.html
-|   |-- modules_constants_py.html
-|   |-- modules_database_py.html
-|   |-- modules_recipe_recommender_py.html
-|   |-- modules_user_py.html
-|   |-- status.json
-|   `-- style.css
 |-- modules
 |   |-- __init__.py
 |   |-- bag_of_ingredients.py
@@ -96,9 +76,6 @@ Spoonacular is a Recipe-Food-Nutrition API providing access to over 365,000 reci
 |   |-- readme.txt
 |   |-- recipe_recommender.py
 |   `-- user.py
-|-- notebooks
-|   |-- comparator_notebook.ipynb
-|   `-- spoonapi.ipynb
 |-- tests
 |   |-- __init__.py
 |   |-- test_bag_of_ingredients.py
@@ -106,7 +83,6 @@ Spoonacular is a Recipe-Food-Nutrition API providing access to over 365,000 reci
 |   |-- test_database.py
 |   |-- test_recipe_recommender.py
 |   `-- test_user.py
-|-- LICENSE
 |-- Procfile
 |-- README.md
 |-- config.py
