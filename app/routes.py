@@ -13,10 +13,19 @@ from modules.comparator import Compare
 from modules.constants import Recipe, Ingredient, ApikeyOutOfPoints
 import json
 
+"""
+This file is the flask router file. It is used to route from one page to
+another.
+"""
 
 @app.route('/index')
 # view function
 def index():
+    """
+    Index Page. Displays the user data on this page.
+
+    :return: Rendered template for index page.
+    """
     if 'username' in session:
         user = session['name']
         user_obj = User.get_user(session['username'])
@@ -28,6 +37,11 @@ def index():
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    Login page. Has the form for a user to login.
+
+    :return: Rendered template for login page.
+    """
     form = LoginForm()
     if 'username' in session:
         username = session['username']
@@ -68,6 +82,11 @@ def login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    """
+    Register page. Has the form to enter user data to register a new user.
+
+    :return: Rendered template for Register page.
+    """
     form = RegisterForm()
 
     if request.method == 'POST':
@@ -110,6 +129,11 @@ def register():
 
 @app.route('/logout')
 def logout():
+    """
+    Logout page. Pops all the session variables
+
+    :return: Redirect to Login page.
+    """
     # remove the username from the session if it is there
     session.pop('username', None)
     session.pop('password', None)
@@ -123,6 +147,12 @@ def logout():
 
 @app.route('/ingredients', methods=['GET', 'POST'])
 def ingredients():
+    """
+    Ingredients page. Shows the user their ingredients. Also has forms to add,
+    delete, and update their ingredients.
+
+    :return: Rendered template for ingredients page
+    """
     form = IngredientForm()
 
     user_boi = BagOfIngredients(session['username'])
@@ -225,6 +255,14 @@ def ingredients():
 
 @app.route('/recipe', methods=['GET', 'POST'])
 def recipe():
+    """
+    Recipe Recommender page. This page allows a user to select ingredients,
+    nutritional requirements, intolerances, and a diet to find recipes. This
+    page can display the recipes and allow the user to select recipes for
+    comparison.
+
+    :return: Rendered template for recipe page.
+    """
     form = RecipeForm()
     user_boi = BagOfIngredients(session['username'])
     ingredients_list = user_boi.get_boi()
@@ -342,6 +380,12 @@ def recipe():
 
 @app.route('/compare', methods=['GET', 'POST'])
 def compare():
+    """
+    Compare page. This page displays visual comparison of the user's selected
+    recipes to compare.
+
+    :return: Rendered template for comparison page.
+    """
 
     compare_list = from_json(session['compare_list'])
 
@@ -360,17 +404,36 @@ def compare():
 
 
 def to_json(recipe_list):
+    """
+    Function used to serialize a list of recipes.
+
+    :param recipe_list: list(Recipe). list of recipes
+    :return: json. A json dictionary to be serialized.
+    """
     return json.dumps(recipe_list, default=lambda o: o.__dict__,
                       sort_keys=True, indent=4)
 
 
 def from_json(json_list):
+    """
+    Function used to convert a serialized dictionary back to a list of recipes.
+
+    :param json_list: json. A json dictionary.
+    :return: list(Recipe). List of recipes constructed back
+    """
     json_list = json.loads(json_list)
     recipe_list = reconstruct_recipe_list(json_list)
     return recipe_list
 
 
 def reconstruct_recipe_list(recipe_dictionary_list):
+    """
+    This is a helper function used to reconstruct Recipe and Ingredient objects
+    back into their original form from a dictionary.
+
+    :param recipe_dictionary_list: dict. A serialized dictionary.
+    :return: list(Recipe). List of recipes constructed from the dictionary.
+    """
     recipe_list = []
     for recipe_dictionary in recipe_dictionary_list:
         recipe_id = recipe_dictionary['recipe_id']
