@@ -1,5 +1,6 @@
 # RecipEat
 [![Build Status](https://api.travis-ci.com/smuktevi/recipeat.svg?branch=main)](https://travis-ci.org/smuktevi/recipeat)
+[![codecov](https://codecov.io/gh/smuktevi/recipeat/branch/main/graph/badge.svg?token=PM8ZSJ7H0N)](https://codecov.io/gh/smuktevi/recipeat)
 
 **By: Corina Geier, Jeffery Lai, Edward Lou, Sai Muktevi, Andrew Zhou**
 
