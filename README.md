@@ -3,7 +3,7 @@
 [![codecov](https://codecov.io/gh/smuktevi/recipeat/branch/main/graph/badge.svg?token=PM8ZSJ7H0N)](https://codecov.io/gh/smuktevi/recipeat)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-test travis #2
+test travis #3
 
 **By: Corina Geier, Jeffery Lai, Edward Lou, Sai Muktevi, Andrew Zhou**
 
