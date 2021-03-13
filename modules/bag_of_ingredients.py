@@ -7,7 +7,19 @@ db = firebase.database()  # Get a reference to the database service
 
 
 class BagOfIngredients:
+    """
+    BagOfIngredient class. Creates a BagOfIngredient object that can be used to
+    add ingredients, update ingredients, and delete ingredients for a certain
+    user.
+    """
+
     def __init__(self, username):
+        """
+        Constructor for BagOfIngredients. Takes in a username and setups the
+        bag.
+
+        :param username: String. Username (email) of the User.
+        """
         self.username = "'" + username + "'"  # use a session variable
         self.ingredients = []
         self.number_of_ingredients = 0
@@ -16,15 +28,24 @@ class BagOfIngredients:
         self.db.open()
 
     def get_boi(self):
-        # Gets bag of ingredients for a certain User
+        """
+        Queries the database for the user's bag of ingredients and returns a
+        list of ingredients
+
+        :return: list(Ingredient). A list of ingredient objects.
+        """
         self.ingredients = self.db.get(
             "BagOfIngredients", "*", where="user_id=" + self.username
         )
         return self.ingredients
 
     def push_boi(self, ing: Ingredient):
-        # Pushes an ingredient into Bag of Ingredients for the User
+        """
+        Function used to add ingredient to database.
 
+        :param ing: Ingredient. Ingredient to be added
+        :return: Boolean. True if ingredient was added, false otherwise
+        """
         columns = "user_id, ingredient, ingredient_name, amount, unit"
         data = "{0},'{1}','{2}',{3},'{4}'".format(
             self.username, ing.ingredient_full, ing.ingredient, ing.amount,
@@ -36,6 +57,12 @@ class BagOfIngredients:
         return push_success
 
     def delete_ingredient(self, ingredient_name):
+        """
+        Function used to delete a single ingredient from the ingredient list.
+
+        :param ingredient_name: String. Name of ingredient to be deleted.
+        :return: Boolean. True if ingredient was deleted, false otherwise.
+        """
         # Deletes one ingredient
         try:
             delete_query = (
@@ -53,6 +80,13 @@ class BagOfIngredients:
         return check
 
     def update_ingredient(self, ingredient_name, new_quantity):
+        """
+        Function to update the quantity of a certain ingredient.
+
+        :param ingredient_name: String. Name of ingredient to be updated.
+        :param new_quantity: int. New quantity of ingredient.
+        :return: Boolean. True if ingredient was updated, false otherwise.
+        """
         # Updates ingredient with new quantity
         try:
             update_query = (
