@@ -63,7 +63,7 @@ class TestDatabaseInsertQuery(unittest.TestCase):
         """
         Test if insert query works for both Tables.
         """
-        self.assertTrue(self.db.write(table="users", columns="user_id, name, email, height, weight, age, gender, diet, intolerances", data="'temp_test@gmail.com', 'temp', 'q@gmail.com', 999, 999, 12, 'temp', 'temp', 'temp'"))
+        self.assertTrue(self.db.write(table="users", columns="user_id, name, email, height, weight, age, gender, diet, intolerances", data="'temp_test@gmail.com', 'temp', 'temp_test@gmail.com', 999, 999, 12, 'temp', 'temp', 'temp'"))
         self.assertTrue(self.db.write(table="bagofingredients", columns="user_id, ingredient, ingredient_name, amount, unit", data="'temp_test@gmail.com', '12 grams sugar', 'sugar', '12', 'grams'"))
 
 
