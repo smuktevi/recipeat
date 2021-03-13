@@ -1,5 +1,7 @@
 # RecipEat
-[![Build Status](https://api.travis-ci.com/smuktevi/recipeat.svg?branch=main)](https://travis-ci.org/smuktevi/recipeat)
+[![Build Status](https://api.travis-ci.com/smuktevi/recipeat.svg?branch=main)](https://travis-ci.com/github/smuktevi/recipeat)
+[![codecov](https://codecov.io/gh/smuktevi/recipeat/branch/main/graph/badge.svg?token=PM8ZSJ7H0N)](https://codecov.io/gh/smuktevi/recipeat)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **By: Corina Geier, Jeffery Lai, Edward Lou, Sai Muktevi, Andrew Zhou**
 
