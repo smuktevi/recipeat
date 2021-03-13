@@ -12,7 +12,7 @@ class Compare:
         returns HTML response with a information on nutrients in given recipes
 
         Args:
-            recipes: list of recipe objects
+            recipe_list: list of recipe objects
 
         Returns: list of HTML responses with nutrition information graphics
         """
@@ -57,7 +57,7 @@ class Compare:
         on ingredients in given recipes
 
         Args:
-            recipes: list of recipe objects
+            recipe_list: list of recipe objects
 
         Returns: list of HTML responses with ingredient graphics
         """
