@@ -41,6 +41,11 @@ Spoonacular is a Recipe-Food-Nutrition API providing access to over 365,000 reci
 ## PEP 8
 This code follows standards set by Flake-8. The code ignores Flake-8 errors: E722 and W503. E722 does not allow the use of bare 'except'. The code for registering and logging in users requires the use of a bare 'except'. W503 does not allow line break before binary operator. This warning is ignored as it contradicts with W504, which does not allow line break after binary operator. The code follows W504 standards, and therefore W503 is ignored. Flake-8 also ignores one file: app/__init__.py. The import statement in app/__init__.py is required be on the bottom of the file to work, and therefore this file is ignored.
 
+The command used to check flake-8:
+```
+flake8 --ignore=E722,W503 --exclude=app/__init__.py
+```
+
 ## Testing
 
 ## Documentation
