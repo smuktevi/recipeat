@@ -1,5 +1,4 @@
 import requests
-from .constants import *
 
 
 class Compare:
