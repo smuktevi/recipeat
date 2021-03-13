@@ -22,5 +22,8 @@ script:
     - pytest --cov=modules --cov-config=.coveragerc
 
 after_success:
+    - bash <(curl -s https://codecov.io/bash)
     - coverage report
     - coveralls
+language:
+  python
