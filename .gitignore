@@ -6,3 +6,4 @@ __pycache__/*
 .DS_Store
 /commands/command.py
 .ipynb_checkpoints/
+.coverage

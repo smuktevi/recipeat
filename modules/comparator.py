@@ -7,7 +7,8 @@ class Compare:
     Class that is used to compare recipes.
     """
 
-    def nutrient_compare(self, recipes):
+    @staticmethod
+    def nutrient_compare(recipe_list):
         """
         returns HTML response with a information on nutrients in given recipes
 
@@ -17,7 +18,7 @@ class Compare:
         Returns: list of HTML responses with nutrition information graphics
         """
         nutr_html_list = []
-        for recipe in recipes:
+        for recipe in recipe_list:
             url = (
                 "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/{id}"
                 "/nutritionWidget?defaultCss=true"
@@ -45,7 +46,8 @@ class Compare:
             )
         return nutr_html_list
 
-    def ingredient_compare(self, recipes):
+    @staticmethod
+    def ingredient_compare(recipe_list):
         """
         returns HTML response with a information
         on ingredients in given recipes
@@ -56,7 +58,7 @@ class Compare:
         Returns: list of HTML responses with ingredient graphics
         """
         ingrd_html_list = []
-        for recipe in recipes:
+        for recipe in recipe_list:
             url = (
                 "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/{id}"
                 "/ingredientWidget?defaultCss=true"

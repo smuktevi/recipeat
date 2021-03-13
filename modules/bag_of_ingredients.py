@@ -22,7 +22,6 @@ class BagOfIngredients:
         self.ingredients = self.db.get(
             "BagOfIngredients", "*", where="user_id=" + self.username
         )
-        print(">>>>")
         return self.ingredients
 
     def push_boi(self, ing: Ingredient):
@@ -40,53 +39,40 @@ class BagOfIngredients:
 
     def delete_ingredient(self, ingredient_name):
         # Deletes one ingredient
-
+        # TODO delete the except part return from database number of delete items
         try:
-            print(
-                "DELETING ingredient "
-                + ingredient_name
-                + " from BOI with user_id>>>"
-                + self.username
-            )
             delete_query = (
                 "DELETE FROM bagofingredients WHERE user_id="
                 + self.username
-                + "AND ingredient_name="
+                + " AND ingredient_name="
                 + ingredient_name
                 + ";"
             )
-            self.db.query(delete_query)
+            print(delete_query)
+            check = self.db.query(delete_query)
         except:
             print("ERROR OCCURED IN DELETION!")
             return False
-        return True
+        return check
 
     def update_ingredient(self, ingredient_name, new_quantity):
         # Updates ingredient with new quantity
-
-        # NEED TO IMPLEMENT CHECK IF INGREDIENT ALREADY IN BAG.
-
+        # TODO delete the except part return from database number of update items
         try:
-            print(
-                "UPDATING ingredient "
-                + ingredient_name
-                + " from BOI with user_id>>>"
-                + self.username
-            )
-            delete_query = (
+            update_query = (
                 "UPDATE bagofingredients SET amount="
                 + new_quantity
                 + "WHERE user_id="
                 + self.username
-                + "AND ingredient_name="
+                + " AND ingredient_name="
                 + ingredient_name
                 + ";"
             )
-            self.db.query(delete_query)
+            check = self.db.query(update_query)
         except:
             print("ERROR OCCURED IN UPDATING!")
             return False
-        return True
+        return check
 
 
 # TEST CASES FOR BOI FOR POSTGRESQL

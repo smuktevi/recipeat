@@ -105,7 +105,16 @@
 
 <div class="row">
     <div class="column">
-        <h1>Enter Ingredients</h1>
+        {% if deletesuccess %}
+        <div class="alert alert-success">
+            {{ deletesuccess }}
+        </div>
+        {% endif %}
+        {% if alertmessage3 %}
+        <div class="alert alert-danger">
+            {{ alertmessage3 }}
+        </div>
+        {% endif %}
         {% if pushsuccess %}
             <div class="alert alert-success">
                 {{ pushsuccess }}
@@ -116,6 +125,19 @@
             {{ alertmessage }}
         </div>
         {% endif %}
+        {% if updatesuccess %}
+        <div class="alert alert-success">
+            {{ updatesuccess }}
+        </div>
+        {% endif %}
+        {% if alertmessage2 %}
+        <div class="alert alert-danger">
+            {{ alertmessage2 }}
+        </div>
+        {% endif %}
+        
+        <h1>Enter Ingredients</h1>
+        
         <form action="" method="post" novalidate>
             {{ form.hidden_tag() }}
             <p>
@@ -133,16 +155,7 @@
             <p>{{ form.submit() }}</p>
             
             <h1>Update Ingredient</h1>
-            {% if updatesuccess %}
-            <div class="alert alert-success">
-                {{ updatesuccess }}
-            </div>
-            {% endif %}
-            {% if alertmessage2 %}
-            <div class="alert alert-danger">
-                {{ alertmessage2 }}
-            </div>
-            {% endif %}
+           
             {{ form.hidden_tag() }}
             <p>
                 {{ form.update_ingredient.label }}<br>
@@ -155,16 +168,7 @@
             <p>{{ form.update_submit() }}</p>
 
             <h1>Delete Ingredient</h1>
-            {% if deletesuccess %}
-            <div class="alert alert-success">
-                {{ deletesuccess }}
-            </div>
-            {% endif %}
-            {% if alertmessage3 %}
-            <div class="alert alert-danger">
-                {{ alertmessage3 }}
-            </div>
-            {% endif %}
+           
             <p>
                 {{ form.delete_ingredient.label }}<br>
                 {{ form.delete_ingredient(size=32) }}

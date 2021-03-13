@@ -69,7 +69,6 @@ class Database:
         except:
             print("Log: Error has occurred while opening database!")
             return False
-        print("Log: Opening database!")
         return True
 
     def close(self):
@@ -79,7 +78,7 @@ class Database:
         otherwise changes might be lost. You can also manage the database
         connection as a context manager, then the closing is done for you. If
         you opened the database connection with the open() method or with the
-        constructor ( \__init\__() ), you must close the connection with this
+        constructor, you must close the connection with this
         method.
 
         param: self
@@ -91,9 +90,7 @@ class Database:
             self.conn.commit()
             self.cursor.close()
             self.conn.close()
-            print("Log: Closing database!")
             return True
-        print("Log: Error in closing database!")
         return False
 
     def get(self, table, columns="*", limit=None, where=None):
@@ -115,7 +112,6 @@ class Database:
             query = "SELECT {0} from {1} WHERE {2};".format(columns, table, where)
         else:
             query = "SELECT {0} from {1};".format(columns, table)
-            print(">>>", query)
         try:
             self.cursor.execute(query)
             rows = self.cursor.fetchall()  # fetch data
@@ -138,7 +134,6 @@ class Database:
         """
 
         query = "INSERT INTO {0} ({1}) VALUES ({2});".format(table, columns, data)
-        print(">>>", query)
         try:
             self.cursor.execute(query)
         except:
@@ -157,6 +152,9 @@ class Database:
         """
         try:
             self.cursor.execute(sql)
+            if ("DELETE" in sql) or ("UPDATE" in sql):
+                if self.cursor.rowcount == 0:
+                    return False
         except:
             print("Log: Error in query execution!")
             return False

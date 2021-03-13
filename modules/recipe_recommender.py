@@ -9,8 +9,9 @@ import modules.constants as constants
 
 
 class RecipeRecommender:
+
+    @staticmethod
     def search_recipes(
-        self,
         ingredients: list = [],
         nutritional_req: dict = {},
         diet: str = "",
@@ -62,14 +63,16 @@ class RecipeRecommender:
 
             # builds list[Recipe] for the output
             for index, recipe in results.iterrows():
-                recipes.append(constants.Recipe(
-                    recipe["id"],
-                    recipe["title"],
-                    recipe["sourceUrl"],
-                    recipe["image"],
-                    str(RecipeRecommender.get_recipe_info(recipe["id"])),
-                    RecipeRecommender.recipe_to_ingredients(recipe["id"])))
-
+                recipes.append(
+                    constants.Recipe(
+                        recipe["id"],
+                        recipe["title"],
+                        recipe["sourceUrl"],
+                        recipe["image"],
+                        str(RecipeRecommender.get_recipe_info(recipe["id"])),
+                        RecipeRecommender.recipe_to_ingredients(recipe["id"]),
+                    )
+                )
         return recipes
 
     @staticmethod
@@ -130,6 +133,7 @@ class RecipeRecommender:
         constants.check_api_errors(get_recipe_info_response)
 
         return get_recipe_info_response
+
 
 
 # if __name__ == '__main__':
