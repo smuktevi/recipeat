@@ -107,7 +107,7 @@ class User:
             cur.execute(command)
             cur.close()
             conn.close()
-
+            
             auth.create_user_with_email_and_password(username, password)
 
             return True
