@@ -22,12 +22,18 @@ config = {
     "measurementId": "G-SHGP23CXCE"
 }
 
+# PostgreSQL database URL
 db_url = ("postgres://fbporsgtkyccmc:846ffc72335cec44f0861518fc4d1acfda4f890f5"
           "2471fdb31dda4a637f3932a@ec2-100-24-139-146.compute-1.amazonaws.com:"
           "5432/d9umass2brvfdv")
 
 
 def get_postgresql_connection():
+    """
+    Function used to get a connection to the postgreSQL database.
+
+    :return: connection object
+    """
     conn = psycopg2.connect(dbname="d9umass2brvfdv", user="fbporsgtkyccmc",
                             password=("846ffc72335cec44f0861518fc4d1acfda4f890"
                                       "f52471fdb31dda4a637f3932a"),
@@ -146,6 +152,7 @@ class Ingredient:
         return return_str
 
 
+# Sample ingredient object
 sample_ingredient = Ingredient(
     "\'4 cups apple\'", "\'apple\'", "4", "\'cups\'")
 
@@ -188,10 +195,17 @@ class Recipe:
             source_url=self.source_url)
 
 
+# api key point threshold
 api_out_of_points_threshold = 100
 
 
 def check_api_errors(response):
+    """
+    Check that we have enough api points to call to Spoonacular.
+
+    :param response: A response object
+    Raises exception if there are not enough points, otherwise does nothing.
+    """
     if int(response.headers["X-RateLimit-requests-Remaining"]) <= \
             api_out_of_points_threshold or \
             int(response.headers["X-RateLimit-results-Remaining"]) <= \
@@ -208,9 +222,11 @@ class ApikeyOutOfPoints(Exception):
     pass
 
 
+# Rapid API header for spoonacular
 api_request_headers = {
     'x-rapidapi-key': "c65a4130b1msh767c11b9104ee56p1a93cdjsn9f1028eb2e98",
     'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
 }
 
+# Rapid API base URL
 api_base_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"

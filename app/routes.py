@@ -18,6 +18,7 @@ This file is the flask router file. It is used to route from one page to
 another.
 """
 
+
 @app.route('/index')
 # view function
 def index():
