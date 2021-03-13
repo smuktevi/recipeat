@@ -113,3 +113,27 @@ class User:
             return True
         except:
             return False
+
+    @staticmethod
+    def delete_user(username, password):
+        """
+        Static method to delete a user. Requires username and password to
+        confirm delete.
+
+        :param username: String. Username (email) of the User.
+        :param password: String. Password of the User.
+        :return: Boolean. True if successfully deleted, false otherwise.
+        """
+        try:
+            user = auth.sign_in_with_email_and_password(username, password)
+            auth.delete_user_account(id_token=user['idToken'])
+
+            conn = get_postgresql_connection()
+            cur = conn.cursor()
+            command = "DELETE FROM Users where user_id = '{}'".format(username)
+            cur.execute(command)
+            cur.close()
+            conn.close()
+            return True
+        except:
+            return False
