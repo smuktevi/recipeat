@@ -116,11 +116,9 @@ class RecipeRecommender:
             ingredients.append(
                 constants.Ingredient(
                     ingredient_full=str(
-                        ingredient['amount.metric.value']) +
-                    " " +
-                    ingredient["amount.metric.unit"] +
-                    " " +
-                    ingredient["name"],
+                        ingredient['amount.metric.value']) + " "
+                    + ingredient["amount.metric.unit"] + " "
+                    + ingredient["name"],
                     ingredient_name=ingredient["name"],
                     amount=ingredient["amount.metric.value"],
                     units=ingredient["amount.metric.unit"]))

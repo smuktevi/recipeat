@@ -45,8 +45,7 @@ class Compare:
             nutr_html_list.append(
                 '<div class="header"><h3>{recipe_name}</h3></div>'.format(
                     recipe_name=recipe.recipe_name
-                )
-                + response.text
+                ) + response.text
             )
         return nutr_html_list
 
@@ -82,7 +81,6 @@ class Compare:
             ingrd_html_list.append(
                 '<div class="header"><h3>{recipe_name}</h3></div>'.format(
                     recipe_name=recipe.recipe_name
-                )
-                + response.text
+                ) + response.text
             )
         return ingrd_html_list

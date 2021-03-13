@@ -177,7 +177,7 @@ def ingredients():
 
             # Add ingredient to database
             ingredient_obj = Ingredient(
-                ingredient_full=quantity+" "+units+" "+ingredient,
+                ingredient_full=quantity + " " + units + " " + ingredient,
                 ingredient_name=ingredient, amount=quantity, units=units)
             push_success = user_boi.push_boi(ingredient_obj)
 
@@ -208,7 +208,7 @@ def ingredients():
                                                       "er!"))
 
             update_success = user_boi.update_ingredient(
-                "\'"+ingredient_name+"\'", "\'"+quantity+"\'")
+                "\'" + ingredient_name + "\'", "\'" + quantity + "\'")
 
             # Check if not successful. Return error page.
             if not update_success:
@@ -234,7 +234,7 @@ def ingredients():
                                                       "pty!"))
 
             delete_success = user_boi.delete_ingredient(
-                "\'"+ingredient_name+"\'")
+                "\'" + ingredient_name + "\'")
 
             # Check if not successful. Return error page.
             if not delete_success:
