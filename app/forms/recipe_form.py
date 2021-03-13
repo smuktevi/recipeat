@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import *
+from wtforms import IntegerField, SelectMultipleField, SubmitField
 
 
 class RecipeForm(FlaskForm):

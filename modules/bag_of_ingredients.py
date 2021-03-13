@@ -1,4 +1,4 @@
-from .constants import *
+from .constants import config, Ingredient
 from pyrebase import pyrebase
 from .database import Database
 
@@ -17,8 +17,6 @@ class BagOfIngredients:
 
     def get_boi(self):
         # Gets bag of ingredients for a certain User
-
-        # print("Getting Bag of Ingredients from DB>>>\n", self.db.get("bagofingredients", "*", where="user_id="+self.username))
         self.ingredients = self.db.get(
             "BagOfIngredients", "*", where="user_id=" + self.username
         )
@@ -29,9 +27,9 @@ class BagOfIngredients:
 
         columns = "user_id, ingredient, ingredient_name, amount, unit"
         data = "{0},'{1}','{2}',{3},'{4}'".format(
-            self.username, ing.ingredient_full, ing.ingredient, ing.amount, ing.units
+            self.username, ing.ingredient_full, ing.ingredient, ing.amount,
+            ing.units
         )
-        print("Pushing " + ing.ingredient_full + " into DB>>> Bag of Ingredients.")
         push_success = self.db.write("BagOfIngredients", columns, data)
         self.number_of_ingredients += 1
         self.ingredients.append(ing)
@@ -39,7 +37,6 @@ class BagOfIngredients:
 
     def delete_ingredient(self, ingredient_name):
         # Deletes one ingredient
-        # TODO delete the except part return from database number of delete items
         try:
             delete_query = (
                 "DELETE FROM bagofingredients WHERE user_id="
@@ -57,7 +54,6 @@ class BagOfIngredients:
 
     def update_ingredient(self, ingredient_name, new_quantity):
         # Updates ingredient with new quantity
-        # TODO delete the except part return from database number of update items
         try:
             update_query = (
                 "UPDATE bagofingredients SET amount="
@@ -73,24 +69,3 @@ class BagOfIngredients:
             print("ERROR OCCURED IN UPDATING!")
             return False
         return check
-
-
-# TEST CASES FOR BOI FOR POSTGRESQL
-# boi_sample = BagOfIngredients(username)
-# boi_sample.get_boi()
-# boi_sample.push_boi(sample_ingredient)
-
-"""
-THIS CAN BE USED FOR TESTING FIREBASE (OLD).
-data = sample_user #check constants.py
-
-# CRUD operations example with predefined user from constants.py
-boi_sample = BagOfIngredients()
-authenticated = boi_sample.authenticate_user(username, password)
-if authenticated:
-    print("AUTHENTICATED!!")
-    boi_sample.get_boi()
-    boi_sample.push_boi(sample_user)
-    boi_sample.update_boi("diet","non-vegetarian")
-    # boi_sample.delete_boi()
-"""

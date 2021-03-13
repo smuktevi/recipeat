@@ -29,7 +29,8 @@ db_url = ("postgres://fbporsgtkyccmc:846ffc72335cec44f0861518fc4d1acfda4f890f5"
 
 def get_postgresql_connection():
     conn = psycopg2.connect(dbname="d9umass2brvfdv", user="fbporsgtkyccmc",
-                            password="846ffc72335cec44f0861518fc4d1acfda4f890f52471fdb31dda4a637f3932a",
+                            password=("846ffc72335cec44f0861518fc4d1acfda4f890"
+                                      "f52471fdb31dda4a637f3932a"),
                             host="ec2-100-24-139-146.compute-1.amazonaws.com",
                             sslmode='require')
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
@@ -79,6 +80,7 @@ sample_user = {
     ],
     "diet": "vegetarian"
 }
+
 
 class Ingredient:
     """
@@ -180,24 +182,25 @@ class Recipe:
 
         :return: String. Formatted print for Recipe object
         """
-        return "recipe id: {recipe_id} \n recipe name {recipe_name} \n source_url: {source_url}".format(
+        return ("recipe id: {recipe_id} \n recipe name {recipe_name} \n"
+                " source_url: {source_url}").format(
             recipe_id=self.recipe_id, recipe_name=self.recipe_name,
             source_url=self.source_url)
 
+
 api_out_of_points_threshold = 100
+
+
 def check_api_errors(response):
-    if int(response.headers["X-RateLimit-requests-Remaining"]) <= api_out_of_points_threshold or int(response.headers["X-RateLimit-results-Remaining"]) <= api_out_of_points_threshold or int(response.headers["X-RateLimit-tinyrequests-Remaining"]) <= api_out_of_points_threshold:
+    if int(response.headers["X-RateLimit-requests-Remaining"]) <= \
+            api_out_of_points_threshold or \
+            int(response.headers["X-RateLimit-results-Remaining"]) <= \
+            api_out_of_points_threshold or \
+            int(response.headers["X-RateLimit-tinyrequests-Remaining"]) \
+            <= api_out_of_points_threshold:
         raise ApikeyOutOfPoints("This API Key is out of points for the day")
 
-"""
-Relevant Headers:
-    "X-RateLimit-requests-Limit": None,
-    "X-RateLimit-requests-Remaining": None,
-    "X-RateLimit-results-Limit": None,
-    "X-RateLimit-results-Remaining": None,
-    "X-RateLimit-tinyrequests-Limit": None,
-    "X-RateLimit-tinyrequests-Remaining": None
-"""
+
 class ApikeyOutOfPoints(Exception):
     """
     Exception class. Raised when API key is out of points.

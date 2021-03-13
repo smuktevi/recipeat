@@ -1,6 +1,6 @@
 import psycopg2
-from .constants import *
-from urllib.parse import parse_qsl, urljoin, urlparse
+from .constants import db_url, ISOLATION_LEVEL_AUTOCOMMIT
+from urllib.parse import urlparse
 
 ###########################################################################
 # The Database class is a high-level wrapper around the psycopg2
@@ -39,8 +39,9 @@ class Database:
 
     def open(self, url=None):
         """
-        Opens a new database connection. This function manually opens a new database connection. The database
-        can also be opened in the constructor or as a context manager.
+        Opens a new database connection. This function manually opens a new
+        database connection. The database can also be opened in the
+        constructor or as a context manager.
 
         param: self
 
@@ -86,7 +87,8 @@ class Database:
         return: Boolean
         """
 
-        if self.conn:  # Execute set of closing statements for database connection.
+        # Execute set of closing statements for database connection.
+        if self.conn:
             self.conn.commit()
             self.cursor.close()
             self.conn.close()
@@ -108,8 +110,10 @@ class Database:
             False - if query fails
         """
 
-        if where:  # check if the query has a where clause
-            query = "SELECT {0} from {1} WHERE {2};".format(columns, table, where)
+        # check if the query has a where clause
+        if where:
+            query = "SELECT {0} from {1} WHERE {2};".format(columns, table,
+                                                            where)
         else:
             query = "SELECT {0} from {1};".format(columns, table)
         try:
@@ -118,7 +122,7 @@ class Database:
         except:
             print("Log: Could not fetch rows!")
             return False
-        return rows[len(rows) - limit if limit else 0 :]
+        return rows[len(rows) - limit if limit else 0:]
 
     def write(self, table, columns, data):
         """
@@ -133,7 +137,8 @@ class Database:
         return: Boolean
         """
 
-        query = "INSERT INTO {0} ({1}) VALUES ({2});".format(table, columns, data)
+        query = "INSERT INTO {0} ({1}) VALUES ({2});".format(table, columns,
+                                                             data)
         try:
             self.cursor.execute(query)
         except:
