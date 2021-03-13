@@ -3,6 +3,7 @@ from modules.bag_of_ingredients import BagOfIngredients
 from modules.constants import Ingredient
 import pytest
 
+
 class TestBagOfIngredients(unittest.TestCase):
     """
     This unittest class is used to test the bag_of_ingredients module.
@@ -42,8 +43,8 @@ class TestBagOfIngredients(unittest.TestCase):
         """
         boi = BagOfIngredients("aa@aa.com")
         boi.push_boi(Ingredient(ingredient_full="10 grams salt",
-                                             ingredient_name="salt", amount=10,
-                                             units="grams"))
+                                ingredient_name="salt", amount=10,
+                                units="grams"))
         push_check = boi.push_boi(Ingredient(ingredient_full="10 grams salt",
                                              ingredient_name="salt", amount=10,
                                              units="grams"))
@@ -55,7 +56,8 @@ class TestBagOfIngredients(unittest.TestCase):
         Tests to delete an ingredient. Should return True
         """
         boi = BagOfIngredients("aa@aa.com")
-        delete_check_failure = boi.delete_ingredient(ingredient_name="'ingredient_does_not_exist'")
+        delete_check_failure = boi.delete_ingredient(
+            ingredient_name="'ingredient_does_not_exist'")
         self.assertFalse(delete_check_failure)
 
         print("delete success check")
@@ -74,7 +76,8 @@ class TestBagOfIngredients(unittest.TestCase):
         update_check = boi.update_ingredient(ingredient_name="'salt'",
                                              new_quantity="10")
         self.assertTrue(update_check)
-        self.assertFalse(boi.update_ingredient(ingredient_name=None, new_quantity=None))
+        self.assertFalse(boi.update_ingredient(ingredient_name=None,
+                                               new_quantity=None))
 
 
 if __name__ == '__main__':

@@ -18,8 +18,8 @@ class TestSearchRecipes(unittest.TestCase):
         ingredients = ['potatoes']
         diet = 'vegetarian'
         intolerances = ['dairy']
-        recipe_list = RecipeRecommender.search_recipes(ingredients, nutrients, diet,
-                                             intolerances)
+        recipe_list = RecipeRecommender.search_recipes(ingredients, nutrients,
+                                                       diet, intolerances)
         self.assertIsInstance(recipe_list, list)
         self.assertIsInstance(recipe_list[0], Recipe)
 

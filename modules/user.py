@@ -1,4 +1,4 @@
-from .constants import *
+from .constants import config, get_postgresql_connection
 from pyrebase import pyrebase
 from .bag_of_ingredients import BagOfIngredients
 
@@ -101,13 +101,11 @@ class User:
             conn = get_postgresql_connection()
             cur = conn.cursor()
             command = "INSERT INTO Users VALUES('{}', '{}', '{}', {}, {}, " \
-                      "{}, '{}')".format(
-                username, name, username, height,
-                weight, age, gender)
+                      "{}, '{}')".format(username, name, username, height,
+                                         weight, age, gender)
             cur.execute(command)
             cur.close()
             conn.close()
-            
             auth.create_user_with_email_and_password(username, password)
 
             return True

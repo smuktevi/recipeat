@@ -20,7 +20,8 @@ class TestUserConstructor(unittest.TestCase):
 
 class TestUserRegistration(unittest.TestCase):
     """
-    This unittest class is used to test the register_user function in the User class.
+    This unittest class is used to test the register_user function in the
+    User class.
     """
 
     @pytest.mark.order(17)
@@ -45,7 +46,8 @@ class TestUserRegistration(unittest.TestCase):
 
 class TestUserAuthentication(unittest.TestCase):
     """
-    This unittest class is used to test the authenticate_user function in the User class.
+    This unittest class is used to test the authenticate_user function in the
+    User class.
     """
 
     @pytest.mark.order(19)
