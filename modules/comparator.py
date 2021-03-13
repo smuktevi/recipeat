@@ -7,25 +7,8 @@ class Compare:
     Class that is used to compare recipes.
     """
 
-    compare = None
-
-    def __init__(self, recipe_list=[]):
-        self.recipe_list = recipe_list
-
     @staticmethod
-    def construct_compare(recipe_list):
-        #print("construct compare was called")
-        if Compare.compare is None:
-            #print("Constructing new object")
-            Compare.compare = Compare(recipe_list)
-            return Compare.compare
-        else:
-            #print("Using same object, replacing recipe_list")
-            Compare.compare.recipe_list = recipe_list
-            return Compare.compare
-
-
-    def nutrient_compare(self):
+    def nutrient_compare(recipe_list):
         """
         returns HTML response with a information on nutrients in given recipes
 
@@ -35,7 +18,7 @@ class Compare:
         Returns: list of HTML responses with nutrition information graphics
         """
         nutr_html_list = []
-        for recipe in self.recipe_list:
+        for recipe in recipe_list:
             url = (
                 "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/{id}"
                 "/nutritionWidget?defaultCss=true"
@@ -63,7 +46,8 @@ class Compare:
             )
         return nutr_html_list
 
-    def ingredient_compare(self):
+    @staticmethod
+    def ingredient_compare(recipe_list):
         """
         returns HTML response with a information
         on ingredients in given recipes
@@ -74,7 +58,7 @@ class Compare:
         Returns: list of HTML responses with ingredient graphics
         """
         ingrd_html_list = []
-        for recipe in self.recipe_list:
+        for recipe in recipe_list:
             url = (
                 "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/{id}"
                 "/ingredientWidget?defaultCss=true"

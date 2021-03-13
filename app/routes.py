@@ -10,6 +10,7 @@ from modules.bag_of_ingredients import BagOfIngredients
 from modules.recipe_recommender import RecipeRecommender
 from modules.comparator import Compare
 from modules.constants import *
+import json
 
 # when url inside this function is called the following function executes and returns to the browser page that called it.
 @app.route('/index')
@@ -41,6 +42,8 @@ def login():
             # Successful login
             session['username'] = username
             session['password'] = password
+            session['recipe_list'] = to_json([])
+            session['compare_list'] = to_json([])
             user_obj = User.get_user(username)
             session['name'] = user_obj.name
             return redirect(url_for('index'))
@@ -98,6 +101,8 @@ def logout():
     session.pop('username', None)
     session.pop('password', None)
     session.pop('user_obj', None)
+    session.pop('recipe_list', None)
+    session.pop('compare_list', None)
     Compare.compare = None
     RecipeRecommender.recipe_recommender = None
     return redirect(url_for('login'))
@@ -131,7 +136,6 @@ def ingredients():
 
             # Get the new list to display
             ingredients_list = user_boi.get_boi()
-            print(">>>>>>>",ingredients_list)     #logging
             return render_template('ingredients.html', form=form, ingredients=ingredients_list, pushsuccess="Successfully added ingredient!")
 
         elif 'update_submit' in request.form:
@@ -237,10 +241,10 @@ def recipe():
                 chosen_ingredients_objects.append(ingredient_obj)
                 chosen_ingredients_names.append(ingredient_obj.ingredient)
 
-            RR = RecipeRecommender.construct_recipe_recommender()
             # TODO add intolerances when the search_recipes has been modified
             try:
-                RR.search_recipes(ingredients=chosen_ingredients_names, nutritional_req=nutr, diet=diets, intolerances=intolerances)
+                recipe_list = RecipeRecommender.search_recipes(ingredients=chosen_ingredients_names, nutritional_req=nutr, diet=diets, intolerances=intolerances)
+                session['recipe_list'] = to_json(recipe_list)
             except ApikeyOutOfPoints:
                 return render_template('recipe.html', form=form,
                                        empty_search="No more API points!")
@@ -252,23 +256,24 @@ def recipe():
             #recipe_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")])]
 
             #recipe_list = []
-            if len(RR.recipe_list) == 0:
-                return render_template('recipe.html', form=form, empty_search="Found no recipes! Sorry!")
 
-            return render_template('recipe.html', form=form, recipe_list=RecipeRecommender.recipe_recommender.recipe_list)
+            if len(recipe_list) == 0:
+                return render_template('recipe.html', form=form, empty_search="Found no recipes! Sorry!")
+            return render_template('recipe.html', form=form, recipe_list=recipe_list)
 
         elif 'compare_submit' in request.form:
             try:
 
                 recipe_compare_list = []
-                for recipe in RecipeRecommender.recipe_recommender.recipe_list:
+                recipe_list = from_json(session['recipe_list'])
+                for recipe in recipe_list:
                     if str(recipe.recipe_id) in request.form:
                         recipe_compare_list.append(recipe)
 
                 if len(recipe_compare_list) < 2:
-                    return render_template('recipe.html', form=form, recipe_list=RecipeRecommender.recipe_recommender.recipe_list, alertmessage="At least two recipes must be selected!")
+                    return render_template('recipe.html', form=form, recipe_list=recipe_list, alertmessage="At least two recipes must be selected!")
 
-                Compare.construct_compare(recipe_compare_list)
+                session['compare_list'] = to_json(recipe_compare_list)
                 #recipe_compare_list = [Recipe(recipe_id=631763, recipe_name="Warm and Luscious Sipping Chocolate", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")]), Recipe(recipe_id=632944, recipe_name="Asparagus Soup", img_url="https://spoonacular.com/recipeImages/631763-312x231.jpg", ingredients=[Ingredient(ingredient_name="salt", amount=2), Ingredient(ingredient_name="potato", amount=3, units="gram")])]
 
             except:
@@ -276,24 +281,58 @@ def recipe():
                 redirect('/compare')
                 return render_template('visual_comparator.html', msg="Sorry, please try again, error occurred in the Back End!")
             return redirect('/compare')
-    if RecipeRecommender.recipe_recommender is None:
+
+    recipe_list = from_json(session['recipe_list'])
+    if len(recipe_list) == 0 :
         return render_template('recipe.html', form=form)
     else:
-        return render_template('recipe.html', form=form, recipe_list=RecipeRecommender.recipe_recommender.recipe_list)
+        return render_template('recipe.html', form=form, recipe_list=recipe_list)
 
 
 @app.route('/compare', methods=['GET', 'POST'])
 def compare():
 
-    # TODO uncomment out button in visual_compare.html
+    compare_list = from_json(session['compare_list'])
 
-    if Compare.compare is None:
+    if len(compare_list) == 0:
         return render_template('visual_comparator.html')
 
-    nutrient_compare_html = Compare.compare.nutrient_compare()
-    ingredient_compare_html = Compare.compare.ingredient_compare()
+    nutrient_compare_html = Compare.nutrient_compare(compare_list)
+    ingredient_compare_html = Compare.ingredient_compare(compare_list)
 
     if nutrient_compare_html is None or ingredient_compare_html is None:
         return render_template('visual_comparator.html')
     else:
         return render_template('visual_comparator.html', ingredient_compare=ingredient_compare_html, nutrient_compare=nutrient_compare_html)
+
+
+def to_json(recipe_list):
+    return json.dumps(recipe_list, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
+
+def from_json(json_list):
+    json_list = json.loads(json_list)
+    recipe_list = reconstruct_recipe_list(json_list)
+    return recipe_list
+
+
+def reconstruct_recipe_list(recipe_dictionary_list):
+    recipe_list = []
+    for recipe_dictionary in recipe_dictionary_list:
+        recipe_id = recipe_dictionary['recipe_id']
+        recipe_name = recipe_dictionary['recipe_name']
+        recipe_source_url = recipe_dictionary['source_url']
+        recipe_img_url = recipe_dictionary['img_url']
+        recipe_description = recipe_dictionary['description']
+        ingredient_list = []
+        for ingredient in recipe_dictionary['ingredients']:
+            ingredient_full_name = ingredient['ingredient_full']
+            ingredient_name = ingredient['ingredient']
+            ingredient_amount = ingredient['amount']
+            ingredient_unit = ingredient['units']
+            new_ingredient = Ingredient(ingredient_full=ingredient_full_name, ingredient_name=ingredient_name, amount=ingredient_amount, units=ingredient_unit)
+            ingredient_list.append(new_ingredient)
+        new_recipe = Recipe(recipe_id=recipe_id, recipe_name=recipe_name, source_url=recipe_source_url, img_url=recipe_img_url, description=recipe_description, ingredients=ingredient_list)
+        recipe_list.append(new_recipe)
+    return recipe_list
+
