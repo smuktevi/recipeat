@@ -9,22 +9,54 @@
 
 ## Installation and Setup
 
-**Quick Info (for Grading)**
+**Quick Info**
 
 * Testing was implemented mainly on our 'modules' folder where we have all of our back-end source code. 
 * For testing we excluded files from our 'app' folder as it consisted mainly of HTML templates. We did not implement testing on routes.py.
 * We have achieved a 100% coverage using unit tests for all our back-end python files. This can be seen in our coverage reports and Codecov.
 * You may choose to run the app locally or via the website link.
 
+**Installation Tutorial**  
+This tutorial will allow you to run the code locally on your own machine!
+1) Clone the git repository to your local machine and change directory to recipeat
+```
+git clone https://github.com/smuktevi/recipeat.git
+cd recipeat
+```
+2) Install required packages and dependecies:
+```
+pip install -e .
+```
+3) You're ready to start running our app locally!  
+
+* Use flask run to run our web app locally!
+```
+flask run
+```
+* Check the code for flake8 standards!
+```
+flake8 --ignore=E722,W503 --exclude=app/__init__.py
+```
+* Run the implemented unit tests!
+```
+pytest --cov=modules --cov-config=.coveragerc
+```
+
 ## Background
 Figuring out what to eat based on the food you have in your fridge can be a difficult task for many. This task is made even harder when someone is trying to eat healthy. RecipEat aims to solve this problem by providing healthy recipes that can be made with the food someone has on hand. RecipEat works with a user’s dietary constraints and nutritional goals to provide recipe recommendations that are the most relevant to the user. RecipEat also allows for a visual comparison of recipes so that users can quickly decide which recipe they would rather make. 
 
 ## Modules
 
+### user.py
+A class that maintains a user's information and session. Has methods to:
+* Register a new user
+* Login an existing user
+* Delete an existing user
+
 ### bag_of_ingredients.py
 A class that maintains a user's Bag of Ingredients. A user can:
-* add ingredients to their bag.
-* delete/update ingredients in their bag.
+* Add ingredients to their bag.
+* Delete/update ingredients in their bag.
 
 ### recipe_recommender.py
 A class that has methods to search for recipes with given inputs:
@@ -35,12 +67,12 @@ A class that has methods to search for recipes with given inputs:
 
 ### comparator.py
 A class that has methods to visually compare nutrients and ingredients for selected recipes.
-* the nutrient comparator shows a bargraph of different nutrional information amounts per each recipe
-* the ingredient comparator shows pictures of the ingredients in a selected recipe
+* The nutrient comparator shows a bargraph of different nutrional information amounts per each recipe
+* The ingredient comparator shows pictures of the ingredients in a selected recipe
 
 ### database.py
 A class that acts as a wrapper around psycopg2 to enable easier PostrgreSQL database access.
-* interacts with the Bag of Ingredients to maintain user data in the backend.
+* Interacts with the Bag of Ingredients to maintain user data in the backend.
 
 
 ## Project Data
