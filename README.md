@@ -57,6 +57,8 @@ pytest --cov=modules --cov-config=.coveragerc
 ```
 
 ## Documentation
+[Component Specification](https://github.com/smuktevi/recipeat/blob/main/docs/Component%20Specification.pdf)  
+[Functional Specification](https://github.com/smuktevi/recipeat/blob/main/docs/Component%20Specification.pdf)  
 
 ## Directory Structure
 ```bash
