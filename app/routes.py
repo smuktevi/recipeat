@@ -47,11 +47,6 @@ def login():
     if 'username' in session:
         username = session['username']
         return render_template('logout.html', username=username)
-        # return 'Logged in as ' + username + '<br>' + ("<a href='/index'>Go to "
-        #                                               "main page!</a><br><b><a"
-        #                                               " href = '/logout'>Click"
-        #                                               " here to log out!</a></"
-        #                                               "b>")
 
     if request.method == 'POST':
         username = request.form['username']
