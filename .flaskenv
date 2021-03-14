@@ -1,1 +1,1 @@
-FLASK_APP=recipeat.py
+FLASK_APP=wsgi.py
