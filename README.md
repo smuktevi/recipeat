@@ -47,6 +47,14 @@ flake8 --ignore=E722,W503 --exclude=app/__init__.py
 ```
 
 ## Testing
+The code that is tested in this project are in the modules folder. Unit tests are used to test the code in the modules. The unit tests must be run in a specific order, and since pytest test order is used to ensure proper unit test order; it is necessary to run the unit tests using pytest. Pytest also allows checking for unit test coverage.
+
+For Coverage, only the modules folder is tested, as functionality is all in the modules. The app folder is not tested as the code is for the UI of the webpage. Inside the modules folder, constants.py is ignored. constants.py does not have any functional code and only variables with fixed constant values, and therefore is not tested.
+
+The command used to run the unit tests:
+```
+pytest --cov=modules --cov-config=.coveragerc
+```
 
 ## Documentation
 
