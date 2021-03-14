@@ -19,6 +19,9 @@ install:
     - pip install codecov==2.0.15
     - pip install pytest-cov==2.7.1
 
+before_script:
+    - flake8 --ignore=E722,W503 --exclude=app/__init__.py
+
 script:
     - pytest --cov=modules --cov-config=.coveragerc
 
