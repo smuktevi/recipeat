@@ -3,12 +3,12 @@ from setuptools import setup, find_packages
 setup(
     name='Recipeat',
     version='0.1.0',
-    description=('RecipEat keeps track of available ingredients and provides '
-                 'healthy recipes. RecipEat works with a user’s dietary '
-                 'constraints and nutritional goals to provide recipe '
-                 'recommendations that are the most relevant to the user. '
-                 'RecipEat also allows for a visual comparison of recipe '
-                 'nutrients and ingredients.'),
+    description="RecipEat keeps track of available ingredients and provides \
+                 healthy recipes. RecipEat works with a user’s dietary \
+                 constraints and nutritional goals to provide recipe \
+                 recommendations that are the most relevant to the user. \
+                 RecipEat also allows for a visual comparison of recipe \
+                 nutrients and ingredients.",
     long_description=__doc__,
     license='MIT',
     author='Corina Geier, Jeffery Lai, Edward Lou, Sai Muktevi, Andrew Zhou',
@@ -90,6 +90,7 @@ setup(
         "Pyrebase4>=4.4.3",
         "pytest>=4.5.0",
         "pytest-cov>=2.7.1",
+        "pytest-order",
         "python-dateutil>=2.8.1",
         "python-dotenv>=0.15.0",
         "python-firebase>=1.2",
