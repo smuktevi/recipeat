@@ -3,14 +3,16 @@ from setuptools import setup, find_packages
 setup(
     name='Recipeat',
     version='0.1.0',
-    description='RecipEat keeps track of available ingredients and provides healthy recipes. \
-                    RecipEat works with a user’s dietary constraints and nutritional goals to provide \
-                    recipe recommendations that are the most relevant to the user. RecipEat \
-                    also allows for a visual comparison of recipe nutrients and ingredients.'
+    description=('RecipEat keeps track of available ingredients and provides '
+                 'healthy recipes. RecipEat works with a user’s dietary '
+                 'constraints and nutritional goals to provide recipe '
+                 'recommendations that are the most relevant to the user. '
+                 'RecipEat also allows for a visual comparison of recipe '
+                 'nutrients and ingredients.'),
     long_description=__doc__,
     license='MIT',
-    author='Corina Geier, Jeffery Lai, Edward Lou, Sai Muktevi, Andrew Zhou' 
-    url='https://recipeat-app.herokuapp.com/'
+    author='Corina Geier, Jeffery Lai, Edward Lou, Sai Muktevi, Andrew Zhou',
+    url='https://recipeat-app.herokuapp.com/',
     python_requires='>=3.6, <3.9',
     packages=find_packages(),
     include_package_data=True,
