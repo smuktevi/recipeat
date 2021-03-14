@@ -1,4 +1,4 @@
-from setuptools import setup, fund_packages
+from setuptools import setup, find_packages
 
 setup(
     name="Recipeat",
