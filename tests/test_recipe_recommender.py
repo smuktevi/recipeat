@@ -22,7 +22,8 @@ class TestSearchRecipes(unittest.TestCase):
         recipe_list = RecipeRecommender.search_recipes(ingredients, nutrients,
                                                        diet, intolerances)
         self.assertIsInstance(recipe_list, list)
-        self.assertIsInstance(recipe_list[0], Recipe)
+        if len(recipe_list) > 0:
+            self.assertIsInstance(recipe_list[0], Recipe)
 
     def test_recipe_to_ingredients(self):
         """
