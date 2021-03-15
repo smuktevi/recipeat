@@ -8,7 +8,7 @@ from app.forms.ingredients_form import IngredientForm
 from app.forms.recipe_form import RecipeForm
 from modules.user import User
 from modules.bag_of_ingredients import BagOfIngredients
-from modules.recipe_recommender import RecipeRecommender
+from modules.recipe_recommender import RecipeRecommender, to_json, from_json
 from modules.comparator import Compare
 from modules.constants import Recipe, Ingredient, ApikeyOutOfPoints
 import json
@@ -397,61 +397,3 @@ def compare():
         return render_template('visual_comparator.html',
                                ingredient_compare=ingredient_compare_html,
                                nutrient_compare=nutrient_compare_html)
-
-
-def to_json(recipe_list):
-    """
-    Function used to serialize a list of recipes.
-
-    :param recipe_list: list(Recipe). list of recipes
-    :return: json. A json dictionary to be serialized.
-    """
-    return json.dumps(recipe_list, default=lambda o: o.__dict__,
-                      sort_keys=True, indent=4)
-
-
-def from_json(json_list):
-    """
-    Function used to convert a serialized dictionary back to a list of recipes.
-
-    :param json_list: json. A json dictionary.
-    :return: list(Recipe). List of recipes constructed back
-    """
-    json_list = json.loads(json_list)
-    recipe_list = reconstruct_recipe_list(json_list)
-    return recipe_list
-
-
-def reconstruct_recipe_list(recipe_dictionary_list):
-    """
-    This is a helper function used to reconstruct Recipe and Ingredient objects
-    back into their original form from a dictionary.
-
-    :param recipe_dictionary_list: dict. A serialized dictionary.
-    :return: list(Recipe). List of recipes constructed from the dictionary.
-    """
-    recipe_list = []
-    for recipe_dictionary in recipe_dictionary_list:
-        recipe_id = recipe_dictionary['recipe_id']
-        recipe_name = recipe_dictionary['recipe_name']
-        recipe_source_url = recipe_dictionary['source_url']
-        recipe_img_url = recipe_dictionary['img_url']
-        recipe_description = recipe_dictionary['description']
-        ingredient_list = []
-        for ingredient in recipe_dictionary['ingredients']:
-            ingredient_full_name = ingredient['ingredient_full']
-            ingredient_name = ingredient['ingredient']
-            ingredient_amount = ingredient['amount']
-            ingredient_unit = ingredient['units']
-            new_ingredient = Ingredient(ingredient_full=ingredient_full_name,
-                                        ingredient_name=ingredient_name,
-                                        amount=ingredient_amount,
-                                        units=ingredient_unit)
-            ingredient_list.append(new_ingredient)
-        new_recipe = Recipe(recipe_id=recipe_id, recipe_name=recipe_name,
-                            source_url=recipe_source_url,
-                            img_url=recipe_img_url,
-                            description=recipe_description,
-                            ingredients=ingredient_list)
-        recipe_list.append(new_recipe)
-    return recipe_list
