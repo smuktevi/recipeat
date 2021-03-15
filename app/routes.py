@@ -323,7 +323,6 @@ def recipe():
                 chosen_ingredients_objects.append(ingredient_obj)
                 chosen_ingredients_names.append(ingredient_obj.ingredient)
 
-            # TODO add intolerances when the search_recipes has been modified
             try:
                 recipe_list = RecipeRecommender.search_recipes(
                     ingredients=chosen_ingredients_names,

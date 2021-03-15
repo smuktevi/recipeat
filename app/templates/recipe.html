@@ -16,6 +16,11 @@
         border: 0;
         border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
+
+    #intolerances {
+        width:125px;
+    }
+
 </style>
 <h1>Recipe Recommender</h1>
 <form action="" method="post" novalidate>
@@ -57,7 +62,6 @@
                 {{ form.max_protein(size=32) }}
             </p>
             <hr>
-            <h5>Ctrl + click for multiple selections in the following:</h5>
             <div class="d-flex flex-row">
                 <!--adding extra divs for padding-->
                 <div style="width: 25px;"></div>
@@ -74,6 +78,21 @@
                 <div>
                     <h3>Diets</h3>
                     {{ form.diets(size=6) }}
+                    <script>
+                        $('option').mousedown(function(e) {
+                            e.preventDefault();
+                            var originalScrollTop = $(this).parent().scrollTop();
+                            console.log(originalScrollTop);
+                            $(this).prop('selected', $(this).prop('selected') ? false : true);
+                            var self = this;
+                            $(this).parent().focus();
+                            setTimeout(function() {
+                                $(self).parent().scrollTop(originalScrollTop);
+                            }, 0);
+
+                            return false;
+                        });
+                    </script>
                 </div>
                 <div style="width: 25px;"></div>
 
@@ -88,6 +107,7 @@
             {% endif %}
             {% if recipe_list %}
             <p style="padding: 10px;">{{ form.compare_submit() }}</p>
+            Select two or more recipes to compare!
             {% endif %}
             {% if alertmessage %}
             <div class="alert alert-danger">
