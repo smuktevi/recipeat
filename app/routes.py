@@ -11,6 +11,7 @@ from modules.bag_of_ingredients import BagOfIngredients
 from modules.recipe_recommender import RecipeRecommender, to_json, from_json
 from modules.comparator import Compare
 from modules.constants import Ingredient, ApikeyOutOfPoints
+import json
 
 """
 This file is the flask router file. It is used to route from one page to
@@ -31,7 +32,11 @@ def index():
         user_obj = User.get_user(session['username'])
     else:
         user = 'New User'
-    return render_template('index.html', user=user, user_obj=user_obj)
+
+    joke = json.loads(User.get_random_food_joke())
+    trivia = json.loads(User.get_random_food_trivia())
+    return render_template('index.html', user=user, user_obj=user_obj,
+                           joke=joke['text'], trivia=trivia['text'])
 
 
 @app.route('/', methods=['GET', 'POST'])

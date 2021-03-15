@@ -1,6 +1,7 @@
-from .constants import config, get_postgresql_connection
+from .constants import config, get_postgresql_connection, api_request_headers
 from pyrebase import pyrebase
 from .bag_of_ingredients import BagOfIngredients
+import requests
 
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
@@ -135,3 +136,19 @@ class User:
             return True
         except:
             return False
+
+    @staticmethod
+    def get_random_food_joke():
+        url = ("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/fo"
+               "od/jokes/random")
+        response = requests.request("GET", url, headers=api_request_headers)
+
+        return response.text
+
+    @staticmethod
+    def get_random_food_trivia():
+        url = ("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/fo"
+               "od/trivia/random")
+        response = requests.request("GET", url, headers=api_request_headers)
+
+        return response.text

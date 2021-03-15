@@ -1,6 +1,7 @@
 import unittest
 import pytest
 from modules.user import User
+import json
 
 
 class TestUserConstructor(unittest.TestCase):
@@ -116,6 +117,26 @@ class TestDeleteUser(unittest.TestCase):
         Delete an non-existing user. Should return false
         """
         self.assertFalse(User.delete_user("not_registered@aa.com", "asdfasdf"))
+
+
+class TestRandomFun(unittest.TestCase):
+    """
+    This unittest class is used to test the random joke and trivia API calls.
+    """
+
+    def test_joke(self):
+        """
+        Test the random joke api call. Should get back a dictionary
+        """
+        joke = User.get_random_food_joke()
+        self.assertIsInstance(json.loads(joke), dict)
+
+    def test_trivia(self):
+        """
+        Test the random trivia api call. Should get back a dictionary
+        """
+        trivia = User.get_random_food_trivia()
+        self.assertIsInstance(json.loads(trivia), dict)
 
 
 if __name__ == '__main__':
