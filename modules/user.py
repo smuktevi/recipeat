@@ -139,6 +139,10 @@ class User:
 
     @staticmethod
     def get_random_food_joke():
+        """
+        Gets a random joke from API
+        :return: JSON. Returns a json response.
+        """
         url = ("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/fo"
                "od/jokes/random")
         response = requests.request("GET", url, headers=api_request_headers)
@@ -147,6 +151,10 @@ class User:
 
     @staticmethod
     def get_random_food_trivia():
+        """
+        Gets a random trivia from API
+        :return: JSON. Returns a json response.
+        """
         url = ("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/fo"
                "od/trivia/random")
         response = requests.request("GET", url, headers=api_request_headers)
