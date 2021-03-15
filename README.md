@@ -169,9 +169,6 @@ pytest --cov=modules --cov-config=.coveragerc
 
 ## Future Work
 
-More information about the project propsal can be found   
-[HERE.](https://docs.google.com/document/d/1VCmc425JY53zHsUiasGh4CeFm5eu0YMbTKfwk1pRHZA/edit#heading=h.5x0d5h95i329)   
-  
 * Add in Machine Learning to recommend recipes based on user ratings of past recipes - building a recommendation system.
 * Allowing users to save recipes they like to their profile.
 * Saving user preferences such as food intolerances during registration.
@@ -180,6 +177,4 @@ More information about the project propsal can be found
 * Making our application highly scalable and highly available by using cloud services.
 * Developing a Meal Planner.
 
-
-
-
+More information about the project propsal can be found [HERE.](https://docs.google.com/document/d/1VCmc425JY53zHsUiasGh4CeFm5eu0YMbTKfwk1pRHZA/edit#heading=h.5x0d5h95i329)   
