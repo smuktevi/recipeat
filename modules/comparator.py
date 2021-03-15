@@ -1,4 +1,5 @@
 import requests
+from bs4 import BeautifulSoup
 
 
 class Compare:
@@ -33,19 +34,17 @@ class Compare:
             }
             response = requests.request("GET", url,
                                         headers=headers, data=payload)
-            # response.header["X-Ratelimit-Classifications-Limit: X"]
-            # >= remaining
-            # X-Ratelimit-Classifications-Limit: X
-            # X-Ratelimit-Classifications-Remaining: X
-            # X-Ratelimit-Requests-Limit: X
-            # X-Ratelimit-Requests-Remaining: X
-            # X-Ratelimit-Tinyrequests-Limit: X
-            # X-Ratelimit-Tinyrequests-Remaining: X
+
+            soup = BeautifulSoup(response.text, "html.parser")
+            for div in soup.find_all("div", {'style': ('margin-top:3px;margin-'
+                                                       'right:10px;text-align:'
+                                                       'right;')}):
+                div.decompose()
 
             nutr_html_list.append(
                 '<div class="header"><h3>{recipe_name}</h3></div>'.format(
                     recipe_name=recipe.recipe_name
-                ) + response.text
+                ) + str(soup)
             )
         return nutr_html_list
 
@@ -78,9 +77,18 @@ class Compare:
             response = requests.request("GET", url,
                                         headers=headers, data=payload)
 
+            soup = BeautifulSoup(response.text, "html.parser")
+            for div in soup.find_all("div", {'class': ('spoonacular-ingredient'
+                                                       's-menu')}):
+                div.decompose()
+            for div in soup.find_all("div", {'style': ('margin-top:3px;margin-'
+                                                       'right:10px;text-align:'
+                                                       'right;')}):
+                div.decompose()
+
             ingrd_html_list.append(
                 '<div class="header"><h3>{recipe_name}</h3></div>'.format(
                     recipe_name=recipe.recipe_name
-                ) + response.text
+                ) + str(soup)
             )
         return ingrd_html_list
