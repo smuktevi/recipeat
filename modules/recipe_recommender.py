@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import modules.constants as constants
+from modules.constants import Ingredient, Recipe
 import json
 
 ###########################################################################
@@ -148,6 +149,7 @@ class RecipeRecommender:
 
         return get_recipe_info_response
 
+
 def to_json(recipe_list):
     """
     Function used to serialize a list of recipes.
@@ -156,7 +158,8 @@ def to_json(recipe_list):
     :return: json. A json dictionary to be serialized.
     """
     return json.dumps(recipe_list, default=lambda o: o.__dict__,
-                    sort_keys=True, indent=4)
+                      sort_keys=True, indent=4)
+
 
 def from_json(json_list):
     """
@@ -165,9 +168,9 @@ def from_json(json_list):
     :param json_list: json. A json dictionary.
     :return: list(Recipe). List of recipes constructed back
     """
-    json_list = json.loads(json_list)
+    recipe_dictionary_list = json.loads(json_list)
     recipe_list = []
-    for recipe_dictionary in json_list:
+    for recipe_dictionary in recipe_dictionary_list:
         recipe_id = recipe_dictionary['recipe_id']
         recipe_name = recipe_dictionary['recipe_name']
         recipe_source_url = recipe_dictionary['source_url']
@@ -191,37 +194,3 @@ def from_json(json_list):
                             ingredients=ingredient_list)
         recipe_list.append(new_recipe)
     return recipe_list
-
-# def reconstruct_recipe_list(recipe_dictionary_list):
-#     """
-#     This is a helper function used to reconstruct Recipe and Ingredient objects
-#     back into their original form from a dictionary.
-
-#     :param recipe_dictionary_list: dict. A serialized dictionary.
-#     :return: list(Recipe). List of recipes constructed from the dictionary.
-#     """
-#     recipe_list = []
-#     for recipe_dictionary in recipe_dictionary_list:
-#         recipe_id = recipe_dictionary['recipe_id']
-#         recipe_name = recipe_dictionary['recipe_name']
-#         recipe_source_url = recipe_dictionary['source_url']
-#         recipe_img_url = recipe_dictionary['img_url']
-#         recipe_description = recipe_dictionary['description']
-#         ingredient_list = []
-#         for ingredient in recipe_dictionary['ingredients']:
-#             ingredient_full_name = ingredient['ingredient_full']
-#             ingredient_name = ingredient['ingredient']
-#             ingredient_amount = ingredient['amount']
-#             ingredient_unit = ingredient['units']
-#             new_ingredient = Ingredient(ingredient_full=ingredient_full_name,
-#                                         ingredient_name=ingredient_name,
-#                                         amount=ingredient_amount,
-#                                         units=ingredient_unit)
-#             ingredient_list.append(new_ingredient)
-#         new_recipe = Recipe(recipe_id=recipe_id, recipe_name=recipe_name,
-#                             source_url=recipe_source_url,
-#                             img_url=recipe_img_url,
-#                             description=recipe_description,
-#                             ingredients=ingredient_list)
-#         recipe_list.append(new_recipe)
-#     return recipe_list

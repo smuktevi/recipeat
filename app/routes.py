@@ -10,8 +10,7 @@ from modules.user import User
 from modules.bag_of_ingredients import BagOfIngredients
 from modules.recipe_recommender import RecipeRecommender, to_json, from_json
 from modules.comparator import Compare
-from modules.constants import Recipe, Ingredient, ApikeyOutOfPoints
-import json
+from modules.constants import Ingredient, ApikeyOutOfPoints
 
 """
 This file is the flask router file. It is used to route from one page to
