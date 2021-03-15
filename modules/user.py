@@ -141,6 +141,7 @@ class User:
     def get_random_food_joke():
         """
         Gets a random joke from API
+
         :return: JSON. Returns a json response.
         """
         url = ("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/fo"
@@ -153,6 +154,7 @@ class User:
     def get_random_food_trivia():
         """
         Gets a random trivia from API
+
         :return: JSON. Returns a json response.
         """
         url = ("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/fo"
