@@ -89,15 +89,16 @@ class BagOfIngredients:
         """
         # Updates ingredient with new quantity
         try:
-            update_query = (
-                "UPDATE bagofingredients SET amount="
-                + new_quantity
-                + "WHERE user_id="
-                + self.username
-                + " AND ingredient_name="
-                + ingredient_name
-                + ";"
-            )
+            unit = self.db.get(table="bagofingredients", columns="unit",
+                               where=("user_id = {} AND ingredient_name = "
+                                      "{}").format(self.username,
+                                                   ingredient_name))
+            full = new_quantity.replace("'", "") + " " + unit[0][0] + " " + \
+                ingredient_name.replace("'", "")
+            update_query = ("UPDATE bagofingredients SET amount = {}, ingredie"
+                            "nt = '{}' WHERE user_id = {} AND ingredient_name"
+                            "= {}").format(new_quantity, full, self.username,
+                                           ingredient_name)
             check = self.db.query(update_query)
         except:
             print("ERROR OCCURED IN UPDATING!")
