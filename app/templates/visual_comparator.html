@@ -19,15 +19,19 @@
     {% if ingredient_compare %}
         <hr>
         <h2>Compare Ingredients</h2>
+        <br>
         {% for comparison in ingredient_compare %}
             {{ comparison | safe }}
+            <br>
         {% endfor %}
     {% endif %}
     {% if ingredient_compare %}
         <hr>
         <h2>Compare Nutrients</h2>
+        <br>
         {% for comparison in nutrient_compare %}
             {{ comparison | safe }}
+            <br>
         {% endfor %}
     <br>
     <a class="btn btn-primary" role="button" href="/recipe">Go Back to Recipe Recommender!</a>
