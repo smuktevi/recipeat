@@ -10,7 +10,7 @@ class IngredientForm(FlaskForm):
     """
     ingredient = StringField('Ingredient', validators=[DataRequired()])
     quantity = IntegerField('Quantity', validators=[DataRequired()])
-    units = StringField('Units (Metric)')
+    units = StringField('Units')
     submit = SubmitField('Add Ingredient')
 
     update_ingredient = StringField('Ingredient to update',
