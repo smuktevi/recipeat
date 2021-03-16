@@ -125,7 +125,7 @@ The recipes displayed can be used for comparison.
 
 ### `comparator.py`
 A class that has methods to visually compare nutrients and ingredients for selected recipes.
-* The nutrient comparator shows a bargraph of different nutrional information amounts per each recipe
+* The nutrient comparator shows a bargraph of different nutritional information amounts per each recipe
 * The ingredient comparator shows pictures of the ingredients in a selected recipe
 
 ### `database.py`
@@ -139,7 +139,7 @@ A class that acts as a wrapper around psycopg2 to enable easier PostrgreSQL data
 Spoonacular is a Recipe-Food-Nutrition API providing access to over 365,000 recipes through ingredient- and nutrient-based queries. The user can also include keywords or phrases, such as ‘lactose intolerance’, to search for recipes that accommodate any special dietary restrictions or preferences. Additionally, the user can analyze nutritional information for each recipe by utilizing the visualization widgets.
 
 ### Firebase
-Firebase is part of the google cloud services and is used in this project for User Authentication and User ID management. This is used for USer Registration and Login.
+Firebase is part of the google cloud services and is used in this project for User Authentication and User ID management. This is used for User Registration and Login.
 
 ### PostgreSQL
 PostgreSQL is an open-source relational database management system offered by Heroku along with deployment capabilities to host our website online. We use PostgreSQL to store User data and Bag of Ingredients data. Database transactions are managed using the database wrapper around `psycopg2` we developed which performs the necessary functions for our use cases.
@@ -177,4 +177,4 @@ pytest --cov=modules --cov-config=.coveragerc
 * Making our application highly scalable and highly available by using cloud services.
 * Developing a Meal Planner.
 
-More information about the project propsal can be found [HERE.](https://docs.google.com/document/d/1VCmc425JY53zHsUiasGh4CeFm5eu0YMbTKfwk1pRHZA/edit#heading=h.5x0d5h95i329)   
+More information about the project proposal can be found [HERE.](https://docs.google.com/document/d/1VCmc425JY53zHsUiasGh4CeFm5eu0YMbTKfwk1pRHZA/edit#heading=h.5x0d5h95i329)   
