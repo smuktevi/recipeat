@@ -7,17 +7,17 @@ class RecipeForm(FlaskForm):
     Recipe form class. Sets up all the required form widgets for recipe
     recommender here.
     """
-    min_carb = IntegerField('Minimum Carbohydrates')
-    max_carb = IntegerField('Maximum Carbohydrates')
+    min_carb = IntegerField('Minimum Carbohydrates (g)')
+    max_carb = IntegerField('Maximum Carbohydrates (g)')
 
-    min_fat = IntegerField('Minimum Fat')
-    max_fat = IntegerField('Maximum Fat')
+    min_fat = IntegerField('Minimum Fat (g)')
+    max_fat = IntegerField('Maximum Fat (g)')
 
-    min_cal = IntegerField('Minimum Calories')
-    max_cal = IntegerField('Maximum Calories')
+    min_cal = IntegerField('Minimum Calories (kcal)')
+    max_cal = IntegerField('Maximum Calories (kcal)')
 
-    min_protein = IntegerField('Minimum Protein')
-    max_protein = IntegerField('Maximum Protein')
+    min_protein = IntegerField('Minimum Protein (g)')
+    max_protein = IntegerField('Maximum Protein (g)')
 
     intolerance_options = [('Dairy', 'Dairy'), ('Egg', 'Egg'),
                            ('Gluten', 'Gluten'), ('Grain', 'Grain'),
