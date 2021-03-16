@@ -1,9 +1,6 @@
 import unittest
-from unittest import mock
-import pytest
-from modules.constants import check_api_errors, Ingredient, Recipe, ApikeyOutOfPoints
-import json
-import requests
+from modules.constants import check_api_errors, Ingredient, Recipe,\
+    ApikeyOutOfPoints
 
 
 class TestConstantObjects(unittest.TestCase):
@@ -66,7 +63,8 @@ class TestConstantObjects(unittest.TestCase):
         recipe = Recipe(
             recipe_id=631763,
             recipe_name="Warm and Luscious Sipping Chocolate",
-            img_url=("https://spoonacular.com/recipeImages" "/631763-312x231.jpg"),
+            img_url=("https://spoonacular.com/recipeImages"
+                     "/631763-312x231.jpg"),
             ingredients=[
                 Ingredient(ingredient_name="salt", amount=2),
                 Ingredient(ingredient_name="potato", amount=3, units="gram"),

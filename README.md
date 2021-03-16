@@ -10,14 +10,14 @@ Figuring out what to eat based on the food you have in your fridge can be a diff
 
 ## Installation and Setup
 
-**Quick Info**  
+**<ins>Quick Info</ins>**  
 
 * Testing was implemented mainly on our 'modules' folder where we have all of our back-end source code. 
 * For testing we excluded files from our 'app' folder as it consisted mainly of HTML templates. We did not implement testing on routes.py.
 * We have achieved a 100% coverage using unit tests for all our back-end python files. This can be seen in our coverage reports and Codecov.
 * You may choose to run the app locally or via the website link.
 
-**Installation**  
+**<ins>Installation</ins>**  
 
 This tutorial will allow you to run the code locally on your own machine!  
 *It is recommended that you create a new conda environment (if you have conda) or a new virtual environment before installation.*
@@ -51,17 +51,20 @@ pytest --cov-report html
 ```
 These reports can be found in the `miscellaneous/htmlcov` directory.
 
-**Web Demo**
-
-A demo of the usage of the application in video format can be downloaded from the [examples folder](https://github.com/smuktevi/recipeat/tree/main/examples).
-This folder also contains a quick 9 minute video recording of our Final Presentation for a better understanding of our project outline, uses cases, software architecture, design, challenges faced, future work, etc.
-
-**Documentation**
+## Documentation
+**<ins>Documents</ins>**
 
 For more information on the Software Engineering and Design behind our project please refer to these links:
 * [Component Specification](https://github.com/smuktevi/recipeat/blob/main/docs/Component%20Specification.pdf)  
 * [Functional Specification](https://github.com/smuktevi/recipeat/blob/main/docs/Component%20Specification.pdf)
 * [Technology Review on Spoonacular](https://github.com/smuktevi/recipeat/blob/main/docs/Technology%20Review.pdf)
+
+**<ins>Web Demo</ins>**
+
+A demo of the usage of the application in video format can be downloaded from the [examples folder](https://github.com/smuktevi/recipeat/tree/main/examples).
+This folder also contains a quick 9 minute video recording of our Final Presentation for a better understanding of our project outline, uses cases, software architecture, design, challenges faced, future work, etc.
+
+
 
 
 ## Directory Structure
