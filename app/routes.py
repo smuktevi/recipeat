@@ -333,12 +333,9 @@ def recipe():
                     nutritional_req=nutr, diet=diets,
                     intolerances=intolerances)
                 session['recipe_list'] = to_json(recipe_list)
-            except ApikeyOutOfPoints:
+            except (ApikeyOutOfPoints, Exception):
                 return render_template('recipe.html', form=form,
                                        empty_search="No more API points!")
-            except:
-                return render_template('recipe.html', form=form,
-                                       empty_search="Back End Error!")
 
             if len(recipe_list) == 0:
                 return render_template('recipe.html', form=form,
@@ -362,7 +359,7 @@ def recipe():
                                                          " must be selected!"))
 
                 session['compare_list'] = to_json(recipe_compare_list)
-            except:
+            except (ApikeyOutOfPoints, Exception):
                 print("ERROR IN COMPARATOR")
                 redirect('/compare')
                 return render_template('visual_comparator.html',

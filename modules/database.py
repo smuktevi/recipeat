@@ -67,7 +67,7 @@ class Database:
             )
             self.conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
             self.cursor = self.conn.cursor()
-        except:
+        except (psycopg2.Error, Exception):
             print("Log: Error has occurred while opening database!")
             return False
         return True
@@ -119,7 +119,7 @@ class Database:
         try:
             self.cursor.execute(query)
             rows = self.cursor.fetchall()  # fetch data
-        except:
+        except (psycopg2.Error, Exception):
             print("Log: Could not fetch rows!")
             return False
         return rows[len(rows) - limit if limit else 0:]
@@ -141,7 +141,7 @@ class Database:
                                                              data)
         try:
             self.cursor.execute(query)
-        except:
+        except (psycopg2.Error, Exception):
             print("Log: Error in Inserting!")
             return False
         return True
@@ -160,7 +160,7 @@ class Database:
             if ("DELETE" in sql) or ("UPDATE" in sql):
                 if self.cursor.rowcount == 0:
                     return False
-        except:
+        except (psycopg2.Error, Exception):
             print("Log: Error in query execution!")
             return False
         return True

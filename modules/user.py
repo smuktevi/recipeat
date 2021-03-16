@@ -75,7 +75,7 @@ class User:
         try:
             auth.sign_in_with_email_and_password(
                 username, password)
-        except:
+        except (pyrebase.HTTPError, Exception):
             return False
         return True
 
@@ -110,7 +110,7 @@ class User:
             auth.create_user_with_email_and_password(username, password)
 
             return True
-        except:
+        except (pyrebase.HTTPError, Exception):
             return False
 
     @staticmethod
@@ -134,7 +134,7 @@ class User:
             cur.close()
             conn.close()
             return True
-        except:
+        except (pyrebase.HTTPError, Exception):
             return False
 
     @staticmethod

@@ -1,6 +1,7 @@
 from .constants import config, Ingredient
 from pyrebase import pyrebase
 from .database import Database
+from psycopg2 import Error
 
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()  # Get a reference to the database service
@@ -74,7 +75,7 @@ class BagOfIngredients:
             )
             print(delete_query)
             check = self.db.query(delete_query)
-        except:
+        except (Error, Exception):
             print("ERROR OCCURED IN DELETION!")
             return False
         return check
@@ -100,7 +101,7 @@ class BagOfIngredients:
                             "= {}").format(new_quantity, full, self.username,
                                            ingredient_name)
             check = self.db.query(update_query)
-        except:
+        except (Error, Exception):
             print("ERROR OCCURED IN UPDATING!")
             return False
         return check
