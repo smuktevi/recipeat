@@ -49,7 +49,7 @@ pytest --cov=modules --cov-config=.coveragerc
 ```
 pytest --cov-report html
 ```
-These reports can be found in the `htmlcov` directory.
+These reports can be found in the `miscellaneous/htmlcov` directory.
 
 ## Directory Structure
 ```bash
@@ -82,7 +82,6 @@ These reports can be found in the `htmlcov` directory.
 |   `-- Web App Demo.mp4
 |-- miscellaneous
 |   |-- commands
-|   |   |-- command.py
 |   |   `-- create_table.py
 |   |-- htmlcov
 |   |   |-- coverage_html.js
