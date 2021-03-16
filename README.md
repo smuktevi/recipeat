@@ -53,6 +53,7 @@ These reports can be found in the `htmlcov` directory.
 
 ## Directory Structure
 ```bash
+.
 |-- app
 |   |-- forms
 |   |   |-- ingredients_form.py
@@ -67,17 +68,45 @@ These reports can be found in the `htmlcov` directory.
 |   |   |-- index.html
 |   |   |-- ingredients.html
 |   |   |-- login.html
+|   |   |-- logout.html
 |   |   |-- recipe.html
 |   |   |-- register.html
 |   |   `-- visual_comparator.html
 |   |-- __init__.py
 |   `-- routes.py
-|-- commands
-|   `-- create_table.py
 |-- docs
-|   |-- Component\ Specification.pdf
-|   |-- Functional\ Specification.pdf
-|   `-- Technology\ Review.pdf
+|   |-- Component Specification.pdf
+|   |-- Functional Specification.pdf
+|   `-- Technology Review.pdf
+|-- examples
+|   `-- Web App Demo.mp4
+|-- miscellaneous
+|   |-- commands
+|   |   |-- command.py
+|   |   `-- create_table.py
+|   |-- htmlcov
+|   |   |-- coverage_html.js
+|   |   |-- favicon_32.png
+|   |   |-- index.html
+|   |   |-- jquery.ba-throttle-debounce.min.js
+|   |   |-- jquery.hotkeys.js
+|   |   |-- jquery.isonscreen.js
+|   |   |-- jquery.min.js
+|   |   |-- jquery.tablesorter.min.js
+|   |   |-- keybd_closed.png
+|   |   |-- keybd_open.png
+|   |   |-- modules___init___py.html
+|   |   |-- modules_bag_of_ingredients_py.html
+|   |   |-- modules_comparator_py.html
+|   |   |-- modules_constants_py.html
+|   |   |-- modules_database_py.html
+|   |   |-- modules_recipe_recommender_py.html
+|   |   |-- modules_user_py.html
+|   |   |-- status.json
+|   |   `-- style.css
+|   `-- notebooks
+|       |-- comparator_notebook.ipynb
+|       `-- spoonapi.ipynb
 |-- modules
 |   |-- __init__.py
 |   |-- bag_of_ingredients.py
@@ -94,13 +123,15 @@ These reports can be found in the `htmlcov` directory.
 |   |-- test_database.py
 |   |-- test_recipe_recommender.py
 |   `-- test_user.py
+|-- LICENSE
 |-- Procfile
 |-- README.md
 |-- config.py
-|-- github_commands.md
-|-- recipeat.py
 |-- requirements.txt
+|-- setup.py
 `-- wsgi.py
+
+13 directories, 63 files
 ```
 
 ## Modules
