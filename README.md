@@ -39,7 +39,7 @@ flask run
 ```
 * Check the code for flake8 standards!
 ```
-flake8 --ignore=E722,W503 --exclude=app/__init__.py
+flake8 --ignore=W503 --exclude=app/__init__.py
 ```
 * Run the implemented unit tests!
 ```
@@ -145,11 +145,11 @@ Firebase is part of the google cloud services and is used in this project for Us
 PostgreSQL is an open-source relational database management system offered by Heroku along with deployment capabilities to host our website online. We use PostgreSQL to store User data and Bag of Ingredients data. Database transactions are managed using the database wrapper around `psycopg2` we developed which performs the necessary functions for our use cases.
 
 ## Coding Standards  - PEP8  
-This code follows standards set by Flake-8. The code ignores Flake-8 errors: E722 and W503. E722 does not allow the use of bare 'except'. The code for registering and logging in users requires the use of a bare 'except', and therefore E722 has been ignored. W503 does not allow line break before binary operators. This warning is ignored as it contradicts with W504, which does not allow line break after binary operators. The code follows W504 standards, and therefore W503 is ignored. Flake-8 also ignores one file: `app/__init__.py`. The import statement in `app/__init__.py` is required be on the bottom of the file to work for flask, and therefore this file is ignored.
+This code follows standards set by Flake-8. The code ignores Flake-8 warning: W503. W503 does not allow line break __before__ binary operators. This warning is ignored as it contradicts with W504, which does not allow line break __after__ binary operators. The code follows W504 standards, and therefore W503 is ignored. Flake-8 also ignores one file: `app/__init__.py`. The import statement in `app/__init__.py` is required be on the bottom of the file to work for flask, and therefore this file is ignored.
 
 The command used to check flake-8:
 ```
-flake8 --ignore=E722,W503 --exclude=app/__init__.py
+flake8 --ignore=W503 --exclude=app/__init__.py
 ```
 
 ## Testing
