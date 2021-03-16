@@ -20,10 +20,10 @@ install:
     - pip install pytest-cov==2.7.1
 
 before_script:
-    - flake8 --ignore=E722,W503 --exclude=app/__init__.py
+    - flake8 --ignore=W503 --exclude=app/__init__.py
 
 script:
-    - pytest --cov=modules --cov-config=.coveragerc
+    - pytest --cov=modules
 
 after_success:
     - bash <(curl -s https://codecov.io/bash)

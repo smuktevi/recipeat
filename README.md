@@ -43,13 +43,26 @@ flake8 --ignore=W503 --exclude=app/__init__.py
 ```
 * Run the implemented unit tests!
 ```
-pytest --cov=modules --cov-config=.coveragerc
+pytest --cov=modules
 ```
 * You may also use the following code to check code coverage in the form of HTML pages.
 ```
 pytest --cov-report html
 ```
 These reports can be found in the `miscellaneous/htmlcov` directory.
+
+**Web Demo**
+
+A demo of the usage of the application in video format can be downloaded from the [examples folder](https://github.com/smuktevi/recipeat/tree/main/examples).
+This folder also contains a quick 9 minute video recording of our Final Presentation for a better understanding of our project outline, uses cases, software architecture, design, challenges faced, future work, etc.
+
+**Documentation**
+
+For more information on the Software Engineering and Design behind our project please refer to these links:
+* [Component Specification](https://github.com/smuktevi/recipeat/blob/main/docs/Component%20Specification.pdf)  
+* [Functional Specification](https://github.com/smuktevi/recipeat/blob/main/docs/Component%20Specification.pdf)
+* [Technology Review on Spoonacular](https://github.com/smuktevi/recipeat/blob/main/docs/Technology%20Review.pdf)
+
 
 ## Directory Structure
 ```bash
@@ -61,6 +74,7 @@ These reports can be found in the `miscellaneous/htmlcov` directory.
 |   |   |-- recipe_form.py
 |   |   `-- register_form.py
 |   |-- static
+|   |   |-- assets
 |   |   `-- styles
 |   |       `-- base.css
 |   |-- templates
@@ -75,37 +89,15 @@ These reports can be found in the `miscellaneous/htmlcov` directory.
 |   |-- __init__.py
 |   `-- routes.py
 |-- docs
-|   |-- Component Specification.pdf
-|   |-- Functional Specification.pdf
-|   `-- Technology Review.pdf
+|   |-- Component\ Specification.pdf
+|   |-- Functional\ Specification.pdf
+|   `-- Technology\ Review.pdf
 |-- examples
-|   `-- Web App Demo.mp4
+|   `-- Web\ App\ Demo.mp4
 |-- miscellaneous
-|   |-- commands
-|   |   `-- create_table.py
-|   |-- htmlcov
-|   |   |-- coverage_html.js
-|   |   |-- favicon_32.png
-|   |   |-- index.html
-|   |   |-- jquery.ba-throttle-debounce.min.js
-|   |   |-- jquery.hotkeys.js
-|   |   |-- jquery.isonscreen.js
-|   |   |-- jquery.min.js
-|   |   |-- jquery.tablesorter.min.js
-|   |   |-- keybd_closed.png
-|   |   |-- keybd_open.png
-|   |   |-- modules___init___py.html
-|   |   |-- modules_bag_of_ingredients_py.html
-|   |   |-- modules_comparator_py.html
-|   |   |-- modules_constants_py.html
-|   |   |-- modules_database_py.html
-|   |   |-- modules_recipe_recommender_py.html
-|   |   |-- modules_user_py.html
-|   |   |-- status.json
-|   |   `-- style.css
-|   `-- notebooks
-|       |-- comparator_notebook.ipynb
-|       `-- spoonapi.ipynb
+|   `-- commands
+|       |-- command.py
+|       `-- create_table.py
 |-- modules
 |   |-- __init__.py
 |   |-- bag_of_ingredients.py
@@ -119,6 +111,7 @@ These reports can be found in the `miscellaneous/htmlcov` directory.
 |   |-- __init__.py
 |   |-- test_bag_of_ingredients.py
 |   |-- test_comparator.py
+|   |-- test_constants.py
 |   |-- test_database.py
 |   |-- test_recipe_recommender.py
 |   `-- test_user.py
@@ -130,7 +123,7 @@ These reports can be found in the `miscellaneous/htmlcov` directory.
 |-- setup.py
 `-- wsgi.py
 
-13 directories, 63 files
+12 directories, 43 files
 ```
 
 ## Modules
@@ -162,6 +155,12 @@ A class that has methods to visually compare nutrients and ingredients for selec
 A class that acts as a wrapper around psycopg2 to enable easier PostrgreSQL database access.
 * Interacts with the Bag of Ingredients to maintain user data in the backend.
 
+### `constants.py`
+This module consists of global constants like apikeys, sample objects, and so on, used in multiple modules .
+It also consists of: 
+* Two classes that define the objects for recipes and ingredients used everywhere.
+* A function that raises an ApikeyOutOfPoints exception to avoid overage costs.
+* The definition of the ApikeyOutOfPoints exception.
 
 ## Data Sources and Management
 
@@ -185,17 +184,12 @@ flake8 --ignore=W503 --exclude=app/__init__.py
 ## Testing
 The code that is tested in this project are in the modules folder. Unit tests are used to test the code in the modules. The unit tests must be run in a specific order, and since pytest test order is used to ensure proper unit test order; it is necessary to run the unit tests using pytest. Pytest also allows checking for unit test coverage.
 
-For Coverage, only the modules folder is tested, as functionality is all in the modules. The app folder is not tested as the code is for the UI of the webpage. Inside the modules folder, constants.py is ignored. constants.py does not have any functional code and only variables with fixed constant values, and therefore is not tested.
+For Coverage, only the modules folder is tested, as functionality is all in the modules. The app folder is not tested as the code is for the UI of the webpage.
 
 The command used to run the unit tests:
 ```
-pytest --cov=modules --cov-config=.coveragerc
+pytest --cov=modules
 ```
-
-## Documentation
-[Component Specification](https://github.com/smuktevi/recipeat/blob/main/docs/Component%20Specification.pdf)  
-[Functional Specification](https://github.com/smuktevi/recipeat/blob/main/docs/Component%20Specification.pdf)  
-
 
 ## Future Work
 
