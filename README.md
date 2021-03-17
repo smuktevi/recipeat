@@ -54,16 +54,16 @@ These reports can be found in the `miscellaneous/htmlcov` directory.
 ## Documentation
 **<ins>Documents</ins>**
 
-[Component Specification](https://github.com/smuktevi/recipeat/blob/documentation/docs/Component%20Specification.pdf)  
+[Component Specification](https://github.com/smuktevi/recipeat/blob/main/docs/Component%20Specification.pdf)  
 Our Component Specification reviews our software components, interactions to achieve our use cases, and our preliminary plan.
 
-[Functional Specification](https://github.com/smuktevi/recipeat/blob/documentation/docs/Functional%20Specification.pdf)  
+[Functional Specification](https://github.com/smuktevi/recipeat/blob/main/docs/Functional%20Specification.pdf)  
 Our Functional Specification reviews the background of our project, the user profile, our data sources, and use cases.
 
-[Technology Review](https://github.com/smuktevi/recipeat/blob/documentation/docs/Technology%20Review.pdf)  
+[Technology Review](https://github.com/smuktevi/recipeat/blob/main/docs/Technology%20Review.pdf)  
 Our Technology Review PPT covers the problem we were trying to solve, use cases, a comparison of the different APIs we considered and tech stack. 
 
-[Final Presentation](https://github.com/smuktevi/recipeat/blob/documentation/docs/Final%20Presentation.pdf)  
+[Final Presentation](https://github.com/smuktevi/recipeat/blob/main/docs/Final%20Presentation.pdf)  
 Our Final PPT presentation covers background, design, directory structure, lessons learned, and future work.
 
 **<ins>Web Demo</ins>**
