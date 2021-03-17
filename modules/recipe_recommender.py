@@ -4,11 +4,6 @@ import modules.constants as constants
 from modules.constants import Ingredient, Recipe
 import json
 
-###########################################################################
-# The RecipeRecommender class allows the user to interact with the
-# Spoonacular API and get recipes that meet the given requirements.
-###########################################################################
-
 
 class RecipeRecommender:
     """

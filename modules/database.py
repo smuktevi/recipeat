@@ -32,9 +32,15 @@ class Database:
             self.open(url)  # url used to open if passed during instantiation.
 
     def __enter__(self):
+        """
+        Methods called for context management of the object.
+        """
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
+        """
+        Methods called for context management of the object.
+        """
         self.close()
 
     def open(self, url=None):

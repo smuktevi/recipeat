@@ -54,8 +54,6 @@ class TestComparator(unittest.TestCase):
         """
         tests that the HTML format is correct HTML format
         for nutrient_compare output
-
-        Returns:
         """
         HTML_list = Compare.nutrient_compare(self.recipe_list)
         self.assertTrue(
@@ -67,8 +65,6 @@ class TestComparator(unittest.TestCase):
         """
         tests that the HTML format is correct HTML format
         for ingredrient_compare output
-
-        Returns:
         """
         HTML_list = Compare.ingredient_compare(self.recipe_list)
         self.assertTrue(
