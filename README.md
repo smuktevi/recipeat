@@ -54,10 +54,17 @@ These reports can be found in the `miscellaneous/htmlcov` directory.
 ## Documentation
 **<ins>Documents</ins>**
 
-For more information on the Software Engineering and Design behind our project please refer to these links:
-* [Component Specification](https://github.com/smuktevi/recipeat/blob/main/docs/Component%20Specification.pdf)  
-* [Functional Specification](https://github.com/smuktevi/recipeat/blob/main/docs/Component%20Specification.pdf)
-* [Technology Review on Spoonacular](https://github.com/smuktevi/recipeat/blob/main/docs/Technology%20Review.pdf)
+[Component Specification](https://github.com/smuktevi/recipeat/blob/documentation/docs/Component%20Specification.pdf)  
+Our Component Specification reviews our software components, interactions to achieve our use cases, and our preliminary plan.
+
+[Functional Specification](https://github.com/smuktevi/recipeat/blob/documentation/docs/Functional%20Specification.pdf)  
+Our Functional Specification reviews the background of our project, the user profile, our data sources, and use cases.
+
+[Technology Review](https://github.com/smuktevi/recipeat/blob/documentation/docs/Technology%20Review.pdf)  
+Our Technology Review PPT covers the problem we were trying to solve, use cases, a comparison of the different APIs we considered and tech stack. 
+
+[Final Presentation](https://github.com/smuktevi/recipeat/blob/documentation/docs/Final%20Presentation.pdf)  
+Our Final PPT presentation covers background, design, directory structure, lessons learned, and future work.
 
 **<ins>Web Demo</ins>**
 
@@ -77,7 +84,6 @@ This folder also contains a quick 9 minute video recording of our Final Presenta
 |   |   |-- recipe_form.py
 |   |   `-- register_form.py
 |   |-- static
-|   |   |-- assets
 |   |   `-- styles
 |   |       `-- base.css
 |   |-- templates
@@ -92,22 +98,46 @@ This folder also contains a quick 9 minute video recording of our Final Presenta
 |   |-- __init__.py
 |   `-- routes.py
 |-- docs
-|   |-- Component\ Specification.pdf
-|   |-- Functional\ Specification.pdf
-|   `-- Technology\ Review.pdf
+|   |-- Component Specification.pdf
+|   |-- Final Presentation.pdf
+|   |-- Functional Specification.pdf
+|   `-- Technology Review.pdf
 |-- examples
-|   `-- Web\ App\ Demo.mp4
+|   |-- Final Presentation.mp4
+|   `-- Web App Demo.mp4
 |-- miscellaneous
-|   `-- commands
-|       |-- command.py
-|       `-- create_table.py
+|   |-- commands
+|   |   |-- command.py
+|   |   `-- create_table.py
+|   |-- htmlcov
+|   |   |-- coverage_html.js
+|   |   |-- favicon_32.png
+|   |   |-- index.html
+|   |   |-- jquery.ba-throttle-debounce.min.js
+|   |   |-- jquery.hotkeys.js
+|   |   |-- jquery.isonscreen.js
+|   |   |-- jquery.min.js
+|   |   |-- jquery.tablesorter.min.js
+|   |   |-- keybd_closed.png
+|   |   |-- keybd_open.png
+|   |   |-- modules___init___py.html
+|   |   |-- modules_bag_of_ingredients_py.html
+|   |   |-- modules_comparator_py.html
+|   |   |-- modules_constants_py.html
+|   |   |-- modules_database_py.html
+|   |   |-- modules_recipe_recommender_py.html
+|   |   |-- modules_user_py.html
+|   |   |-- status.json
+|   |   `-- style.css
+|   `-- notebooks
+|       |-- comparator_notebook.ipynb
+|       `-- spoonapi.ipynb
 |-- modules
 |   |-- __init__.py
 |   |-- bag_of_ingredients.py
 |   |-- comparator.py
 |   |-- constants.py
 |   |-- database.py
-|   |-- readme.txt
 |   |-- recipe_recommender.py
 |   `-- user.py
 |-- tests
@@ -126,7 +156,7 @@ This folder also contains a quick 9 minute video recording of our Final Presenta
 |-- setup.py
 `-- wsgi.py
 
-12 directories, 43 files
+13 directories, 65 files
 ```
 
 ## Modules
