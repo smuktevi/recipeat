@@ -76,36 +76,15 @@ These reports can be found in the `miscellaneous/htmlcov` directory.
 |   `-- routes.py
 |-- docs
 |   |-- Component Specification.pdf
+|   |-- Final Presentation.pdf
 |   |-- Functional Specification.pdf
 |   `-- Technology Review.pdf
 |-- examples
 |   `-- Web App Demo.mp4
 |-- miscellaneous
-|   |-- commands
-|   |   `-- create_table.py
-|   |-- htmlcov
-|   |   |-- coverage_html.js
-|   |   |-- favicon_32.png
-|   |   |-- index.html
-|   |   |-- jquery.ba-throttle-debounce.min.js
-|   |   |-- jquery.hotkeys.js
-|   |   |-- jquery.isonscreen.js
-|   |   |-- jquery.min.js
-|   |   |-- jquery.tablesorter.min.js
-|   |   |-- keybd_closed.png
-|   |   |-- keybd_open.png
-|   |   |-- modules___init___py.html
-|   |   |-- modules_bag_of_ingredients_py.html
-|   |   |-- modules_comparator_py.html
-|   |   |-- modules_constants_py.html
-|   |   |-- modules_database_py.html
-|   |   |-- modules_recipe_recommender_py.html
-|   |   |-- modules_user_py.html
-|   |   |-- status.json
-|   |   `-- style.css
-|   `-- notebooks
-|       |-- comparator_notebook.ipynb
-|       `-- spoonapi.ipynb
+|   `-- commands
+|       |-- command.py
+|       `-- create_table.py
 |-- modules
 |   |-- __init__.py
 |   |-- bag_of_ingredients.py
@@ -130,7 +109,7 @@ These reports can be found in the `miscellaneous/htmlcov` directory.
 |-- setup.py
 `-- wsgi.py
 
-13 directories, 63 files
+11 directories, 43 files
 ```
 
 ## Modules
